@@ -1,4 +1,4 @@
-function make_vehs_data(obj, intersection_struct_map, vis_data)
+function makeVehiclesData(obj, intersection_struct_map, vis_data)
 
     % vis_dataからroad_vehs_mapとroad_first_veh_mapを取得
     % road_vehs_mapはキー：道路ID、値：その道路上の自動車の位置と進路をまとめた配列

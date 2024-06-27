@@ -1,4 +1,4 @@
-function make_variables_list(obj)
+function makeVariablesList(obj)
 
     obj.makeZ1List();
     obj.makeZ2List();

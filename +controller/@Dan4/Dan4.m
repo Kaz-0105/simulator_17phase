@@ -122,7 +122,7 @@ classdef Dan4 < handle
         makeVehiclesData(obj, intersection_struct_map, VissimData);
 
         % 混合論理動的システムの係数行列を作成する関数群
-        make_mld_matrices(obj);
+        makeMld(obj);
         makeA(obj, pos_vehs);
         makeB1(obj, pos_vehs, route_vehs, first_veh_ids, road_prms);
         makeB2(obj, route_vehs, first_veh_ids, road_prms);
@@ -135,7 +135,7 @@ classdef Dan4 < handle
 
         % 決定変数の種類ごとのリストを作成する関数群
 
-        make_variables_list(obj);
+        makeVariablesList(obj);
 
         makeDelta1List(obj);
         makeDelta2List(obj);
@@ -156,7 +156,7 @@ classdef Dan4 < handle
         makeZ5List(obj);
 
         % 混合整数線形計画問題の形にMLDの係数と信号機制約の係数を変形する関数群
-        make_milp_matrices(obj);
+        makeMilp(obj);
         makeObjectiveFunction(obj, templete_id);
         makeConstraints(obj, mld_matrices, pos_vehs);
         makeBoundary(obj);

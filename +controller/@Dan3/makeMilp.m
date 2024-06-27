@@ -1,4 +1,4 @@
-function make_milp_matrices(obj)
+function makeMilp(obj)
 
     
     obj.milp_matrices.f = [];

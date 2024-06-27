@@ -57,7 +57,7 @@ classdef Dan3 < handle
             obj.m = Config.model_prms.m; % ホライゾン内の最大変化回数
             obj.fix_num = Config.model_prms.fix_num; % 固定するステップ数
 
-            obj.make_road_prms(maps) % 交差点の東西南北の道路のパラメータを収納する構造体を作成
+            obj.makeRoadPrms(maps) % 交差点の東西南北の道路のパラメータを収納する構造体を作成
 
             obj.PhiResults = tool.PhiResults(obj.N_p, obj.N_c, obj.N_s); % PhiResultsクラスの初期化
             obj.UResults = tool.UResults(obj.signal_num, obj.N_p, obj.N_c); % UResultsクラスの初期化
@@ -144,11 +144,11 @@ classdef Dan3 < handle
     end
 
     methods(Access = private)
-        make_road_prms(obj, maps);
-        make_vehs_data(obj, intersection_struct_map, vis_data);
+        makeRoadPrms(obj, maps);
+        makeVehiclesData(obj, intersection_struct_map, vis_data);
 
         % 混合論理動的システムの係数行列を作成する関数群
-        make_mld_matrices(obj);
+        makeMld(obj);
         makeA(obj, pos_vehs);
         makeB1(obj, pos_vehs, route_vehs, first_veh_ids, road_prms);
         makeB2(obj, route_vehs, first_veh_ids, road_prms);
@@ -161,7 +161,7 @@ classdef Dan3 < handle
 
         % 決定変数の種類ごとのリストを作成する関数群
 
-        make_variables_list(obj);
+        makeVariablesList(obj);
 
         makeDelta1List(obj);
         makeDelta2List(obj);
@@ -182,7 +182,7 @@ classdef Dan3 < handle
         makeZ5List(obj);
 
         % 混合整数線形計画問題の形にMLDの係数と信号機制約の係数を変形する関数群
-        make_milp_matrices(obj);
+        makeMilp(obj);
         makeObjectiveFunction(obj);
         makeConstraints(obj, mld_matrices, pos_vehs);
         makeBoundary(obj);

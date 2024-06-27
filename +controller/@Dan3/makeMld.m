@@ -1,4 +1,4 @@
-function make_mld_matrices(obj)
+function makeMld(obj)
     pos_vehs = obj.pos_vehs;
     route_vehs = obj.route_vehs;
     first_veh_ids = obj.first_veh_ids;

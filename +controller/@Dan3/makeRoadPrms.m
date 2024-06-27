@@ -1,4 +1,4 @@
-function make_road_prms(obj, maps)
+function makeRoadPrms(obj, maps)
     % intersection構造体の取得
     intersection_struct_map = maps('intersection_struct_map');
     intersection_struct = intersection_struct_map(obj.id);
