@@ -104,7 +104,8 @@ classdef Dan4 < handle
             obj.prediction_count = 0; % 予測回数の初期化
             obj.calc_time = 0;        % 計算時間の初期化
 
-            obj.VariableListMap = containers.Map('KeyType', 'char', 'ValueType', 'any'); % 決定変数の種類ごとのリストを収納するdictionaryの初期化
+            % 決定変数の種類とそれに該当するリストを作成
+            obj.VariableListMap = containers.Map('KeyType', 'char', 'ValueType', 'any'); 
             
             % フェーズのバイナリ変数の定義
             obj.makePhaseSignalGroupMap();

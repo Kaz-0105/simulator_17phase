@@ -96,13 +96,17 @@ classdef Dan3 < handle
             % 道路に関するパラメータを格納する構造体を作成
             obj.makeRoadPrms();
 
-            obj.PhiResults = tool.PhiResults(obj.N_p, obj.N_c, obj.N_s); % PhiResultsクラスの初期化
-            obj.UResults = tool.UResults(obj.signal_num, obj.N_p, obj.N_c); % UResultsクラスの初期化
-            obj.UResults.setInitialFutureData([1,0,1,0,1,0]'); % モデルに出てくる前回の信号現示の部分でエラーを起こさないために設定
+            % phiとuの結果を格納するクラスの初期化
+            obj.PhiResults = tool.PhiResults(obj.N_p, obj.N_c, obj.N_s); 
+            obj.UResults = tool.UResults(obj.signal_num, obj.N_p, obj.N_c); 
+            obj.UResults.setInitialFutureData([1,0,1,0,1,0]');
 
-            obj.prediction_count = 0; % 予測回数の初期化
+            % 予測回数と最適化の計算にかかった時間の変数を初期化
+            obj.prediction_count = 0; 
+            obj.calc_time = 0; 
 
-            obj.VariableListMap = dictionary(string.empty, cell.empty); % 決定変数の種類ごとのリストを収納するdictionaryの初期化
+            % それぞれの種類の決定変数に対して該当するリストを作成
+            obj.VariableListMap = containers.Map('KeyType', 'char', 'ValueType', 'any'); 
         end
 
         % 混合整数線形計画問題を解く関数
