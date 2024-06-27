@@ -1,4 +1,4 @@
-function make_u_opt(obj)
+function makeUOpt(obj)
 
     u_opt = zeros(obj.signal_num, obj.N_p);
 

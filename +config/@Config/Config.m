@@ -1,7 +1,7 @@
 classdef Config<handle
     properties
-        inpx_file = "";             % inpxファイルのパス 
-        layx_file = "";             % layxファイルのパス
+        inpx_file = '';             % inpxファイルのパス 
+        layx_file = '';             % layxファイルのパス
         graphic_mode = 0;           % グラフィックモード
         seed = 0;                   % シード値
         predictive_horizon = 0;     % 予測ホライゾン
@@ -26,7 +26,7 @@ classdef Config<handle
             if strlength(inpx_dir) == 0
                 obj.inpx_file = char(append(file_dir, inpx_name, inpx_ext));
             else
-                obj.inpx_file = char(append(pwd,"\", data.inpx_file));
+                obj.inpx_file = char(append(pwd,'\', data.inpx_file));
             end
 
             % layxファイルの設定
@@ -35,7 +35,7 @@ classdef Config<handle
             if strlength(layx_dir) == 0
                 obj.layx_file = char(append(file_dir,layx_name,layx_ext));                        % ファイル名のみしかyamlファイルに記載されていない場合は,yamlファイルと同じディレクトリに存在するとする
             else
-                obj.layx_file = char(append(pwd, "\", data.layx_file));                        % ディレクトリまで記載があった場合は,そのまま
+                obj.layx_file = char(append(pwd, '\', data.layx_file));                        % ディレクトリまで記載があった場合は,そのまま
             end
 
             % グラフィックモードの設定
@@ -115,14 +115,14 @@ classdef Config<handle
                 group = group{1};
                 for intersection_struct = group.intersections
                     intersection_struct = intersection_struct{1};
-                    if strcmp(intersection_struct.control_method, "Dan4") || strcmp(intersection_struct.control_method, "Dan3")
+                    if strcmp(intersection_struct.control_method, 'Dan4') || strcmp(intersection_struct.control_method, 'Dan3')
                         prms_data = yaml.loadFile(append(file_dir, 'Config_dan.yaml'));
                         obj.model_prms.m = prms_data.m;
                         obj.model_prms.N_s = prms_data.N_s;
                         obj.model_prms.eps = prms_data.eps;
                         obj.model_prms.fix_num = prms_data.fix_num;
-                    elseif strcmp(intersection_struct.control_method, "Fix")
-                    elseif strcmp(intersection_struct.control_method, "Max_queue")
+                    elseif strcmp(intersection_struct.control_method, 'Fix')
+                    elseif strcmp(intersection_struct.control_method, 'Max_queue')
                     end
                 end
 
@@ -134,15 +134,13 @@ classdef Config<handle
                 group = group{1};
                 for intersection_struct = group.intersections
                     intersection_struct = intersection_struct{1};
-                    if strcmp(intersection_struct.control_method, "Dan_4phase")
-                        fprintf('交差点%dの制御方法: MPC(4フェーズ)\n', intersection_struct.id);
-                    elseif strcmp(intersection_struct.control_method, "Dan_8phase")
-                        fprintf('交差点%dの制御方法: MPC(8フェーズ)\n', intersection_struct.id);
-                    elseif strcmp(intersection_struct.control_method, "Fix")
+                    if strcmp(intersection_struct.control_method, 'Dan4')
+                        fprintf('交差点%dの制御方法: MPC(十字路)\n', intersection_struct.id);
+                    elseif strcmp(intersection_struct.control_method, 'Fix')
                         fprintf('交差点%dの制御方法: 固定式\n', intersection_struct.id);
-                    elseif strcmp(intersection_struct.control_method, "Max_queue")
+                    elseif strcmp(intersection_struct.control_method, 'Max_queue')
                         fprintf('交差点%dの制御方法: 最大車列\n', intersection_struct.id);
-                    elseif strcmp(intersection_struct.control_method, "Dan_3fork")
+                    elseif strcmp(intersection_struct.control_method, 'Dan3')
                         fprintf('交差点%dの制御方法: MPC(三叉路)\n', intersection_struct.id);
                     end
                     

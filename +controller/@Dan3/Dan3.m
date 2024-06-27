@@ -235,6 +235,6 @@ classdef Dan3 < handle
     end
 
     methods(Static)
-        front_veh_id = getFrontVehId(veh_id, route_vehs);
+        front_veh_id = getFrontVehicle(veh_id, route_vehs);
     end
 end

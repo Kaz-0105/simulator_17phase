@@ -1,5 +1,5 @@
 % 分岐後の先行車を特定する関数
-function front_veh_id = getFrontVehId(veh_id, route_vehs)
+function front_veh_id = getFrontVehicle(veh_id, route_vehs)
     for front_veh_id = (veh_id-1) : -1 : 1
         if route_vehs(veh_id) == 1
             if route_vehs(front_veh_id) == 1
