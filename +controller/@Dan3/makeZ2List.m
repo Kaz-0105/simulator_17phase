@@ -9,7 +9,7 @@ function makeZ2List(obj)
                 last_index = last_index + 1;
 
                 if route_vehs.north(veh_id) == 1 
-                    first_veh_route = 'straight';
+                    first_veh_route = 'left';
                 elseif route_vehs.north(veh_id) == 2
                     first_veh_route = 'right';
                 end
@@ -23,7 +23,7 @@ function makeZ2List(obj)
                     last_index = last_index + 5;
                 end
             elseif route_vehs.north(veh_id) == 2
-                if strcmp(first_veh_route, 'straight')
+                if strcmp(first_veh_route, 'left')
                     z2_list = [z2_list, last_index + 2];
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -41,7 +41,7 @@ function makeZ2List(obj)
                 last_index = last_index + 1;
 
                 if route_vehs.south(veh_id) == 1 
-                    first_veh_route = 'straight';
+                    first_veh_route = 'left';
                 elseif route_vehs.south(veh_id) == 2
                     first_veh_route = 'right';
                 end
@@ -55,7 +55,7 @@ function makeZ2List(obj)
                     last_index = last_index + 5;
                 end
             elseif route_vehs.south(veh_id) == 2
-                if strcmp(first_veh_route, 'straight')
+                if strcmp(first_veh_route, 'left')
                     z2_list = [z2_list, last_index + 2];
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -73,7 +73,7 @@ function makeZ2List(obj)
                 last_index = last_index + 1;
 
                 if route_vehs.east(veh_id) == 1 
-                    first_veh_route = 'straight';
+                    first_veh_route = 'left';
                 elseif route_vehs.east(veh_id) == 2
                     first_veh_route = 'right';
                 end
@@ -87,7 +87,7 @@ function makeZ2List(obj)
                     last_index = last_index + 5;
                 end
             elseif route_vehs.east(veh_id) == 2
-                if strcmp(first_veh_route, 'straight')
+                if strcmp(first_veh_route, 'left')
                     z2_list = [z2_list, last_index + 2];
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -105,7 +105,7 @@ function makeZ2List(obj)
                 last_index = last_index + 1;
 
                 if route_vehs.west(veh_id) == 1 
-                    first_veh_route = 'straight';
+                    first_veh_route = 'left';
                 elseif route_vehs.west(veh_id) == 2
                     first_veh_route = 'right';
                 end
@@ -119,7 +119,7 @@ function makeZ2List(obj)
                     last_index = last_index + 5;
                 end
             elseif route_vehs.west(veh_id) == 2
-                if strcmp(first_veh_route, 'straight')
+                if strcmp(first_veh_route, 'left')
                     z2_list = [z2_list, last_index + 2];
                     first_veh_route = 'done';
                     last_index = last_index + 3;

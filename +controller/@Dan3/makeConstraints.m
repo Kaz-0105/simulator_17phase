@@ -31,6 +31,7 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     elseif ~isfield(pos_vehs, 'west')
         pos_vehs_initial = [pos_vehs.north; pos_vehs.south; pos_vehs.east];
     end
+    obj.pos_vehs_initial = pos_vehs_initial;
 
     % ここから具体的な計算
     A_bar = kron(ones(obj.N_p, 1), A); % A_barの計算

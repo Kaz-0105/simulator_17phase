@@ -10,7 +10,7 @@ function makeDeltaPList(obj)
                 last_index = last_index + 4;
 
                 if route_vehs.north(veh_id) == 1 
-                    first_veh_route = 'straight';
+                    first_veh_route = 'left';
                 elseif route_vehs.north(veh_id) == 2
                     first_veh_route = 'right';
                 end
@@ -24,7 +24,7 @@ function makeDeltaPList(obj)
                     last_index = last_index + 9;
                 end
             elseif route_vehs.north(veh_id) == 2
-                if strcmp(first_veh_route, 'straight')
+                if strcmp(first_veh_route, 'left')
                     deltap_list = [deltap_list, last_index + 2];
                     first_veh_route = 'done';
                     last_index = last_index + 7;
@@ -43,7 +43,7 @@ function makeDeltaPList(obj)
                 last_index = last_index + 4;
 
                 if route_vehs.south(veh_id) == 1 
-                    first_veh_route = 'straight';
+                    first_veh_route = 'left';
                 elseif route_vehs.south(veh_id) == 2
                     first_veh_route = 'right';
                 end
@@ -57,7 +57,7 @@ function makeDeltaPList(obj)
                     last_index = last_index + 9;
                 end
             elseif route_vehs.south(veh_id) == 2
-                if strcmp(first_veh_route, 'straight')
+                if strcmp(first_veh_route, 'left')
                     deltap_list = [deltap_list, last_index + 2];
                     first_veh_route = 'done';
                     last_index = last_index + 7;
@@ -76,7 +76,7 @@ function makeDeltaPList(obj)
                 last_index = last_index + 4;
 
                 if route_vehs.east(veh_id) == 1 
-                    first_veh_route = 'straight';
+                    first_veh_route = 'left';
                 elseif route_vehs.east(veh_id) == 2
                     first_veh_route = 'right';
                 end
@@ -90,7 +90,7 @@ function makeDeltaPList(obj)
                     last_index = last_index + 9;
                 end
             elseif route_vehs.east(veh_id) == 2
-                if strcmp(first_veh_route, 'straight')
+                if strcmp(first_veh_route, 'left')
                     deltap_list = [deltap_list, last_index + 2];
                     first_veh_route = 'done';
                     last_index = last_index + 7;
@@ -109,7 +109,7 @@ function makeDeltaPList(obj)
                 last_index = last_index + 4;
 
                 if route_vehs.west(veh_id) == 1 
-                    first_veh_route = 'straight';
+                    first_veh_route = 'left';
                 elseif route_vehs.west(veh_id) == 2
                     first_veh_route = 'right';
                 end
@@ -123,7 +123,7 @@ function makeDeltaPList(obj)
                     last_index = last_index + 9;
                 end
             elseif route_vehs.west(veh_id) == 2
-                if strcmp(first_veh_route, 'straight')
+                if strcmp(first_veh_route, 'left')
                     deltap_list = [deltap_list, last_index + 2];
                     first_veh_route = 'done';
                     last_index = last_index + 7;

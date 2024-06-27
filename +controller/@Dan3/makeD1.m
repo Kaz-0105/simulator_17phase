@@ -18,7 +18,7 @@ function makeD1(obj, route_vehs, first_veh_ids, direction)
         elseif strcmp(direction,'south')
             signal_id = [3, 4];
         elseif strcmp(direction,'west')
-            signal_id = [5, 6];
+            signal_id = [5, obj.signal_num];
         end
     elseif ~isfield(route_vehs, 'south')
         if strcmp(direction,'north')
@@ -26,7 +26,7 @@ function makeD1(obj, route_vehs, first_veh_ids, direction)
         elseif strcmp(direction,'east')
             signal_id = [3, 4];
         elseif strcmp(direction,'west')
-            signal_id = [5, 6];
+            signal_id = [5, obj.signal_num];
         end
     elseif ~isfield(route_vehs, 'east')
         if strcmp(direction,'north')
@@ -34,7 +34,7 @@ function makeD1(obj, route_vehs, first_veh_ids, direction)
         elseif strcmp(direction,'south')
             signal_id = [3, 4];
         elseif strcmp(direction,'west')
-            signal_id = [5, 6];
+            signal_id = [5, obj.signal_num];
         end
     elseif ~isfield(route_vehs, 'west')
         if strcmp(direction,'north')
@@ -42,7 +42,7 @@ function makeD1(obj, route_vehs, first_veh_ids, direction)
         elseif strcmp(direction,'east')
             signal_id = [3, 4];
         elseif strcmp(direction,'south')
-            signal_id = [5, 6];
+            signal_id = [5, obj.signal_num];
         end
     end
 
@@ -55,17 +55,17 @@ function makeD1(obj, route_vehs, first_veh_ids, direction)
         for veh_id = 1: num_veh
             if veh_id == 1
                 % IDが1の自動車の場合
-                d1 = zeros(12, 6);
+                d1 = zeros(12, obj.signal_num);
                 d1(1:2,signal_id(1)) = [-1;1]; 
 
             elseif veh_id == first_veh_ids.right
                 % 右折車線の先頭車（IDが１ではないかつ先頭車）の場合
-                d1 = zeros(28,6);
+                d1 = zeros(28,obj.signal_num);
                 d1(1:2,signal_id(2)) = [-1;1];
 
             else
                 % それ以外の場合
-                d1 = zeros(42,6);
+                d1 = zeros(42,obj.signal_num);
                 if route_vehs(veh_id) == 1 
                     d1(1:2,signal_id(1)) = [-1;1];
                 elseif route_vehs(veh_id) == 2
@@ -81,17 +81,17 @@ function makeD1(obj, route_vehs, first_veh_ids, direction)
         for veh_id = 1: num_veh
             if veh_id == 1
                 % IDが1の自動車の場合
-                d1 = zeros(12, 6);
+                d1 = zeros(12, obj.signal_num);
                 d1(1:2,signal_id(2)) = [-1;1]; 
                 
             elseif veh_id == first_veh_ids.left
                 % 直進車線の先頭車（IDが１ではないかつ先頭車）の場合
-                d1 = zeros(28,6);
+                d1 = zeros(28,obj.signal_num);
                 d1(1:2,signal_id(1)) = [-1;1];
 
             else
                 % それ以外の場合
-                d1 = zeros(42,6);
+                d1 = zeros(42,obj.signal_num);
                 if route_vehs(veh_id) == 1 
                     d1(1:2,signal_id(1)) = [-1;1];
                 elseif route_vehs(veh_id) == 2
