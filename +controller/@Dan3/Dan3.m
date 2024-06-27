@@ -1,63 +1,100 @@
 classdef Dan3 < handle
-    properties(GetAccess = private)
-        id; % 交差点のID
+    properties
+        % 普通のプロパティ
+        id;         % 交差点のID
         signal_num; % 信号機の数
-        dt; % タイムステップ
+        phase_num;  % 信号機のフェーズの数
+        
+        dt;  % サンプリング時間
         N_p; % 予測ホライゾン
         N_c; % 制御ホライゾン
-        N_s; % 最低の連続回数
-        eps; % 微小量
-        m; % ホライゾン内の最大変化回数
+
+        N_s;     % 最低の連続回数
+        m;       % ホライゾン内の最大変化回数
         fix_num; % 固定するステップ数
-        phase_num = 4; % 信号機のフェーズ数
 
-        road_prms; % 交差点を構成する東西南北の道路のパラメータを収納する構造体
+        eps; % 微小量
 
-        PhiResults; % 全体として信号現示が変化したことを示すバイナリphiの結果を格納するクラス
-        UResults; % 信号現示のバイナリuの結果を格納するクラス
-
-        pos_vehs; % 自動車の位置情報をまとめた構造体
-        route_vehs; % 自動車の進行方向の情報をまとめた構造体
-        num_vehs; % 自動車の数をまとめた構造体
-        first_veh_ids; % 先頭車の情報をまとめた構造体
-
-        mld_matrices; % 混合論理動的システムの係数行列を収納する構造体
-        milp_matrices; % 混合整数線形計画問題の係数行列を収納する構造体
-
-        VariableListMap; % 決定変数の種類ごとのリストを収納するdictionary
         u_length;           % uの決定変数の数
         z_length;           % zの決定変数の数
         delta_length;       % deltaの決定変数の数
+        v_length;           % vの決定変数の数
+        variables_size;     % 決定変数の数
 
-        v_length; % MLDの決定変数の長さ
-        variables_size; % 決定変数の数
+        fval;      % 最適解の目的関数の値
+        exitflag;  % 最適解の終了ステータス
+        calc_time; % 計算時間
+
         prediction_count = 0; % 予測回数
+        success_count = 0;    % 最適解が見つかった回数
+        success_rate;         % 最適解が見つかった割合
+    end
 
-        x_opt; % 最適解
-        fval; % 最適解の目的関数の値
-        exitflag;
-        calc_time = 0; % 計算時間
+    properties
+        % 構造体
+        road_prms;     % 道路に関するパラメータを格納する構造体
+        pos_vehs;      % 車の位置情報を格納する構造体
+        route_vehs;    % 車の進行方向の情報を格納する構造体
+        num_vehs;      % 車の数を格納する構造体
+        first_veh_ids; % 先頭車の情報を格納する構造体
 
-        u_opt; % 最適解から次の最適化に必要な信号現示の部分
-        phi_opt; % 最適解から次の最適化に必要な全体として信号現示が変化したことを示すバイナリphiの部分
+        mld_matrices;  % 混合論理動的システムの係数行列を収納する構造体
+        milp_matrices; % 混合整数線形計画問題の係数行列を収納する構造体
+    end
 
+    properties
+        % クラス
+        PhiResults; % phiの結果を格納するクラス
+        UResults;   % uの結果を格納するクラス
+    end
 
+    properties
+        % リスト
+        pos_vehs_initial; % 自動車の初期位置のリスト
+        pos_vehs_result;  % 予測の最終結果のリスト
+
+        x_opt;   % 最適解のリスト
+        u_opt;   % uの最適解のリスト
+        phi_opt; % phiの最適解のリスト 
+    end
+
+    properties
+        % Map
+        VariableListMap;     % 決定変数のリストを格納するMap
+        PhaseSignalGroupMap; % フェーズを構成するSignalGroupを収納するMap
+        Maps;                % Vissimクラスで作成したMap群
     end
 
     methods(Access = public)
-        function obj = dan_3fork(id, Config, maps)
-            obj.id = id; % 交差点のID
-            obj.signal_num = 6; % 信号機の数（今回は各道路2車線なので6）
-            obj.u_length = obj.signal_num;
-            obj.dt = Config.time_step; % タイムステップ
-            obj.N_p = Config.predictive_horizon; % 予測ホライゾン
-            obj.N_c = Config.control_horizon; % 制御ホライゾン
-            obj.N_s = Config.model_prms.N_s; % 最低の連続回数
-            obj.eps = Config.model_prms.eps; % 微小量
-            obj.m = Config.model_prms.m; % ホライゾン内の最大変化回数
-            obj.fix_num = Config.model_prms.fix_num; % 固定するステップ数
+        function obj = Dan3(id, Config, Maps)
+            % 交差点のID、SignalGroupの数、Phaseの数を設定
+            obj.id = id;
+            obj.signal_num = 6;
+            obj.phase_num = 4;
 
-            obj.makeRoadPrms(maps) % 交差点の東西南北の道路のパラメータを収納する構造体を作成
+            % サンプリング時間
+            obj.dt = Config.time_step;
+
+            % 予測ホライゾン、制御ホライゾン
+            obj.N_p = Config.predictive_horizon;
+            obj.N_c = Config.control_horizon;
+
+            % 最低の連続回数、ホライゾン内の最大変化回数、固定するステップ数
+            obj.N_s = Config.model_prms.N_s;
+            obj.m = Config.model_prms.m;
+            obj.fix_num = Config.model_prms.fix_num;
+
+            % 微小量
+            obj.eps = Config.model_prms.eps;
+
+            % 制御入力の変数の長さ
+            obj.u_length = obj.signal_num;
+            
+            % Mapsの設定
+            obj.Maps = Maps;
+
+            % 道路に関するパラメータを格納する構造体を作成
+            obj.makeRoadPrms();
 
             obj.PhiResults = tool.PhiResults(obj.N_p, obj.N_c, obj.N_s); % PhiResultsクラスの初期化
             obj.UResults = tool.UResults(obj.signal_num, obj.N_p, obj.N_c); % UResultsクラスの初期化
@@ -144,7 +181,7 @@ classdef Dan3 < handle
     end
 
     methods(Access = private)
-        makeRoadPrms(obj, maps);
+        makeRoadPrms(obj, Maps);
         makeVehiclesData(obj, intersection_struct_map, vis_data);
 
         % 混合論理動的システムの係数行列を作成する関数群
