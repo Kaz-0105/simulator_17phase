@@ -1,5 +1,8 @@
 function makePhaseSignalGroupMap(obj)
+    % Mapを初期化
     obj.PhaseSignalGroupMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+
+    % PhaseとSignalGroupの対応を設定
     obj.PhaseSignalGroupMap(1) = [1, 2, 7, 8];
     obj.PhaseSignalGroupMap(2) = [3, 4, 9, 10];
     obj.PhaseSignalGroupMap(3) = [4, 5, 10, 11];

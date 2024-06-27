@@ -12,36 +12,36 @@ function makeD1(obj, route_vehs, first_veh_ids, direction)
     % 
 
     % 方向と対応する信号のバイナリのIDを取得
-    if ~isfield(route_vehs, "north")
-        if strcmp(direction,"south")
+    if ~isfield(route_vehs, 'north')
+        if strcmp(direction,'east')
             signal_id = [1, 2];
-        elseif strcmp(direction,"east")
+        elseif strcmp(direction,'south')
             signal_id = [3, 4];
-        elseif strcmp(direction,"west")
+        elseif strcmp(direction,'west')
             signal_id = [5, 6];
         end
-    elseif ~isfield(route_vehs, "south")
-        if strcmp(direction,"north")
+    elseif ~isfield(route_vehs, 'south')
+        if strcmp(direction,'north')
             signal_id = [1, 2];
-        elseif strcmp(direction,"east")
+        elseif strcmp(direction,'east')
             signal_id = [3, 4];
-        elseif strcmp(direction,"west")
+        elseif strcmp(direction,'west')
             signal_id = [5, 6];
         end
-    elseif ~isfield(route_vehs, "east")
-        if strcmp(direction,"north")
+    elseif ~isfield(route_vehs, 'east')
+        if strcmp(direction,'north')
             signal_id = [1, 2];
-        elseif strcmp(direction,"south")
+        elseif strcmp(direction,'south')
             signal_id = [3, 4];
-        elseif strcmp(direction,"west")
+        elseif strcmp(direction,'west')
             signal_id = [5, 6];
         end
-    elseif ~isfield(route_vehs, "west")
-        if strcmp(direction,"north")
+    elseif ~isfield(route_vehs, 'west')
+        if strcmp(direction,'north')
             signal_id = [1, 2];
-        elseif strcmp(direction,"south")
+        elseif strcmp(direction,'east')
             signal_id = [3, 4];
-        elseif strcmp(direction,"east")
+        elseif strcmp(direction,'south')
             signal_id = [5, 6];
         end
     end

@@ -10,23 +10,23 @@ function makeZ1List(obj)
                 last_index = last_index + 1;
 
                 if route_vehs.north(veh_id) == 1 || route_vehs.north(veh_id) == 2
-                    first_veh_route = "straight";
+                    first_veh_route = 'straight';
                 elseif route_vehs.north(veh_id) == 3
-                    first_veh_route = "right";
+                    first_veh_route = 'right';
                 end
             elseif route_vehs.north(veh_id) == 1 || route_vehs.north(veh_id) == 2
-                if strcmp(first_veh_route, "right")
+                if strcmp(first_veh_route, 'right')
                     z1_list = [z1_list, last_index + 1];
-                    first_veh_route = "done";
+                    first_veh_route = 'done';
                     last_index = last_index + 3;
                 else
                     z1_list = [z1_list, last_index + 1];
                     last_index = last_index + 5;
                 end
             elseif route_vehs.north(veh_id) == 3
-                if strcmp(first_veh_route, "straight")
+                if strcmp(first_veh_route, 'straight')
                     z1_list = [z1_list, last_index + 1];
-                    first_veh_route = "done";
+                    first_veh_route = 'done';
                     last_index = last_index + 3;
                 else
                     z1_list = [z1_list, last_index + 1];
@@ -43,23 +43,23 @@ function makeZ1List(obj)
                 last_index = last_index + 1;
 
                 if route_vehs.south(veh_id) == 1 || route_vehs.south(veh_id) == 2
-                    first_veh_route = "straight";
+                    first_veh_route = 'straight';
                 elseif route_vehs.south(veh_id) == 3
-                    first_veh_route = "right";
+                    first_veh_route = 'right';
                 end
             elseif route_vehs.south(veh_id) == 1 || route_vehs.south(veh_id) == 2
-                if strcmp(first_veh_route, "right")
+                if strcmp(first_veh_route, 'right')
                     z1_list = [z1_list, last_index + 1];
-                    first_veh_route = "done";
+                    first_veh_route = 'done';
                     last_index = last_index + 3;
                 else
                     z1_list = [z1_list, last_index + 1];
                     last_index = last_index + 5;
                 end
             elseif route_vehs.south(veh_id) == 3
-                if strcmp(first_veh_route, "straight")
+                if strcmp(first_veh_route, 'straight')
                     z1_list = [z1_list, last_index + 1];
-                    first_veh_route = "done";
+                    first_veh_route = 'done';
                     last_index = last_index + 3;
                 else
                     z1_list = [z1_list, last_index + 1];
@@ -76,23 +76,23 @@ function makeZ1List(obj)
                 last_index = last_index + 1;
 
                 if route_vehs.east(veh_id) == 1 || route_vehs.east(veh_id) == 2
-                    first_veh_route = "straight";
+                    first_veh_route = 'straight';
                 elseif route_vehs.east(veh_id) == 3
-                    first_veh_route = "right";
+                    first_veh_route = 'right';
                 end
             elseif route_vehs.east(veh_id) == 1 || route_vehs.east(veh_id) == 2
-                if strcmp(first_veh_route, "right")
+                if strcmp(first_veh_route, 'right')
                     z1_list = [z1_list, last_index + 1];
-                    first_veh_route = "done";
+                    first_veh_route = 'done';
                     last_index = last_index + 3;
                 else
                     z1_list = [z1_list, last_index + 1];
                     last_index = last_index + 5;
                 end
             elseif route_vehs.east(veh_id) == 3
-                if strcmp(first_veh_route, "straight")
+                if strcmp(first_veh_route, 'straight')
                     z1_list = [z1_list, last_index + 1];
-                    first_veh_route = "done";
+                    first_veh_route = 'done';
                     last_index = last_index + 3;
                 else
                     z1_list = [z1_list, last_index + 1];
@@ -109,23 +109,23 @@ function makeZ1List(obj)
                 last_index = last_index + 1;
 
                 if route_vehs.west(veh_id) == 1 || route_vehs.west(veh_id) == 2
-                    first_veh_route = "straight";
+                    first_veh_route = 'straight';
                 elseif route_vehs.west(veh_id) == 3
-                    first_veh_route = "right";
+                    first_veh_route = 'right';
                 end
             elseif route_vehs.west(veh_id) == 1 || route_vehs.west(veh_id) == 2
-                if strcmp(first_veh_route, "right")
+                if strcmp(first_veh_route, 'right')
                     z1_list = [z1_list, last_index + 1];
-                    first_veh_route = "done";
+                    first_veh_route = 'done';
                     last_index = last_index + 3;
                 else
                     z1_list = [z1_list, last_index + 1];
                     last_index = last_index + 5;
                 end
             elseif route_vehs.west(veh_id) == 3
-                if strcmp(first_veh_route, "straight")
+                if strcmp(first_veh_route, 'straight')
                     z1_list = [z1_list, last_index + 1];
-                    first_veh_route = "done";
+                    first_veh_route = 'done';
                     last_index = last_index + 3;
                 else
                     z1_list = [z1_list, last_index + 1];
@@ -135,7 +135,7 @@ function makeZ1List(obj)
         end
     end
 
-    obj.VariableListMap("z_1") = z1_list;
+    obj.VariableListMap('z_1') = z1_list;
     
 
 end

@@ -1,5 +1,4 @@
 function makeConstraints(obj, mld_matrices, pos_vehs)
-
     % MLDの式を一つの不等式制約にまとめる
 
     % MLDの係数を取得
@@ -50,36 +49,9 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     [row_num, ~] = size(obj.milp_matrices.P);
     obj.milp_matrices.P = [obj.milp_matrices.P, zeros(row_num, obj.phase_num*obj.N_p + (obj.phase_num + 1)*(obj.N_p-1))];
     [~, obj.variables_size] = size(obj.milp_matrices.P);
-
-    % フェーズのバイナリ変数の定義
-
-    PhaseSignalGroupMap = dictionary(int32.empty, cell.empty);
-
-    if ~isfield(pos_vehs, 'north')
-        PhaseSignalGroupMap(1) = {[1, 2, 3]};
-        PhaseSignalGroupMap(2) = {[1, 5, 6]};
-        PhaseSignalGroupMap(3) = {[3, 4, 5]};
-        PhaseSignalGroupMap(4) = {[1, 3, 5]};
-    elseif ~isfield(pos_vehs, 'south')
-        PhaseSignalGroupMap(1) = {[1, 2, 5]};
-        PhaseSignalGroupMap(2) = {[1, 3, 4]};
-        PhaseSignalGroupMap(3) = {[3, 5, 6]};
-        PhaseSignalGroupMap(4) = {[1, 3, 5]};
-    elseif ~ isfield(pos_vehs, 'east')
-        PhaseSignalGroupMap(1) = {[3, 5, 6]};
-        PhaseSignalGroupMap(2) = {[1, 2, 5]};
-        PhaseSignalGroupMap(3) = {[1, 3, 4]};
-        PhaseSignalGroupMap(4) = {[1, 3, 5]};
-    elseif ~isfield(pos_vehs, 'west')
-        PhaseSignalGroupMap(1) = {[1, 5, 6]};
-        PhaseSignalGroupMap(2) = {[3, 4, 5]};
-        PhaseSignalGroupMap(3) = {[1, 2, 3]};
-        PhaseSignalGroupMap(4) = {[1, 3, 5]};
-    end
     
     for phase_id = 1: obj.phase_num
-        phase_group = PhaseSignalGroupMap(phase_id);
-        phase_group = phase_group{1};
+        phase_group = obj.PhaseSignalGroupMap(phase_id);
 
         for step = 1:obj.N_p
 
@@ -87,9 +59,7 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
             P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 1];
             P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 1];
             P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 1];
-            P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.phase_num*(step-1)) = [1; 1; 1; -1];
-            
-            
+            P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.phase_num*(step-1)) = [1; 1; 1; -1];  
             obj.milp_matrices.P = [obj.milp_matrices.P; P_tmp];
 
             q_tmp = [0;0;0;2];
@@ -125,10 +95,10 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
 
     for step = 1:obj.N_p
         P_tmp = zeros(1, obj.variables_size);
-        P_tmp(1, 1 + obj.v_length*(step-1): obj.signal_num +obj.v_length*(step-1)) = [1, 1, 1, 1, 1, 1];
+        P_tmp(1, 1 + obj.v_length*(step-1): obj.signal_num +obj.v_length*(step-1)) = ones(1, obj.signal_num);
         obj.milp_matrices.P = [obj.milp_matrices.P; P_tmp];
 
-        obj.milp_matrices.q = [obj.milp_matrices.q; 3];
+        obj.milp_matrices.q = [obj.milp_matrices.q; obj.road_num];
     end
 
     % 信号の変化の回数の制限
@@ -163,7 +133,7 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     
     for step = 1:(obj.N_p-1)
         P_tmp = zeros(1, obj.variables_size);
-        P_tmp(obj.v_length*obj.N_p + obj.phase_num*obj.N_p + (obj.phase_num + 1)*(step -1) + 1 : obj.v_length*obj.N_p + obj.phase_num*obj.N_p+ (obj.phase_num + 1)*step) = [-1, -1, -1, -1, 2];
+        P_tmp(obj.v_length*obj.N_p + obj.phase_num*obj.N_p + (obj.phase_num + 1)*(step -1) + 1 : obj.v_length*obj.N_p + obj.phase_num*obj.N_p+ (obj.phase_num + 1)*step) = [-ones(1, obj.phase_num), 2];
         obj.milp_matrices.Peq = [obj.milp_matrices.Peq; P_tmp];
         obj.milp_matrices.qeq = [obj.milp_matrices.qeq; 0];
     end

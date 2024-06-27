@@ -103,8 +103,8 @@
         </sg>
         <sg sg_id="4" signal_sequence="7">
           <cmds>
-            <cmd display="3" begin="30000" />
-            <cmd display="1" begin="60000" />
+            <cmd display="1" begin="0" />
+            <cmd display="3" begin="60000" />
           </cmds>
           <fixedstates>
             <fixedstate display="4" duration="0" />
@@ -121,8 +121,8 @@
         </sg>
         <sg sg_id="6" signal_sequence="7">
           <cmds>
-            <cmd display="1" begin="0" />
-            <cmd display="3" begin="60000" />
+            <cmd display="3" begin="30000" />
+            <cmd display="1" begin="60000" />
           </cmds>
           <fixedstates>
             <fixedstate display="4" duration="0" />

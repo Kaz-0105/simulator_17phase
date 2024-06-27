@@ -15,7 +15,7 @@ function makeRoadPrms(obj)
 
     % 東西南北の道路に対しそれぞれのパラメータを収納する
     for irid = intersection_struct.input_road_ids
-        if strcmp(intersection_struct.input_road_directions(irid), "north")
+        if strcmp(intersection_struct.input_road_directions(irid), 'north')
             road_struct = RoadStructMap(irid);
             north_road.D_b = road_struct.D_b-1; % D_b: 車線の分岐点から信号機までの長さ
             north_road.D_f = road_struct.D_f; % D_f: 先行車の影響圏に入る距離
@@ -25,7 +25,7 @@ function makeRoadPrms(obj)
             north_road.p_s = road_struct.p_s; % p_s: 信号機の位置
             north_road.v = road_struct.v*1000/3600; % v: 速度[m/s]
 
-        elseif strcmp(intersection_struct.input_road_directions(irid), "south")
+        elseif strcmp(intersection_struct.input_road_directions(irid), 'south')
             road_struct = RoadStructMap(irid);
             south_road.D_b = road_struct.D_b-1; % D_b: 車線の分岐点から信号機までの長さ
             south_road.D_f = road_struct.D_f; % D_f: 先行車の影響圏に入る距離
@@ -35,7 +35,7 @@ function makeRoadPrms(obj)
             south_road.p_s = road_struct.p_s; % p_s: 信号機の位置
             south_road.v = road_struct.v*1000/3600; % v: 速度[m/s]
 
-        elseif strcmp(intersection_struct.input_road_directions(irid), "east")
+        elseif strcmp(intersection_struct.input_road_directions(irid), 'east')
             road_struct = RoadStructMap(irid);
             east_road.D_b = road_struct.D_b-1; % D_b: 車線の分岐点から信号機までの長さ
             east_road.D_f = road_struct.D_f; % D_f: 先行車の影響圏に入る距離
@@ -45,7 +45,7 @@ function makeRoadPrms(obj)
             east_road.p_s = road_struct.p_s; % p_s: 信号機の位置
             east_road.v = road_struct.v*1000/3600; % v: 速度[m/s]
 
-        elseif strcmp(intersection_struct.input_road_directions(irid), "west")
+        elseif strcmp(intersection_struct.input_road_directions(irid), 'west')
             road_struct = RoadStructMap(irid);
             west_road.D_b = road_struct.D_b-1; % D_b: 車線の分岐点から信号機までの長さ
             west_road.D_f = road_struct.D_f; % D_f: 先行車の影響圏に入る距離

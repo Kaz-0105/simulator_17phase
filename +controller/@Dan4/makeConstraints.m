@@ -89,10 +89,10 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
 
     for step = 1:obj.N_p
         P_tmp = zeros(1, obj.variables_size);
-        P_tmp(1, 1 + obj.v_length*(step-1): obj.signal_num +obj.v_length*(step-1)) = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+        P_tmp(1, 1 + obj.v_length*(step-1): obj.signal_num +obj.v_length*(step-1)) = ones(1, obj.signal_num);
         obj.milp_matrices.P = [obj.milp_matrices.P; P_tmp];
 
-        obj.milp_matrices.q = [obj.milp_matrices.q; 4];
+        obj.milp_matrices.q = [obj.milp_matrices.q; obj.road_num];
     end
 
     % 信号の変化の回数の制限
@@ -146,6 +146,8 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
         q_tmp = u_data(:, step);
         obj.milp_matrices.qeq = [obj.milp_matrices.qeq; q_tmp];
     end
+
+    % 最小連続回数について
 
     for step = 1: obj.N_p -1
         P_tmp = zeros(1, obj.variables_size);

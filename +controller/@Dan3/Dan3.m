@@ -4,6 +4,7 @@ classdef Dan3 < handle
         id;         % 交差点のID
         signal_num; % 信号機の数
         phase_num;  % 信号機のフェーズの数
+        road_num;   % 道路の数
         
         dt;  % サンプリング時間
         N_p; % 予測ホライゾン
@@ -67,10 +68,11 @@ classdef Dan3 < handle
 
     methods(Access = public)
         function obj = Dan3(id, Config, Maps)
-            % 交差点のID、SignalGroupの数、Phaseの数を設定
+            % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
             obj.id = id;
             obj.signal_num = 6;
             obj.phase_num = 4;
+            obj.road_num = 3;
 
             % サンプリング時間
             obj.dt = Config.time_step;
@@ -107,86 +109,24 @@ classdef Dan3 < handle
 
             % それぞれの種類の決定変数に対して該当するリストを作成
             obj.VariableListMap = containers.Map('KeyType', 'char', 'ValueType', 'any'); 
-        end
 
-        % 混合整数線形計画問題を解く関数
-        function sig = optimize(obj)
-
-            % 混合整数線形計画問題を解く
-
-            f = obj.milp_matrices.f;
-            intcon = obj.milp_matrices.intcon;
-            P = obj.milp_matrices.P;
-            q = obj.milp_matrices.q;
-            Peq = obj.milp_matrices.Peq;
-            qeq = obj.milp_matrices.qeq;
-            lb = obj.milp_matrices.lb;
-            ub = obj.milp_matrices.ub;
-
-            if ~isempty(P)
-                % 交差点内に自動車が存在するとき
-
-                options = optimoptions('intlinprog');
-                options.IntegerTolerance = 1e-3;
-                options.ConstraintTolerance = 1e-3;
-                options.RelativeGapTolerance = 1e-3;
-                options.MaxTime = 10;
-                options.Display = 'final';
-
-                tic;
-
-                [obj.x_opt, obj.fval, obj.exitflag] = intlinprog(f', intcon, P, q, Peq, qeq, lb, ub, options);
-
-                obj.calc_time = toc;
-
-                if ~isempty(obj.x_opt)
-                    % 実行可能解が見つかったとき
-                    % 最適解から次の最適化に必要な決定変数を抽出
-                    obj.makeUOpt();
-                    obj.makePhiOpt();
-                else
-                    % 実行可能解が見つからなかったとき
-                    % 自動車台数が多いところを出す
-
-                    obj.emergencyTreatment();
-                    obj.calc_time = 0;
-                end
-            else
-                % 交差点内に自動車が存在しないとき
-                % 今の信号現示を維持する
-
-                u_future = obj.UResults.get('future_data');
-                obj.u_opt = [];
-
-                for step = 1:obj.N_p
-                    obj.u_opt = [obj.u_opt, u_future(:, 1)];
-                end
-
-                obj.phi_opt = zeros(1, obj.N_p -1);
-                obj.calc_time = 0;
-            end
-
-            obj.UResults.updateData(obj.u_opt); % 信号現示のバイナリuの結果を更新
-            obj.PhiResults.updateData(obj.phi_opt) % 全体として信号現示が変化したことを示すバイナリphiの結果を更新
-
-            sig = obj.u_opt;
-            
-            obj.prediction_count = obj.prediction_count + 1; % 予測回数をカウント
-
-            fprintf('交差点%dの最適化結果:\n', obj.id);
-            disp(sig);
-
+            % PhaseとSignalGroupのMapを作成
+            obj.makePhaseSignalGroupMap();
         end
     end
 
     methods(Access = public)
         value = get(obj, property_name);
         updateStates(obj, IntersectionStructMap, VissimData);
+        optimize(obj);
     end
 
     methods(Access = private)
         makeRoadPrms(obj, Maps);
         makeVehiclesData(obj, intersection_struct_map, vis_data);
+
+        % PhaseとSignalGroupのMapを作成する関数
+        makePhaseSignalGroupMap(obj);
 
         % 混合論理動的システムの係数行列を作成する関数群
         makeMld(obj);

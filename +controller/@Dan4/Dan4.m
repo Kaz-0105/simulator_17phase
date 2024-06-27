@@ -4,6 +4,7 @@ classdef Dan4 < handle
         id;         % 交差点のID
         signal_num; % 信号機の数
         phase_num;  % 信号機のフェーズの数
+        road_num;   % 道路の数
         
         dt;  % サンプリング時間
         N_p; % 予測ホライゾン
@@ -67,10 +68,11 @@ classdef Dan4 < handle
 
     methods(Access = public)
         function obj = Dan4(id, Config, Maps) 
-            % 交差点のID、SignalGroupの数、Phaseの数を設定
+            % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
             obj.id = id;
             obj.signal_num = 12;
             obj.phase_num = 17;
+            obj.road_num = 4;
 
             % サンプリング時間
             obj.dt = Config.time_step;
@@ -107,7 +109,7 @@ classdef Dan4 < handle
             % 決定変数の種類とそれに該当するリストを作成
             obj.VariableListMap = containers.Map('KeyType', 'char', 'ValueType', 'any'); 
             
-            % フェーズのバイナリ変数の定義
+            % PhaseとSignalGroupのMapを作成
             obj.makePhaseSignalGroupMap();
         end
     end
@@ -121,6 +123,9 @@ classdef Dan4 < handle
     methods(Access = private)
         makeRoadPrms(obj, Maps);
         makeVehiclesData(obj, intersection_struct_map, VissimData);
+
+        % PhaseとSignalGroupのマップを作成する関数
+        makePhaseSignalGroupMap(obj);
 
         % 混合論理動的システムの係数行列を作成する関数群
         makeMld(obj);
