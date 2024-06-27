@@ -1,11 +1,11 @@
-function makeVehiclesData(obj, IntersectionStructMap, vis_data)
+function makeVehiclesData(obj, IntersectionStructMap, VissimData)
 
-    % vis_dataからRoadVehsMapとRoadFirstVehMapを取得
+    % VissimDataからRoadVehsMapとRoadFirstVehMapを取得
     % RoadVehsMapはキー：道路ID、値：その道路上の自動車の位置と進路をまとめた配列
     % RoadFirstVehMapはキー：道路ID、値：その道路上の先頭の自動車のID
 
-    RoadVehsMap = vis_data.get('RoadVehsMap');
-    RoadFirstVehMap = vis_data.get('RoadFirstVehMap');
+    RoadVehsMap = VissimData.get('RoadVehsMap');
+    RoadFirstVehMap = VissimData.get('RoadFirstVehMap');
 
     % intersection構造体を取得
     intersection_struct = IntersectionStructMap(obj.id);

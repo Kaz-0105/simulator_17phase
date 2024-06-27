@@ -8,12 +8,12 @@ function makeZ5List(obj)
             if veh_id == 1
                 last_index = last_index + 1;
 
-                if route_vehs.north(veh_id) == 1 || route_vehs.north(veh_id) == 2
+                if route_vehs.north(veh_id) == 1 
                     first_veh_route = 'straight';
-                elseif route_vehs.north(veh_id) == 3
+                elseif route_vehs.north(veh_id) == 2
                     first_veh_route = 'right';
                 end
-            elseif route_vehs.north(veh_id) == 1 || route_vehs.north(veh_id) == 2
+            elseif route_vehs.north(veh_id) == 1 
                 if strcmp(first_veh_route, 'right')
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -21,7 +21,7 @@ function makeZ5List(obj)
                     z5_list = [z5_list, last_index + 5];
                     last_index = last_index + 5;
                 end
-            elseif route_vehs.north(veh_id) == 3
+            elseif route_vehs.north(veh_id) == 2
                 if strcmp(first_veh_route, 'straight')
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -38,12 +38,12 @@ function makeZ5List(obj)
             if veh_id == 1
                 last_index = last_index + 1;
 
-                if route_vehs.south(veh_id) == 1 || route_vehs.south(veh_id) == 2
+                if route_vehs.south(veh_id) == 1 
                     first_veh_route = 'straight';
-                elseif route_vehs.south(veh_id) == 3
+                elseif route_vehs.south(veh_id) == 2
                     first_veh_route = 'right';
                 end
-            elseif route_vehs.south(veh_id) == 1 || route_vehs.south(veh_id) == 2
+            elseif route_vehs.south(veh_id) == 1 
                 if strcmp(first_veh_route, 'right')
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -51,7 +51,7 @@ function makeZ5List(obj)
                     z5_list = [z5_list, last_index + 5];
                     last_index = last_index + 5;
                 end
-            elseif route_vehs.south(veh_id) == 3
+            elseif route_vehs.south(veh_id) == 2
                 if strcmp(first_veh_route, 'straight')
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -68,12 +68,12 @@ function makeZ5List(obj)
             if veh_id == 1
                 last_index = last_index + 1;
 
-                if route_vehs.east(veh_id) == 1 || route_vehs.east(veh_id) == 2
+                if route_vehs.east(veh_id) == 1 
                     first_veh_route = 'straight';
-                elseif route_vehs.east(veh_id) == 3
+                elseif route_vehs.east(veh_id) == 2
                     first_veh_route = 'right';
                 end
-            elseif route_vehs.east(veh_id) == 1 || route_vehs.east(veh_id) == 2
+            elseif route_vehs.east(veh_id) == 1 
                 if strcmp(first_veh_route, 'right')
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -81,7 +81,7 @@ function makeZ5List(obj)
                     z5_list = [z5_list, last_index + 5];
                     last_index = last_index + 5;
                 end
-            elseif route_vehs.east(veh_id) == 3
+            elseif route_vehs.east(veh_id) == 2
                 if strcmp(first_veh_route, 'straight')
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -98,12 +98,12 @@ function makeZ5List(obj)
             if veh_id == 1
                 last_index = last_index + 1;
 
-                if route_vehs.west(veh_id) == 1 || route_vehs.west(veh_id) == 2
+                if route_vehs.west(veh_id) == 1 
                     first_veh_route = 'straight';
-                elseif route_vehs.west(veh_id) == 3
+                elseif route_vehs.west(veh_id) == 2
                     first_veh_route = 'right';
                 end
-            elseif route_vehs.west(veh_id) == 1 || route_vehs.west(veh_id) == 2
+            elseif route_vehs.west(veh_id) == 1 
                 if strcmp(first_veh_route, 'right')
                     first_veh_route = 'done';
                     last_index = last_index + 3;
@@ -111,7 +111,7 @@ function makeZ5List(obj)
                     z5_list = [z5_list, last_index + 5];
                     last_index = last_index + 5;
                 end
-            elseif route_vehs.west(veh_id) == 3
+            elseif route_vehs.west(veh_id) == 2
                 if strcmp(first_veh_route, 'straight')
                     first_veh_route = 'done';
                     last_index = last_index + 3;
