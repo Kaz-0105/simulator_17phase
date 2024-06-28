@@ -1,7 +1,7 @@
 function makeVehiclesData(obj, IntersectionStructMap, VissimData)
-    % VissimDataからRoadVehsMapとRoadFirstVehMapを取得
+
+    % VissimDataからRoadVehsMapを取得
     RoadVehsMap = VissimData.get('RoadVehsMap');
-    RoadFirstVehMap = VissimData.get('RoadFirstVehMap');
 
     % intersection構造体を取得
     intersection_struct = IntersectionStructMap(obj.id);
@@ -23,9 +23,6 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
                 obj.route_vehs.north = [];
             end
 
-            % その道路の先頭車のIDをfirst_veh_idsに格納（直進車線と右折車線で2台分ある）
-            obj.first_veh_ids.north = RoadFirstVehMap(irid);
-
         elseif strcmp(intersection_struct.input_road_directions(irid), 'south')
             if ~isempty(vehs_data)
                 obj.pos_vehs.south = vehs_data(:,1);
@@ -34,8 +31,6 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
                 obj.pos_vehs.south = [];
                 obj.route_vehs.south = [];
             end
-
-            obj.first_veh_ids.south = RoadFirstVehMap(irid);
 
         elseif strcmp(intersection_struct.input_road_directions(irid), 'east')
             if ~isempty(vehs_data)
@@ -46,8 +41,6 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
                 obj.route_vehs.east = [];
             end
 
-            obj.first_veh_ids.east = RoadFirstVehMap(irid);
-            
         elseif strcmp(intersection_struct.input_road_directions(irid), 'west')
             if ~isempty(vehs_data)
                 obj.pos_vehs.west = vehs_data(:,1);
@@ -57,7 +50,6 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
                 obj.route_vehs.west = [];
             end
 
-            obj.first_veh_ids.west = RoadFirstVehMap(irid);
         end
 
     end

@@ -123,7 +123,7 @@ classdef Dan3 < handle
 
     methods(Access = private)
         makeRoadPrms(obj, Maps);
-        makeVehiclesData(obj, intersection_struct_map, vis_data);
+        makeVehiclesData(obj, IntersectionStructMap, VissimData);
 
         % PhaseとSignalGroupのMapを作成する関数
         makePhaseSignalGroupMap(obj);

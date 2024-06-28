@@ -136,14 +136,13 @@ classdef Config<handle
                     intersection_struct = intersection_struct{1};
                     if strcmp(intersection_struct.control_method, 'Dan4')
                         fprintf('交差点%dの制御方法: MPC(十字路)\n', intersection_struct.id);
-                    elseif strcmp(intersection_struct.control_method, 'Fix')
-                        fprintf('交差点%dの制御方法: 固定式\n', intersection_struct.id);
-                    elseif strcmp(intersection_struct.control_method, 'Max_queue')
-                        fprintf('交差点%dの制御方法: 最大車列\n', intersection_struct.id);
+                    elseif strcmp(intersection_struct.control_method, 'Fix4')
+                        fprintf('交差点%dの制御方法: 固定式(十字路)\n', intersection_struct.id);
                     elseif strcmp(intersection_struct.control_method, 'Dan3')
                         fprintf('交差点%dの制御方法: MPC(三叉路)\n', intersection_struct.id);
+                    elseif strcmp(intersection_struct.control_method, 'Fix3')
+                        fprintf('交差点%dの制御方法: 固定式(三叉路)\n', intersection_struct.id);
                     end
-                    
                 end
             end
         end
