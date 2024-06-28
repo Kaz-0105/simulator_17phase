@@ -2,17 +2,19 @@ classdef VissimData<handle
 
     properties(GetAccess = private)
         % Map
-        RoadVehsMap;          % キー：道路ID、値：その道路上の自動車の位置と進路をまとめた配列
-        RoadFirstVehMap;     % キー：道路ID、値：その道路上の先頭の自動車のID
+        RoadVehsMap;            % キー：道路ID、値：その道路上の自動車の位置と進路をまとめた配列
+        RoadFirstVehMap;        % キー：道路ID、値：その道路上の先頭の自動車のID
+        IntersectionNumRoadMap; % キー：交差点ID、値：その交差点に流入する道路の数
+        RoadIntersectionMap;    % キー：道路ID、値：その道路が流入道路となる交差点のID
     end
 
     methods(Access = public)
         function obj = VissimData(Com, Maps)
-            % RoadVehsMap を作成する
-            obj.RoadVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            % IntersectionNumRoadMap を作成する
+            obj.makeIntersectionNumRoadMap(Maps);
 
-            % RoadFirstVehMap を作成する
-            obj.RoadFirstVehMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            % RoadIntersectionMap を作成する
+            obj.makeRoadIntersectionMap(Maps);
 
             % RoadVehsMap と RoadFirstVehMap を作成する
             obj.makeVehicleData(Com, Maps);

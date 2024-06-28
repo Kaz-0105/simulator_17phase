@@ -1,4 +1,10 @@
 function makeVehicleData(obj, Com, Maps)
+    % RoadVehsMap を作成する
+    obj.RoadVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+
+    % RoadFirstVehMap を作成する
+    obj.RoadFirstVehMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+
     % RoadStructMapを取得
     RoadStructMap = Maps('RoadStructMap');
 
@@ -55,30 +61,63 @@ function makeVehicleData(obj, Com, Maps)
 
         % RoadFirstVehMap の作成
 
-        first_straight_id = 0;
-        first_right_id = 0;
-        first_ids = [];
+        try
+            % 注目しているRoadが流入道路となっている交差点の流入道路の数を取得
+            intersection_id = obj.RoadIntersectionMap(road_id);
+            road_num = obj.IntersectionNumRoadMap(intersection_id);
 
-        if ~isempty(vehs_data)
-            for veh_id = 1: length(vehs_data(:,2))
-                route = vehs_data(veh_id,2);
-                if route == 1 || route == 2
-                    if first_straight_id == 0
-                        first_straight_id = veh_id;
-                    end
-                elseif route == 3
-                    if first_right_id == 0
-                        first_right_id = veh_id;
+            if road_num == 3
+                first_left_id = 0;
+                first_right_id = 0;
+                first_ids = [];
+
+                if ~isempty(vehs_data)
+                    for veh_id = 1: length(vehs_data(:,2))
+                        route = vehs_data(veh_id,2);
+                        if route == 1
+                            if first_left_id == 0
+                                first_left_id = veh_id;
+                            end
+                        elseif route == 2
+                            if first_right_id == 0
+                                first_right_id = veh_id;
+                            end
+                        end
                     end
                 end
+
+                first_ids.left = first_left_id;
+                first_ids.right = first_right_id;
+
+                obj.RoadFirstVehMap(road_id) = first_ids;
+            elseif road_num == 4
+                first_straight_id = 0;
+                first_right_id = 0;
+                first_ids = [];
+
+                if ~isempty(vehs_data)
+                    for veh_id = 1: length(vehs_data(:,2))
+                        route = vehs_data(veh_id,2);
+                        if route == 1 || route == 2
+                            if first_straight_id == 0
+                                first_straight_id = veh_id;
+                            end
+                        elseif route == 3
+                            if first_right_id == 0
+                                first_right_id = veh_id;
+                            end
+                        end
+                    end
+                end
+
+                first_ids.straight = first_straight_id;
+                first_ids.right = first_right_id;
             end
+
+            obj.RoadFirstVehMap(road_id) = first_ids;
+        catch
+            obj.RoadFirstVehMap(road_id) = [];
         end
-
-        first_ids.straight = first_straight_id;
-        first_ids.right = first_right_id;
-
-        obj.RoadFirstVehMap(road_id) = first_ids;
-
     end
 
 end

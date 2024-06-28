@@ -28,9 +28,7 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
             end
 
             % その道路の先頭車のIDをfirst_veh_idsに格納（直進車線と右折車線で2台分ある）
-            first_vehs_struct = RoadFirstVehMap(irid);
-            obj.first_veh_ids.north.left = first_vehs_struct.straight; 
-            obj.first_veh_ids.north.right = first_vehs_struct.right;
+            obj.first_veh_ids.north = RoadFirstVehMap(irid);
 
         elseif strcmp(intersection_struct.input_road_directions(irid), 'south')
             if ~isempty(vehs_data)
@@ -41,9 +39,7 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
                 obj.route_vehs.south = [];
             end
 
-            first_vehs_struct = RoadFirstVehMap(irid);
-            obj.first_veh_ids.south.left = first_vehs_struct.straight; 
-            obj.first_veh_ids.south.right = first_vehs_struct.right;
+            obj.first_veh_ids.south = RoadFirstVehMap(irid);
 
         elseif strcmp(intersection_struct.input_road_directions(irid), 'east')
             if ~isempty(vehs_data)
@@ -54,10 +50,8 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
                 obj.route_vehs.east = [];
             end
 
-            first_vehs_struct = RoadFirstVehMap(irid);
-            obj.first_veh_ids.east.left = first_vehs_struct.straight;
-            obj.first_veh_ids.east.right = first_vehs_struct.right;
-
+            obj.first_veh_ids.east = RoadFirstVehMap(irid);
+            
         elseif strcmp(intersection_struct.input_road_directions(irid), 'west')
             if ~isempty(vehs_data)
                 obj.pos_vehs.west = vehs_data(:,1);
@@ -67,9 +61,7 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
                 obj.route_vehs.west = [];
             end
 
-            first_vehs_struct = RoadFirstVehMap(irid);
-            obj.first_veh_ids.west.left = first_vehs_struct.straight;
-            obj.first_veh_ids.west.right = first_vehs_struct.right;
+            obj.first_veh_ids.west = RoadFirstVehMap(irid);
         end
 
     end
