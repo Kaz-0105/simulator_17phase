@@ -40,16 +40,13 @@ function emergencyTreatmentCopy(obj)
     end
 
     % 最大のバリューを持つキーを取得
-    keys = PhaseVehicleMap.keys;
-    values = PhaseVehicleMap.values;
-    
-    max_key = keys{1};
-    max_value = values{1};
+    max_key = 1;
+    max_value = PhaseVehicleMap(1);
 
-    for i = 2:length(keys)
-        tmp_value = values{i};
+    for phase_id = 2:obj.phase_num
+        tmp_value = PhaseVehicleMap(phase_id);
         if tmp_value > max_value
-            max_key = keys{i};
+            max_key = phase_id;
             max_value = tmp_value;
         end
     end

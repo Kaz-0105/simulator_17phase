@@ -5,7 +5,7 @@ seed : 22                                    # 乱数のシード値
 predictive_horizon : 4                       # 予測ホライゾン
 control_horizon : 2                          # 制御ホライゾン
 time_step : 2                                # タイムステップ        
-num_loop : 10                                # MPCのサイクルのループ回数
+num_loop : 250                               # MPCのサイクルのループ回数
 sim_count : 1                                # シミュレーション回数
 sim_resolution : 10                          # シミュレーション時間で1sあたりに何回自動車の位置を更新するか(解像度)
 max_time : 10                                # 最適化の計算時間の上限

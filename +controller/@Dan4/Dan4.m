@@ -72,7 +72,7 @@ classdef Dan4 < handle
             % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
             obj.id = id;
             obj.signal_num = 12;
-            obj.phase_num = 17;
+            obj.phase_num = 8;
             obj.road_num = 4;
 
             % サンプリング時間
