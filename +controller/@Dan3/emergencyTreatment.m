@@ -110,4 +110,13 @@ function emergencyTreatment(obj)
     end
 
     obj.phi_opt = zeros(1, obj.N_p-1);
+
+    % 計算時間を設定
+    if obj.exitflag == 0
+        % 計算が間に合っていないとき
+        obj.calc_time = obj.max_time * 2;
+    elseif obj.exitflag == -2
+        % 実行可能解が見つからなかったとき
+        obj.calc_time = -1;
+    end
 end

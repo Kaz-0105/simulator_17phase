@@ -1,19 +1,20 @@
 classdef Config<handle
     properties
-        inpx_file = '';             % inpxファイルのパス 
-        layx_file = '';             % layxファイルのパス
-        graphic_mode = 0;           % グラフィックモード
-        seed = 0;                   % シード値
-        predictive_horizon = 0;     % 予測ホライゾン
-        control_horizon = 0;        % 制御ホライゾン
-        time_step = 0;              % タイムステップ
-        control_interval = 0;       % 制御のインターバル時間
-        num_loop = 0;               % MPCのサイクルのループ回数
-        sim_count = 0;              % シミュレーションする時間
-        sim_resolution = 0;         % シミュレーション時間で1sあたりに何回自動車の位置を更新するか(解像度)
-        plot_list = {};             % 出力するデータ
-        model_prms = [];            % 予測モデルのパラメータ
-        groups = {};                % group構造体
+        inpx_file;          % inpxファイルのパス 
+        layx_file;          % layxファイルのパス
+        graphic_mode;       % グラフィックモード
+        seed;               % シード値
+        predictive_horizon; % 予測ホライゾン
+        control_horizon;    % 制御ホライゾン
+        time_step;          % タイムステップ
+        max_time;           % 最適化時間の上限
+        control_interval;   % 制御のインターバル時間
+        num_loop;           % MPCのサイクルのループ回数
+        sim_count;          % シミュレーションする時間
+        sim_resolution;     % シミュレーション時間で1sあたりに何回自動車の位置を更新するか(解像度)
+        plot_list = {};     % 出力するデータ
+        model_prms = [];    % 予測モデルのパラメータ
+        groups = {};        % group構造体
     end
 
     methods
@@ -68,6 +69,9 @@ classdef Config<handle
             % タイムステップの設定
             obj.time_step = data.time_step;
 
+            % 最適化時間の上限を設定
+            obj.max_time = data.max_time;
+
             % 制御のインターバル時間の設定
             obj.control_interval = obj.control_horizon*obj.time_step;
 
@@ -111,22 +115,7 @@ classdef Config<handle
             end
 
             % 予測モデルのパラメータの設定（修正必要）
-            for group = obj.groups
-                group = group{1};
-                for intersection_struct = group.intersections
-                    intersection_struct = intersection_struct{1};
-                    if strcmp(intersection_struct.control_method, 'Dan4') || strcmp(intersection_struct.control_method, 'Dan3')
-                        prms_data = yaml.loadFile(append(file_dir, 'Config_dan.yaml'));
-                        obj.model_prms.m = prms_data.m;
-                        obj.model_prms.N_s = prms_data.N_s;
-                        obj.model_prms.eps = prms_data.eps;
-                        obj.model_prms.fix_num = prms_data.fix_num;
-                    elseif strcmp(intersection_struct.control_method, 'Fix')
-                    elseif strcmp(intersection_struct.control_method, 'Max_queue')
-                    end
-                end
-
-            end
+            obj.model_prms = yaml.loadFile(append(file_dir, 'config_dan.yaml'));
         end
 
         function showControlMethod(obj)
