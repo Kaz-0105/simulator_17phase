@@ -110,9 +110,9 @@ classdef Vissim < handle
                     case 'DanOld4'
                         obj.IntersectionControllerMap(intersection_struct.id) = controller.DanOld4(intersection_struct.id, Config, obj.Maps);
                     case 'Fix3'
-                        obj.IntersectionControllerMap(intersection_struct.id) = controller.Fix3();
+                        obj.IntersectionControllerMap(intersection_struct.id) = controller.Fix3(intersection_struct.id, Config, obj.Maps);
                     case 'Fix4'
-                        obj.IntersectionControllerMap(intersection_struct.id) = controller.Fix4();
+                        obj.IntersectionControllerMap(intersection_struct.id) = controller.Fix4(intersection_struct.id, Config, obj.Maps);
                 end    
             end
 

@@ -126,8 +126,5 @@ function makeZ1List(obj)
             end
         end
     end
-
     obj.VariableListMap('z_1') = z1_list;
-    
-
 end

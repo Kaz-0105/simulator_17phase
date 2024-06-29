@@ -6,9 +6,10 @@ classdef Dan4 < handle
         phase_num;  % 信号機のフェーズの数
         road_num;   % 道路の数
         
-        dt;  % サンプリング時間
-        N_p; % 予測ホライゾン
-        N_c; % 制御ホライゾン
+        dt;       % サンプリング時間
+        N_p;      % 予測ホライゾン
+        N_c;      % 制御ホライゾン
+        max_time; % 最適化時間の上限
 
         N_s;     % 最低の連続回数
         m;       % ホライゾン内の最大変化回数
@@ -26,8 +27,8 @@ classdef Dan4 < handle
         exitflag;  % 最適解の終了ステータス
         calc_time; % 計算時間
 
-        prediction_count = 0; % 予測回数
-        success_count = 0;    % 最適解が見つかった回数
+        prediction_count; % 予測回数
+        success_count;    % 最適解が見つかった回数
         success_rate;         % 最適解が見つかった割合
     end
 
@@ -81,6 +82,9 @@ classdef Dan4 < handle
             obj.N_p = Config.predictive_horizon;
             obj.N_c = Config.control_horizon; 
 
+            % 最適化時間の上限
+            obj.max_time = Config.max_time;
+
             % 最低の連続回数、ホライゾン内の最大変化回数、固定するステップ数
             obj.N_s = Config.model_prms.N_s;
             obj.m = Config.model_prms.m;
@@ -98,19 +102,25 @@ classdef Dan4 < handle
             % 道路に関するパラメータを格納する構造体を作成
             obj.makeRoadPrms();
 
+            % PhaseとSignalGroupのMapを作成
+            obj.makePhaseSignalGroupMap();
+
             % phiとuの結果を格納するクラスの初期化
             obj.PhiResults = tool.PhiResults(obj.N_p, obj.N_c, obj.N_s);
-            obj.UResults = tool.UResults(obj.signal_num, obj.N_p, obj.N_c); 
-            obj.UResults.setInitialFutureData([1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]');
+            obj.UResults = tool.UResults(obj.signal_num, obj.N_p, obj.N_c);
+            
+            % 余った予測分を計算時間確保に利用するために最初だけ結果を固定しておく
+            u_0 = zeros(obj.signal_num, 1);
+            u_0(obj.PhaseSignalGroupMap(1)) = ones(obj.road_num, 1);
+            obj.UResults.setInitialFutureData(u_0);
 
-            obj.prediction_count = 0; % 予測回数の初期化
-            obj.calc_time = 0;        % 計算時間の初期化
+            % 予測回数の初期化
+            obj.prediction_count = 0; 
+            obj.success_count = 0;
+            obj.calc_time = 0;
 
             % 決定変数の種類とそれに該当するリストを作成
             obj.VariableListMap = containers.Map('KeyType', 'char', 'ValueType', 'any'); 
-            
-            % PhaseとSignalGroupのMapを作成
-            obj.makePhaseSignalGroupMap();
         end
     end
 

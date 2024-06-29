@@ -52,9 +52,7 @@ function optimize(obj)
             obj.emergencyTreatment();
         end
     else
-        % 交差点内に自動車が存在しないとき
         % 今の信号現示を維持する
-
         u_future = obj.UResults.get('future_data');
         obj.u_opt = [];
 
@@ -63,21 +61,21 @@ function optimize(obj)
         end
 
         for step = obj.N_s + 1: obj.N_p
-            obj.u_opt = [obj.u_opt, u_furure(:, obj.N_s)];
+            obj.u_opt = [obj.u_opt, u_future(:, obj.N_s)];
         end
 
         obj.phi_opt = zeros(1, obj.N_p -1);
         obj.calc_time = 0;
     end
 
-    obj.UResults.updateData(obj.u_opt); % 信号現示のバイナリuの結果を更新
-    obj.PhiResults.updateData(obj.phi_opt) % 全体として信号現示が変化したことを示すバイナリphiの結果を更新
+    obj.UResults.updateData(obj.u_opt); 
+    obj.PhiResults.updateData(obj.phi_opt);
     
-    
-
+    % 結果を表示
     fprintf('交差点%dの最適化結果:\n', obj.id);
     disp(obj.u_opt);
 
+    % 最適化成功率を表示
     fprintf('最適化成功率: \n');
     obj.success_rate = obj.success_count / obj.prediction_count;
     disp(obj.success_rate)
