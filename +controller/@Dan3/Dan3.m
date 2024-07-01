@@ -71,10 +71,10 @@ classdef Dan3 < handle
         function obj = Dan3(id, Config, Maps)
             % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
             obj.id = id;
-            obj.signal_num = 6;
-            obj.phase_num = 4;
             obj.road_num = 3;
-
+            obj.signal_num = obj.road_num *(obj.road_num -1);
+            obj.phase_num = 4;
+            
             % サンプリング時間
             obj.dt = Config.time_step;
 
