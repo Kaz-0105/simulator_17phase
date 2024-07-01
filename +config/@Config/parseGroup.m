@@ -93,7 +93,7 @@ function group = parseGroup(roads_file, intersections_file)
     end
 
     % エリア内の交差点の情報を取得
-    group.intersections = {};
+    group.IntersectionsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any')
 
     for intersection_data = intersections_data.intersections
         intersection_data = intersection_data{1};
@@ -104,24 +104,22 @@ function group = parseGroup(roads_file, intersections_file)
 
         % 流入側の道路のリストとその方角を取得
         tmp_intersection.input_road_ids = [];
-        tmp_intersection.input_road_directions = containers.Map('KeyType', 'int32', 'ValueType', 'char');
+        tmp_intersection.InputRoadOrderMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
-        irids = intersection_data.irids;
-        ir_directions = intersection_data.ir_directions;
-
-        for i = 1: length(irids)
-            input_road_id = irids{i};
-            input_road_direction = char(ir_directions{i});
-            
-            tmp_intersection.input_road_ids(end + 1) = input_road_id;
-            tmp_intersection.input_road_directions(input_road_id) = input_road_direction; 
+        for input_road = intersection_data.input_road_ids
+            input_road = input_road{1};
+            tmp_intersection.input_road_ids(end + 1) = input_road.id;
+            tmp_intersection.InputRoadOrderMap(input_road.id) = input_road.order;
         end
 
         % 流出側の道路のリストを取得
         tmp_intersection.output_road_ids = [];
+        tmp_intersection.OutputRoadOrderMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
-        for output_road_id = intersection_data.orids
-            tmp_intersection.output_road_ids(end + 1) = output_road_id{1};
+        for output_road = intersection_data.output_road_ids
+            output_road = output_road{1};
+            tmp_intersection.output_road_ids(end + 1) = output_road.id;
+            tmp_intersection.OutputRoadOrderMap(output_road.id) = output_road.order;
         end
 
         % 交差点の制御方法を取得
