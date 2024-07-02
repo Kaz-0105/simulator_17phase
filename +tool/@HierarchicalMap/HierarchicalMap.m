@@ -45,6 +45,6 @@ classdef HierarchicalMap < handle
         values = outerKeys(obj);
         values = innerKeys(obj, key1);
         displayCounter(obj);
-        isKey = isKey(obj, key1, key2);
+        flag = isKey(obj, key1, key2);
     end
 end
