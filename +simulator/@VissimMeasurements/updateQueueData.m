@@ -31,7 +31,7 @@ function updateQueueData(obj, Maps)
             if ~obj.QueueDataMap.isKey(intersection_struct.id, order)
                 obj.QueueDataMap.add(intersection_struct.id, order, tmp_queue_length);
             else
-                obj.QueueDataMap.set(intersection_struct.id, order, [obj.QueueDataMap(intersection_struct.id, order), tmp_queue_length]);
+                obj.QueueDataMap.set(intersection_struct.id, order, [obj.QueueDataMap.get(intersection_struct.id, order), tmp_queue_length]);
             end
         end
     end

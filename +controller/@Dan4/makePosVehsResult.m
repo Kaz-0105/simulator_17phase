@@ -18,9 +18,10 @@ function makePosVehsResult(obj)
 
     figure;
     hold on;
-    for veh_id = 1: length(obj.pos_vehs.south)
-        if obj.route_vehs.south(veh_id) ~= 3
-            plot(0: obj.N_p, obj.pos_vehs_result(length(obj.pos_vehs.north) + veh_id, :));
+    route_vehs = obj.RoadRouteVehsMap(2);
+    for veh_id = 1: length(route_vehs)
+        if route_vehs(veh_id) ~= 3
+            plot(0: obj.N_p, obj.pos_vehs_result(length(obj.RoadRouteVehsMap(1)) + veh_id, :));
         end
     end
     close all;

@@ -17,7 +17,7 @@ function makeMilp(obj)
     end
    
     % 等式制約と不等式制約の作成
-    obj.makeConstraints(obj.mld_matrices, obj.pos_vehs);
+    obj.makeConstraints();
 
     % 目的関数の作成
     obj.makeObjectiveFunction(2);

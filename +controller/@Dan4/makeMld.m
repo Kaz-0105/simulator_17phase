@@ -1,8 +1,4 @@
 function makeMld(obj)
-    pos_vehs = obj.pos_vehs;
-    route_vehs = obj.route_vehs;
-    first_veh_ids = obj.first_veh_ids;
-    road_prms = obj.road_prms;
 
     obj.mld_matrices.A = [];
     obj.mld_matrices.B1 = [];
@@ -15,67 +11,80 @@ function makeMld(obj)
     obj.mld_matrices.E = [];
 
     % どの方向にも車両が存在しない場合は何もしない
-    if isempty(pos_vehs.north)
-        if isempty(pos_vehs.south)
-            if isempty(pos_vehs.east)
-                if isempty(pos_vehs.west)
-                    return
-                end
-            end
+    isVehicle = false;
+    for road_id = 1: obj.road_num
+        if ~isempty(obj.RoadPosVehsMap(road_id))
+            isVehicle = true;
+            break;
         end
     end
 
+    if ~isVehicle
+        return
+    end
+
     % Aの計算
-    obj.makeA(pos_vehs.north);
-    obj.makeA(pos_vehs.south);
-    obj.makeA(pos_vehs.east);
-    obj.makeA(pos_vehs.west);
+    for road_id = 1: obj.road_num
+        pos_vehs = obj.RoadPosVehsMap(road_id);
+        obj.makeA(pos_vehs);
+    end
 
     % B1の計算
-    obj.makeB1(pos_vehs.north);
-    obj.makeB1(pos_vehs.south);
-    obj.makeB1(pos_vehs.east);
-    obj.makeB1(pos_vehs.west);
+    for road_id = 1: obj.road_num
+        pos_vehs = obj.RoadPosVehsMap(road_id);
+        obj.makeB1(pos_vehs);
+    end
 
     % B2の計算
-    obj.makeB2(route_vehs.north, first_veh_ids.north, road_prms.north);
-    obj.makeB2(route_vehs.south, first_veh_ids.south, road_prms.south);
-    obj.makeB2(route_vehs.east, first_veh_ids.east, road_prms.east);
-    obj.makeB2(route_vehs.west, first_veh_ids.west, road_prms.west);
+    for road_id = 1: obj.road_num
+        route_vehs = obj.RoadRouteVehsMap(road_id);
+        first_veh_ids = obj.RoadFirstVehStructMap(road_id);
+        road_prms = obj.RoadPrmsMap(road_id);
+        obj.makeB2(route_vehs, first_veh_ids, road_prms);
+    end
 
     % B3の計算
-    obj.makeB3(route_vehs.north, first_veh_ids.north, road_prms.north);
-    obj.makeB3(route_vehs.south, first_veh_ids.south, road_prms.south);
-    obj.makeB3(route_vehs.east, first_veh_ids.east, road_prms.east);
-    obj.makeB3(route_vehs.west, first_veh_ids.west, road_prms.west);
+    for road_id = 1: obj.road_num
+        route_vehs = obj.RoadRouteVehsMap(road_id);
+        first_veh_ids = obj.RoadFirstVehStructMap(road_id);
+        road_prms = obj.RoadPrmsMap(road_id);
+        obj.makeB3(route_vehs, first_veh_ids, road_prms);
+    end
 
     % Cの計算
-    obj.makeC(route_vehs.north, first_veh_ids.north);
-    obj.makeC(route_vehs.south, first_veh_ids.south);
-    obj.makeC(route_vehs.east, first_veh_ids.east);
-    obj.makeC(route_vehs.west, first_veh_ids.west);
+    for road_id = 1: obj.road_num
+        route_vehs = obj.RoadRouteVehsMap(road_id);
+        first_veh_ids = obj.RoadFirstVehStructMap(road_id);
+        obj.makeC(route_vehs, first_veh_ids);
+    end
 
     % D1の計算
-    obj.makeD1(route_vehs.north, first_veh_ids.north, "north");
-    obj.makeD1(route_vehs.south, first_veh_ids.south, "south");
-    obj.makeD1(route_vehs.east, first_veh_ids.east, "east");
-    obj.makeD1(route_vehs.west, first_veh_ids.west, "west");
+    for road_id = 1: obj.road_num
+        route_vehs = obj.RoadRouteVehsMap(road_id);
+        first_veh_ids = obj.RoadFirstVehStructMap(road_id);
+        obj.makeD1(route_vehs, first_veh_ids, road_id);
+    end
 
     % D2の計算
-    obj.makeD2(pos_vehs.north, first_veh_ids.north);
-    obj.makeD2(pos_vehs.south, first_veh_ids.south);
-    obj.makeD2(pos_vehs.east, first_veh_ids.east);
-    obj.makeD2(pos_vehs.west, first_veh_ids.west);
+    for road_id = 1: obj.road_num
+        pos_vehs = obj.RoadPosVehsMap(road_id);
+        first_veh_ids = obj.RoadFirstVehStructMap(road_id);
+        obj.makeD2(pos_vehs, first_veh_ids);
+    end
 
     % D3の計算
-    obj.makeD3(pos_vehs.north, first_veh_ids.north, road_prms.north);
-    obj.makeD3(pos_vehs.south, first_veh_ids.south, road_prms.south);
-    obj.makeD3(pos_vehs.east, first_veh_ids.east, road_prms.east);
-    obj.makeD3(pos_vehs.west, first_veh_ids.west, road_prms.west);
+    for road_id = 1: obj.road_num
+        pos_vehs = obj.RoadPosVehsMap(road_id);
+        first_veh_ids = obj.RoadFirstVehStructMap(road_id);
+        road_prms = obj.RoadPrmsMap(road_id);
+        obj.makeD3(pos_vehs, first_veh_ids, road_prms);
+    end
 
     % Eの計算
-    obj.makeE(pos_vehs.north, first_veh_ids.north, road_prms.north);
-    obj.makeE(pos_vehs.south, first_veh_ids.south, road_prms.south);
-    obj.makeE(pos_vehs.east, first_veh_ids.east, road_prms.east);
-    obj.makeE(pos_vehs.west, first_veh_ids.west, road_prms.west);
+    for road_id = 1: obj.road_num
+        pos_vehs = obj.RoadPosVehsMap(road_id);
+        first_veh_ids = obj.RoadFirstVehStructMap(road_id);
+        road_prms = obj.RoadPrmsMap(road_id);
+        obj.makeE(pos_vehs, first_veh_ids, road_prms);
+    end
 end

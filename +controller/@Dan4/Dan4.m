@@ -181,7 +181,7 @@ classdef Dan4 < handle
         % 混合整数線形計画問題の形にMLDの係数と信号機制約の係数を変形する関数群
         makeMilp(obj);
         makeObjectiveFunction(obj, templete_id);
-        makeConstraints(obj, mld_matrices, pos_vehs);
+        makeConstraints(obj);
         makeBoundary(obj);
         makeIntcon(obj);
         makeWeight(obj);

@@ -1,5 +1,5 @@
 % D1行列を作成する関数
-function makeD1(obj, route_vehs, first_veh_ids, direction)
+function makeD1(obj, route_vehs, first_veh_ids, order)
 
     % D1_rを初期化
     D1_r = [];
@@ -10,13 +10,13 @@ function makeD1(obj, route_vehs, first_veh_ids, direction)
     end
 
     % 方向と対応する信号のバイナリのIDを取得
-    if strcmp(direction,'north')
+    if order == 1
         signal_id = [1, 2, 3];
-    elseif strcmp(direction, 'east')
+    elseif order == 2
         signal_id = [4, 5, 6];
-    elseif strcmp(direction, 'south')
+    elseif order == 3
         signal_id = [7, 8, 9];
-    elseif strcmp(direction, 'west')
+    elseif order == 4
         signal_id = [10, 11, 12];
     end
 

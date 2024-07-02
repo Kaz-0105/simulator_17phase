@@ -1,17 +1,16 @@
-function makeConstraints(obj, mld_matrices, pos_vehs)
-
+function makeConstraints(obj)
     % MLDの式を一つの不等式制約にまとめる
 
     % MLDの係数を取得
-    A = mld_matrices.A;
-    B1 = mld_matrices.B1;
-    B2 = mld_matrices.B2;
-    B3 = mld_matrices.B3;
-    C = mld_matrices.C;
-    D1 = mld_matrices.D1;
-    D2 = mld_matrices.D2;
-    D3 = mld_matrices.D3;
-    E = mld_matrices.E;
+    A = obj.mld_matrices.A;
+    B1 = obj.mld_matrices.B1;
+    B2 = obj.mld_matrices.B2;
+    B3 = obj.mld_matrices.B3;
+    C = obj.mld_matrices.C;
+    D1 = obj.mld_matrices.D1;
+    D2 = obj.mld_matrices.D2;
+    D3 = obj.mld_matrices.D3;
+    E = obj.mld_matrices.E;
 
     % B1, B2, B3をまとめる
     B = [B1, B2, B3];
@@ -23,8 +22,12 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     [~, obj.v_length] = size(D);
 
     % 交差点内の全ての自動車の位置情報をまとめる
-    pos_vehs_initial = [pos_vehs.north; pos_vehs.south; pos_vehs.east; pos_vehs.west];
-    obj.pos_vehs_initial = pos_vehs_initial;
+    obj.pos_vehs_initial = [];
+    
+    for road_id = 1: obj.road_num
+        pos_vehs = obj.RoadPosVehsMap(road_id);
+        obj.pos_vehs_initial = [obj.pos_vehs_initial; pos_vehs];
+    end
 
     % ここから具体的な計算
     A_bar = kron(ones(obj.N_p, 1), A); % A_barの計算
@@ -35,7 +38,7 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
 
     % P、qに代入  
     obj.milp_matrices.P = [obj.milp_matrices.P; C_bar*B_bar + D_bar];
-    obj.milp_matrices.q = [obj.milp_matrices.q; E_bar - C_bar*A_bar*pos_vehs_initial];
+    obj.milp_matrices.q = [obj.milp_matrices.q; E_bar - C_bar*A_bar*obj.pos_vehs_initial];
 
     % 信号機制約を追加していく
 
@@ -62,8 +65,6 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     end
 
     % 信号現示の変化のバイナリ変数を定義 
-
-
     for step = 1:(obj.N_p-1)
         P_tmp = zeros(4*obj.phase_num, obj.variables_size);
 
@@ -86,7 +87,6 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
 
 
     % 青になっていい信号の数の制限
-
     for step = 1:obj.N_p
         P_tmp = zeros(1, obj.variables_size);
         P_tmp(1, 1 + obj.v_length*(step-1): obj.signal_num +obj.v_length*(step-1)) = ones(1, obj.signal_num);
@@ -96,7 +96,6 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     end
 
     % 信号の変化の回数の制限
-
     P_tmp = zeros(1, obj.variables_size);
 
     for step = 1:(obj.N_p-1)
@@ -108,7 +107,6 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     obj.milp_matrices.q = [obj.milp_matrices.q; obj.m];
 
     % delta_cの固定
-
     deltac_list = obj.VariableListMap('delta_c');
     
     for veh_id = 1:length(deltac_list)
@@ -123,8 +121,7 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     end
 
 
-    % 増えた変数の定義その２
-    
+    % 増えた変数の定義その２ 
     for step = 1:(obj.N_p-1)
         P_tmp = zeros(1, obj.variables_size);
         P_tmp(obj.v_length*obj.N_p + obj.phase_num*obj.N_p + (obj.phase_num + 1)*(step -1) + 1 : obj.v_length*obj.N_p + obj.phase_num*obj.N_p+ (obj.phase_num + 1)*step) = [-ones(1, obj.phase_num), 2];
@@ -134,7 +131,6 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     
 
     % 初期値の固定
-    
     for step = 1:obj.fix_num
         P_tmp = zeros(obj.signal_num, obj.variables_size);
         for signal_id = 1:obj.signal_num
@@ -148,7 +144,6 @@ function makeConstraints(obj, mld_matrices, pos_vehs)
     end
 
     % 最小連続回数について
-
     for step = 1: obj.N_p -1
         P_tmp = zeros(1, obj.variables_size);
         q_tmp = 1;
