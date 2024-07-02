@@ -17,7 +17,7 @@ Com = Vissim.get('Com');
 
 % シミュレーションを行う
 
-for sim_count = 1:Config.sim_count
+for sim_count =ghytedgdfdgdgffdgfdgfdggfdfgdgfdgjhjhkkljhkjlkjl 1:Config.sim_count
     fprintf('%d回目のシミュレーションを開始します。\n', sim_count);
     Vissim.clear_states();
 

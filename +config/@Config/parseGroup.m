@@ -81,18 +81,18 @@ function group = parseGroup(roads_file, intersections_file)
             tmp_road.speed = 60;
         end
 
-        % % queue_counterのIDを取得
-        % tmp_road.queue_counter_ids = [];
-        % for queue_counter_id = road_data.queue_counter_ids
-        %     queue_counter_id = queue_counter_id{1};
-        %     tmp_road.queue_counter_ids(end + 1) = queue_counter_id;
-        % end
+        % queue_counterのIDを取得
+        tmp_road.queue_counter_ids = [];
+        for queue_counter_id = road_data.queue_counter_ids
+            queue_counter_id = queue_counter_id{1};
+            tmp_road.queue_counter_ids(end + 1) = queue_counter_id;
+        end
 
         group.RoadsMap(tmp_road.id) = tmp_road;
     end
 
     % エリア内の交差点の情報を取得
-    group.IntersectionsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any')
+    group.IntersectionsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
     for intersection_data = intersections_data.intersections
         intersection_data = intersection_data{1};

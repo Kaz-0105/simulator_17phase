@@ -6,10 +6,10 @@ function makeLinkTypeMap(obj)
     for group = obj.Config.groups
         group = group{1};
         
-        for road = group.roads
-            road = road{1};
+        for road_id = cell2mat(keys(group.RoadsMap))
+            road = group.RoadsMap(road_id);
 
-            if length(road.link_ids) == 3
+            if length(road.link_ids) >= 3
                 % 道路が3つのリンクから構成される場合（ある交差点に対して流入道路となっている場合）
                 for link_id = road.link_ids
                     if link_id >= 10000

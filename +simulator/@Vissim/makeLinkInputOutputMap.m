@@ -4,8 +4,8 @@ function makeLinkInputOutputMap(obj)
     % 流入末端リンクを調べる
     for group = obj.Config.groups
         group = group{1};
-        for road = group.roads
-            road = road{1};
+        for road_id = cell2mat(keys(group.RoadsMap))
+            road = group.RoadsMap(road_id);
             if isfield(road, 'input')
                 obj.LinkInputOutputMap(road.main_link_id) = 'input';
             end

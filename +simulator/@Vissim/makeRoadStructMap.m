@@ -6,9 +6,9 @@ function makeRoadStructMap(obj)
     for group = obj.Config.groups
         group = group{1};
         
-        for road = group.roads
+        for road_id = cell2mat(keys(group.RoadsMap))
             road_struct = [];
-            road = road{1};
+            road = group.RoadsMap(road_id);
 
             for  link_id = road.link_ids
                 % LinkTypeMapからリンクの種類を取得
