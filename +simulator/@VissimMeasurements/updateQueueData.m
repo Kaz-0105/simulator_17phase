@@ -13,8 +13,7 @@ function updateQueueData(obj, Maps)
         
         tmp_queue_struct = [];
         for input_road_id = intersection_struct.input_road_ids
-            input_road_direction = intersection_struct.input_road_directions(input_road_id);
-
+            input_road_order = intersection_struct.InputRoadOrderMap(input_road_id);
 
             tmp_queue_length = 0;
             input_road_link_ids = RoadLinkMap(input_road_id);
@@ -27,24 +26,24 @@ function updateQueueData(obj, Maps)
             end
 
             if ~ismember(intersection_struct.id, cell2mat(keys(obj.QueueDataMap)))
-                if strcmp(input_road_direction, 'north')
+                if strcmp(input_road_order, 'north')
                     tmp_queue_struct.north = [tmp_queue_length];
-                elseif strcmp(input_road_direction, 'south')
+                elseif strcmp(input_road_order, 'south')
                     tmp_queue_struct.south = [tmp_queue_length];
-                elseif strcmp(input_road_direction, 'east')
+                elseif strcmp(input_road_order, 'east')
                     tmp_queue_struct.east = [tmp_queue_length];
-                elseif strcmp(input_road_direction, 'west')
+                elseif strcmp(input_road_order, 'west')
                     tmp_queue_struct.west = [tmp_queue_length];
                 end
 
             else
-                if strcmp(input_road_direction, 'north')
+                if strcmp(input_road_order, 'north')
                     tmp_queue_struct.north = [obj.QueueDataMap(intersection_struct.id).north, tmp_queue_length];
-                elseif strcmp(input_road_direction, 'south')
+                elseif strcmp(input_road_order, 'south')
                     tmp_queue_struct.south = [obj.QueueDataMap(intersection_struct.id).south, tmp_queue_length];
-                elseif strcmp(input_road_direction, 'east')
+                elseif strcmp(input_road_order, 'east')
                     tmp_queue_struct.east = [obj.QueueDataMap(intersection_struct.id).east, tmp_queue_length];
-                elseif strcmp(input_road_direction, 'west')
+                elseif strcmp(input_road_order, 'west')
                     tmp_queue_struct.west = [obj.QueueDataMap(intersection_struct.id).west, tmp_queue_length];
                 end
             end

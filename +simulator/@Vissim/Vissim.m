@@ -124,8 +124,8 @@ classdef Vissim < handle
 
             for group = obj.Config.groups
                 group = group{1};
-                for intersection = group.intersections
-                    intersection = intersection{1};
+                for intersection_id = cell2mat(keys(group.IntersectionsMap))
+                    intersection = group.IntersectionsMap(intersection_id);
                     obj.IntersectionSignalControllerMap(intersection.id) = obj.Com.Net.SignalControllers.ItemByKey(intersection.id);
                 end
             end

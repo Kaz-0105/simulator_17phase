@@ -34,7 +34,6 @@ classdef Dan4 < handle
 
     properties
         % 構造体
-        road_prms;     % 道路に関するパラメータを格納する構造体
         pos_vehs;      % 車の位置情報を格納する構造体
         route_vehs;    % 車の進行方向の情報を格納する構造体
         num_vehs;      % 車の数を格納する構造体
@@ -62,6 +61,7 @@ classdef Dan4 < handle
 
     properties
         % Map
+        RoadPrmsMap;         % 道路に関するパラメータを格納するMap
         VariableListMap;     % 決定変数のリストを格納するMap
         PhaseSignalGroupMap; % フェーズを構成するSignalGroupを収納するMap
         Maps;                % Vissimクラスで作成したMap群
@@ -101,7 +101,7 @@ classdef Dan4 < handle
             obj.Maps = Maps;
 
             % 道路に関するパラメータを格納する構造体を作成
-            obj.makeRoadPrms();
+            obj.makeRoadPrmsMap();
 
             % PhaseとSignalGroupのMapを作成
             obj.makePhaseSignalGroupMap();
@@ -141,14 +141,14 @@ classdef Dan4 < handle
         % 混合論理動的システムの係数行列を作成する関数群
         makeMld(obj);
         makeA(obj, pos_vehs);
-        makeB1(obj, pos_vehs, route_vehs, first_veh_ids, road_prms);
-        makeB2(obj, route_vehs, first_veh_ids, road_prms);
-        makeB3(obj, route_vehs, first_veh_ids, road_prms);
-        makeC(obj, pos_vehs, route_vehs, first_veh_ids, road_prms);    
+        makeB1(obj, pos_vehs, route_vehs, first_veh_ids, RoadPrmsMap);
+        makeB2(obj, route_vehs, first_veh_ids, RoadPrmsMap);
+        makeB3(obj, route_vehs, first_veh_ids, RoadPrmsMap);
+        makeC(obj, pos_vehs, route_vehs, first_veh_ids, RoadPrmsMap);    
         makeD1(obj, route_vehs, first_veh_ids, direction);
-        makeD2(obj, pos_vehs, first_veh_ids, road_prms);
-        makeD3(obj, pos_vehs, first_veh_ids, road_prms);
-        makeE(obj, pos_vehs, first_veh_ids, road_prms);
+        makeD2(obj, pos_vehs, first_veh_ids, RoadPrmsMap);
+        makeD3(obj, pos_vehs, first_veh_ids, RoadPrmsMap);
+        makeE(obj, pos_vehs, first_veh_ids, RoadPrmsMap);
 
         % 決定変数の種類ごとのリストを作成する関数群
 

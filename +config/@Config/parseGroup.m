@@ -26,10 +26,10 @@ function group = parseGroup(roads_file, intersections_file)
         % 道路を構成するリンクのうち直進車線のメインのリンクのIDを取得
         tmp_road.main_link_id = road_data.v_mid;
 
-        % % Signal Controller（1つの交差点の信号機をまとめたグループのこと）のIDを取得
-        % if isfield(road_data, 'v_sc')
-        %     tmp_road.signal_controller_id = road_data.v_sc;
-        % end
+        % Signal Controller（1つの交差点の信号機をまとめたグループのこと）のIDを取得
+        if isfield(road_data, 'v_sc')
+            tmp_road.signal_controller_id = road_data.v_sc;
+        end
 
         % % Signal Group（1つの交差点で挙動ごとに信号機を分けたグループのこと）のIDを取得
         % if isfield(road_data, 'v_sg')
@@ -64,15 +64,15 @@ function group = parseGroup(roads_file, intersections_file)
             tmp_road.input = road_data.input;
         end
 
-        % % sig_head_idを取得
-        % if isfield(road_data, 'sig_head_ids')
-        %     tmp_sig_head_ids = [];
-        %     for sig_head_id = road_data.sig_head_ids
-        %         sig_head_id = sig_head_id{1};
-        %         tmp_sig_head_ids(end + 1) = sig_head_id;
-        %     end
-        %     tmp_road.sig_head_ids = tmp_sig_head_ids;
-        % end
+        % sig_head_idを取得
+        if isfield(road_data, 'sig_head_ids')
+            tmp_sig_head_ids = [];
+            for sig_head_id = road_data.sig_head_ids
+                sig_head_id = sig_head_id{1};
+                tmp_sig_head_ids(end + 1) = sig_head_id;
+            end
+            tmp_road.sig_head_ids = tmp_sig_head_ids;
+        end
 
         % 自動車の速度を取得
         if isfield(road_data, 'speed')
