@@ -27,7 +27,7 @@ classdef VissimMeasurements < handle
             % Mapの初期化
             obj.InputDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
             obj.OutputDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            obj.QueueDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            obj.QueueDataMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
             obj.CalcTimeDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
             obj.NumVehsDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 

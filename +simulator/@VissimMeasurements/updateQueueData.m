@@ -8,16 +8,18 @@ function updateQueueData(obj, Maps)
     % LinkQueueMapを取得
     LinkQueueMap = Maps('LinkQueueMap');
     
-    for intersection_struct = values(IntersectionStructMap)
-        intersection_struct = intersection_struct{1};
-        
-        tmp_queue_struct = [];
-        for input_road_id = intersection_struct.input_road_ids
-            input_road_order = intersection_struct.InputRoadOrderMap(input_road_id);
+    for intersection_id = cell2mat(keys(IntersectionStructMap))
+        % intersection構造体の取得
+        intersection_struct = IntersectionStructMap(intersection_id);
 
+        for road_id = intersection_struct.input_road_ids
+            % 道路の順番を取得（時計回りで設定するのがルール）
+            order = intersection_struct.InputRoadOrderMap(road_id);
+
+            % キューの長さを計算
             tmp_queue_length = 0;
-            input_road_link_ids = RoadLinkMap(input_road_id);
-            for link_id = input_road_link_ids
+            link_ids = RoadLinkMap(road_id);
+            for link_id = link_ids
                 if isKey(LinkQueueMap, link_id)
                     queue_counter_id = LinkQueueMap(link_id);
                     queue_counter_obj = obj.Com.Net.QueueCounters.ItemByKey(queue_counter_id);
@@ -25,33 +27,12 @@ function updateQueueData(obj, Maps)
                 end
             end
 
-            if ~ismember(intersection_struct.id, cell2mat(keys(obj.QueueDataMap)))
-                if strcmp(input_road_order, 'north')
-                    tmp_queue_struct.north = [tmp_queue_length];
-                elseif strcmp(input_road_order, 'south')
-                    tmp_queue_struct.south = [tmp_queue_length];
-                elseif strcmp(input_road_order, 'east')
-                    tmp_queue_struct.east = [tmp_queue_length];
-                elseif strcmp(input_road_order, 'west')
-                    tmp_queue_struct.west = [tmp_queue_length];
-                end
-
+            % キューの長さをマップに格納
+            if ~obj.QueueDataMap.isKey(intersection_struct.id, order)
+                obj.QueueDataMap.add(intersection_struct.id, order, tmp_queue_length);
             else
-                if strcmp(input_road_order, 'north')
-                    tmp_queue_struct.north = [obj.QueueDataMap(intersection_struct.id).north, tmp_queue_length];
-                elseif strcmp(input_road_order, 'south')
-                    tmp_queue_struct.south = [obj.QueueDataMap(intersection_struct.id).south, tmp_queue_length];
-                elseif strcmp(input_road_order, 'east')
-                    tmp_queue_struct.east = [obj.QueueDataMap(intersection_struct.id).east, tmp_queue_length];
-                elseif strcmp(input_road_order, 'west')
-                    tmp_queue_struct.west = [obj.QueueDataMap(intersection_struct.id).west, tmp_queue_length];
-                end
+                obj.QueueDataMap.set(intersection_struct.id, order, [obj.QueueDataMap(intersection_struct.id, order), tmp_queue_length]);
             end
         end
-        
-
-        obj.QueueDataMap(intersection_struct.id) = tmp_queue_struct;
     end
-
-    
 end
