@@ -9,7 +9,6 @@ function makeZ2List(obj)
         route_vehs = obj.RoadRouteVehsMap(road_id);
         for veh_id = 1: length(route_vehs)
             if veh_id == 1
-                z2_list = [z2_list, last_index + 1];
                 last_index = last_index + 1;
 
                 if route_vehs(veh_id) == 1 || route_vehs(veh_id) == 2
@@ -19,20 +18,20 @@ function makeZ2List(obj)
                 end
             elseif route_vehs(veh_id) == 1 || route_vehs(veh_id) == 2
                 if strcmp(first_veh_route, '3')
-                    z2_list = [z2_list, last_index + 1];
+                    z2_list = [z2_list, last_index + 2];
                     first_veh_route = '0';
                     last_index = last_index + 3;
                 else
-                    z2_list = [z2_list, last_index + 1];
+                    z2_list = [z2_list, last_index + 2];
                     last_index = last_index + 5;
                 end
             elseif route_vehs(veh_id) == 3
                 if strcmp(first_veh_route, '1-2')
-                    z2_list = [z2_list, last_index + 1];
+                    z2_list = [z2_list, last_index + 2];
                     first_veh_route = '0';
                     last_index = last_index + 3;
                 else
-                    z2_list = [z2_list, last_index + 1];
+                    z2_list = [z2_list, last_index + 2];
                     last_index = last_index + 5;
                 end
             end
