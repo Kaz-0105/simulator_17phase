@@ -35,10 +35,10 @@ classdef VissimMeasurements < handle
             obj.makeLinkDataCollectionMeasurementMap();
         end
 
-        function updateData(obj, maps, IntersectionControllerMap)
+        function updateData(obj, Maps, IntersectionControllerMap)
             % 計測データの更新を行う関数
-            obj.updateInputOutputData(maps);
-            obj.updateQueueData(maps);
+            obj.updateInputOutputData(Maps);
+            obj.updateQueueData(Maps);
             obj.updateCalcTimeData(IntersectionControllerMap);
             obj.updateNumVehsData(IntersectionControllerMap);
         end
@@ -55,7 +55,7 @@ classdef VissimMeasurements < handle
 
         % 計測データの更新を行う関数
         updateInputOutputData(obj, Maps)
-        updateQueueData(obj, maps)
+        updateQueueData(obj, Maps)
         updateCalcTimeData(obj, controllers)
         updateNumVehsData(obj, controllers)
 

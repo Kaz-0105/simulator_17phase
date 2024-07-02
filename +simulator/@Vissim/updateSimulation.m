@@ -13,7 +13,7 @@ function updateSimulation(obj, sim_step)
             SignalController = obj.IntersectionSignalControllerMap(intersection_id);
 
             % Controllerクラスの変数を取得
-            Controller = obj.IntersectionControllerMap(intersection_id);
+            % Controller = obj.IntersectionControllerMap(intersection_id);
 
             % 信号現示の制御権限を移しておく
             for signal_group_id = 1: SignalController.SGs.Count
