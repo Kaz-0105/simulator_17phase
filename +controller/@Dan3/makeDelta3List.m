@@ -9,21 +9,21 @@ function makeDelta3List(obj)
                 last_index = last_index + 4;
 
                 if route_vehs.north(veh_id) == 1 
-                    first_veh_route = 'left';
+                    first_veh_route = '1';
                 elseif route_vehs.north(veh_id) == 2
-                    first_veh_route = 'right';
+                    first_veh_route = '2';
                 end
             elseif route_vehs.north(veh_id) == 1 
-                if strcmp(first_veh_route, 'right')
-                    first_veh_route = 'done';
+                if strcmp(first_veh_route, '2')
+                    first_veh_route = '0';
                     last_index = last_index + 7;
                 else
                     delta3_list = [delta3_list, last_index + 8];
                     last_index = last_index + 9;
                 end
             elseif route_vehs.north(veh_id) == 2
-                if strcmp(first_veh_route, 'left')
-                    first_veh_route = 'done';
+                if strcmp(first_veh_route, '1')
+                    first_veh_route = '0';
                     last_index = last_index + 7;
                 else
                     delta3_list = [delta3_list, last_index + 8];
@@ -39,21 +39,21 @@ function makeDelta3List(obj)
                 last_index = last_index + 4;
 
                 if route_vehs.south(veh_id) == 1 
-                    first_veh_route = 'left';
+                    first_veh_route = '1';
                 elseif route_vehs.south(veh_id) == 2
-                    first_veh_route = 'right';
+                    first_veh_route = '2';
                 end
             elseif route_vehs.south(veh_id) == 1 
-                if strcmp(first_veh_route, 'right')
-                    first_veh_route = 'done';
+                if strcmp(first_veh_route, '2')
+                    first_veh_route = '0';
                     last_index = last_index + 7;
                 else
                     delta3_list = [delta3_list, last_index + 8];
                     last_index = last_index + 9;
                 end
             elseif route_vehs.south(veh_id) == 2
-                if strcmp(first_veh_route, 'left')
-                    first_veh_route = 'done';
+                if strcmp(first_veh_route, '1')
+                    first_veh_route = '0';
                     last_index = last_index + 7;
                 else
                     delta3_list = [delta3_list, last_index + 8];
@@ -69,21 +69,21 @@ function makeDelta3List(obj)
                 last_index = last_index + 4;
 
                 if route_vehs.east(veh_id) == 1 
-                    first_veh_route = 'left';
+                    first_veh_route = '1';
                 elseif route_vehs.east(veh_id) == 2
-                    first_veh_route = 'right';
+                    first_veh_route = '2';
                 end
             elseif route_vehs.east(veh_id) == 1 
-                if strcmp(first_veh_route, 'right')
-                    first_veh_route = 'done';
+                if strcmp(first_veh_route, '2')
+                    first_veh_route = '0';
                     last_index = last_index + 7;
                 else
                     delta3_list = [delta3_list, last_index + 8];
                     last_index = last_index + 9;
                 end
             elseif route_vehs.east(veh_id) == 2
-                if strcmp(first_veh_route, 'left')
-                    first_veh_route = 'done';
+                if strcmp(first_veh_route, '1')
+                    first_veh_route = '0';
                     last_index = last_index + 7;
                 else
                     delta3_list = [delta3_list, last_index + 8];
@@ -99,21 +99,21 @@ function makeDelta3List(obj)
                 last_index = last_index + 4;
 
                 if route_vehs.west(veh_id) == 1 
-                    first_veh_route = 'left';
+                    first_veh_route = '1';
                 elseif route_vehs.west(veh_id) == 2
-                    first_veh_route = 'right';
+                    first_veh_route = '2';
                 end
             elseif route_vehs.west(veh_id) == 1 
-                if strcmp(first_veh_route, 'right')
-                    first_veh_route = 'done';
+                if strcmp(first_veh_route, '2')
+                    first_veh_route = '0';
                     last_index = last_index + 7;
                 else
                     delta3_list = [delta3_list, last_index + 8];
                     last_index = last_index + 9;
                 end
             elseif route_vehs.west(veh_id) == 2
-                if strcmp(first_veh_route, 'left')
-                    first_veh_route = 'done';
+                if strcmp(first_veh_route, '1')
+                    first_veh_route = '0';
                     last_index = last_index + 7;
                 else
                     delta3_list = [delta3_list, last_index + 8];

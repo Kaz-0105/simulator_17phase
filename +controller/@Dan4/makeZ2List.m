@@ -1,129 +1,46 @@
 function makeZ2List(obj)
-    route_vehs = obj.route_vehs;
+    % 信号機の変数の最後のインデックスを取得
     last_index = obj.signal_num;
+
+    % z_2の変数のリストを作成
     z2_list = [];
 
-    for veh_id = 1:length(route_vehs.north)
-        if veh_id == 1
-            last_index = last_index + 1;
+    for road_id = 1: obj.road_num
+        route_vehs = obj.RoadRouteVehsMap(road_id);
+        for veh_id = 1: length(route_vehs)
+            if veh_id == 1
+                z2_list = [z2_list, last_index + 1];
+                last_index = last_index + 1;
 
-            if route_vehs.north(veh_id) == 1 || route_vehs.north(veh_id) == 2
-                first_veh_route = "straight";
-            elseif route_vehs.north(veh_id) == 3
-                first_veh_route = "right";
-            end
-        elseif route_vehs.north(veh_id) == 1 || route_vehs.north(veh_id) == 2
-            if strcmp(first_veh_route, "right")
-                z2_list = [z2_list, last_index + 2];
-                first_veh_route = "done";
-                last_index = last_index + 3;
-            else
-                z2_list = [z2_list, last_index + 2];
-                last_index = last_index + 5;
-            end
-        elseif route_vehs.north(veh_id) == 3
-            if strcmp(first_veh_route, "straight")
-                z2_list = [z2_list, last_index + 2];
-                first_veh_route = "done";
-                last_index = last_index + 3;
-            else
-                z2_list = [z2_list, last_index + 2];
-                last_index = last_index + 5;
+                if route_vehs(veh_id) == 1 || route_vehs(veh_id) == 2
+                    first_veh_route = '1-2';
+                elseif route_vehs(veh_id) == 3
+                    first_veh_route = '3';
+                end
+            elseif route_vehs(veh_id) == 1 || route_vehs(veh_id) == 2
+                if strcmp(first_veh_route, '3')
+                    z2_list = [z2_list, last_index + 1];
+                    first_veh_route = '0';
+                    last_index = last_index + 3;
+                else
+                    z2_list = [z2_list, last_index + 1];
+                    last_index = last_index + 5;
+                end
+            elseif route_vehs(veh_id) == 3
+                if strcmp(first_veh_route, '1-2')
+                    z2_list = [z2_list, last_index + 1];
+                    first_veh_route = '0';
+                    last_index = last_index + 3;
+                else
+                    z2_list = [z2_list, last_index + 1];
+                    last_index = last_index + 5;
+                end
             end
         end
     end
 
-    for veh_id = 1:length(route_vehs.south)
-        if veh_id == 1
-            last_index = last_index + 1;
-
-            if route_vehs.south(veh_id) == 1 || route_vehs.south(veh_id) == 2
-                first_veh_route = "straight";
-            elseif route_vehs.south(veh_id) == 3
-                first_veh_route = "right";
-            end
-        elseif route_vehs.south(veh_id) == 1 || route_vehs.south(veh_id) == 2
-            if strcmp(first_veh_route, "right")
-                z2_list = [z2_list, last_index + 2];
-                first_veh_route = "done";
-                last_index = last_index + 3;
-            else
-                z2_list = [z2_list, last_index + 2];
-                last_index = last_index + 5;
-            end
-        elseif route_vehs.south(veh_id) == 3
-            if strcmp(first_veh_route, "straight")
-                z2_list = [z2_list, last_index + 2];
-                first_veh_route = "done";
-                last_index = last_index + 3;
-            else
-                z2_list = [z2_list, last_index + 2];
-                last_index = last_index + 5;
-            end
-        end
-    end
-
-    for veh_id = 1:length(route_vehs.east)
-        if veh_id == 1
-            last_index = last_index + 1;
-
-            if route_vehs.east(veh_id) == 1 || route_vehs.east(veh_id) == 2
-                first_veh_route = "straight";
-            elseif route_vehs.east(veh_id) == 3
-                first_veh_route = "right";
-            end
-        elseif route_vehs.east(veh_id) == 1 || route_vehs.east(veh_id) == 2
-            if strcmp(first_veh_route, "right")
-                z2_list = [z2_list, last_index + 2];
-                first_veh_route = "done";
-                last_index = last_index + 3;
-            else
-                z2_list = [z2_list, last_index + 2];
-                last_index = last_index + 5;
-            end
-        elseif route_vehs.east(veh_id) == 3
-            if strcmp(first_veh_route, "straight")
-                z2_list = [z2_list, last_index + 2];
-                first_veh_route = "done";
-                last_index = last_index + 3;
-            else
-                z2_list = [z2_list, last_index + 2];
-                last_index = last_index + 5;
-            end
-        end
-    end
-
-    for veh_id = 1:length(route_vehs.west)
-        if veh_id == 1
-            last_index = last_index + 1;
-
-            if route_vehs.west(veh_id) == 1 || route_vehs.west(veh_id) == 2
-                first_veh_route = "straight";
-            elseif route_vehs.west(veh_id) == 3
-                first_veh_route = "right";
-            end
-        elseif route_vehs.west(veh_id) == 1 || route_vehs.west(veh_id) == 2
-            if strcmp(first_veh_route, "right")
-                z2_list = [z2_list, last_index + 2];
-                first_veh_route = "done";
-                last_index = last_index + 3;
-            else
-                z2_list = [z2_list, last_index + 2];
-                last_index = last_index + 5;
-            end
-        elseif route_vehs.west(veh_id) == 3
-            if strcmp(first_veh_route, "straight")
-                z2_list = [z2_list, last_index + 2];
-                first_veh_route = "done";
-                last_index = last_index + 3;
-            else
-                z2_list = [z2_list, last_index + 2];
-                last_index = last_index + 5;
-            end
-        end
-    end
-
-    obj.VariableListMap("z_2") = z2_list;
+    % VariableListMapにz_2の変数のリストを追加
+    obj.VariableListMap('z_2') = z2_list;
 
 
 end
