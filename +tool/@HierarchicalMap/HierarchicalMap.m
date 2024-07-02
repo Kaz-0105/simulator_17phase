@@ -1,4 +1,4 @@
-classdef DoubleMap < handle
+classdef HierarchicalMap < handle
     properties
         OuterMap;
         CounterMap;
@@ -11,7 +11,7 @@ classdef DoubleMap < handle
     end
 
     methods
-        function obj = DoubleMap(varargin)
+        function obj = HierarchicalMap(varargin)
             % キーとバリューの型指定
             if nargin == 6
                 for i = 1:2:5
@@ -45,5 +45,6 @@ classdef DoubleMap < handle
         values = outerKeys(obj);
         values = innerKeys(obj, key1);
         displayCounter(obj);
+        isKey = isKey(obj, key1, key2);
     end
 end
