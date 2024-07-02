@@ -121,8 +121,8 @@ classdef Config<handle
         function showControlMethod(obj)
             for group = obj.groups
                 group = group{1};
-                for intersection_struct = group.intersections
-                    intersection_struct = intersection_struct{1};
+                for intersection_id = cell2mat(keys(group.IntersectionsMap))
+                    intersection_struct = group.IntersectionsMap(intersection_id);
                     if strcmp(intersection_struct.control_method, 'Dan4')
                         fprintf('交差点%dの制御方法: MPC(十字路)\n', intersection_struct.id);
                     elseif strcmp(intersection_struct.control_method, 'Fix4')
