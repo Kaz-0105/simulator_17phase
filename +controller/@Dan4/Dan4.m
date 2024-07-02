@@ -34,11 +34,6 @@ classdef Dan4 < handle
 
     properties
         % 構造体
-        pos_vehs;      % 車の位置情報を格納する構造体
-        route_vehs;    % 車の進行方向の情報を格納する構造体
-        num_vehs;      % 車の数を格納する構造体
-        first_veh_ids; % 先頭車の情報を格納する構造体
-
         mld_matrices;  % 混合論理動的システムの係数行列を収納する構造体
         milp_matrices; % 混合整数線形計画問題の係数行列を収納する構造体
     end
@@ -61,10 +56,14 @@ classdef Dan4 < handle
 
     properties
         % Map
-        RoadPrmsMap;         % 道路に関するパラメータを格納するMap
-        VariableListMap;     % 決定変数のリストを格納するMap
-        PhaseSignalGroupMap; % フェーズを構成するSignalGroupを収納するMap
-        Maps;                % Vissimクラスで作成したMap群
+        RoadPrmsMap;           % 道路に関するパラメータを格納するMap
+        VariableListMap;       % 決定変数のリストを格納するMap
+        PhaseSignalGroupMap;   % フェーズを構成するSignalGroupを収納するMap
+        RoadPosVehsMap;        % 道路ごとの車の位置情報を収納するMap
+        RoadRouteVehsMap;      % 道路ごとの車の進行方向情報を収納するMap
+        RoadFirstVehStructMap; % 道路ごとの先頭車の情報を収納するMap
+        RoadNumVehsMap;        % 道路ごとの車の数を収納するMap
+        Maps;                  % Vissimクラスで作成したMap群
     end
 
     methods(Access = public)
@@ -122,6 +121,13 @@ classdef Dan4 < handle
 
             % 決定変数の種類とそれに該当するリストを作成
             obj.VariableListMap = containers.Map('KeyType', 'char', 'ValueType', 'any'); 
+
+            % RoadNumVehsMapの初期化
+            obj.RoadNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+
+            for road_id = 1: obj.road_num
+                obj.RoadNumVehsMap(road_id) = 0;
+            end
         end
     end
 

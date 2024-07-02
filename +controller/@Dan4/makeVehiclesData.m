@@ -1,75 +1,44 @@
 function makeVehiclesData(obj, IntersectionStructMap, VissimData)
+    % RoadPosVehsMap、RoadRouteVehsMap、RoadFirstVehStructMapの初期化
+    obj.RoadPosVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+    obj.RoadRouteVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+    obj.RoadFirstVehStructMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
     % VissimDataからRoadVehsMapとRoadFirstVehMapを取得
-    % RoadVehsMapはキー：道路ID、値：その道路上の自動車の位置と進路をまとめた配列
-    % RoadFirstVehMapはキー：道路ID、値：その道路上の先頭の自動車のID
-
     RoadVehsMap = VissimData.get('RoadVehsMap');
     RoadFirstVehMap = VissimData.get('RoadFirstVehMap');
 
     % intersection構造体を取得
     intersection_struct = IntersectionStructMap(obj.id);
 
-    % 東西南北それぞれの道路の情報をまとめる
+    % 流入道路ごとに情報を取得
     for irid = intersection_struct.input_road_ids
-        % RoadVehsMapから注目している流入道路に対応するデータを取得
+        % RoadVehsMapから注目している道路の自動車情報を取得
         vehs_data = RoadVehsMap(irid);
 
-        if strcmp(intersection_struct.input_road_directions(irid), 'north')
-            if ~isempty(vehs_data)
-                % 自動車が存在する場合
-                obj.pos_vehs.north = vehs_data(:,1); % 1列目は位置のデータなのでpos_vehsに格納
-                obj.route_vehs.north = vehs_data(:,2); % 2列目は進路のデータなのでroute_vehsに格納
+        % 道路の順番を取得
+        order = intersection_struct.InputRoadOrderMap(irid);
 
-            else
-                % 自動車が存在しない場合は空の配列とする
-                obj.pos_vehs.north = []; 
-                obj.route_vehs.north = [];
-            end
+        % 自動車が存在するかどうかで場合分け
+        if ~isempty(vehs_data)
+            % 自動車の位置
+            obj.RoadPosVehsMap(order) = vehs_data(:, 1);
+            
+            % 自動車の進路
+            obj.RoadRouteVehsMap(order) = vehs_data(:, 2);
 
-            % その道路の先頭車のIDをfirst_veh_idsに格納（直進車線と右折車線で2台分ある）
-            obj.first_veh_ids.north = RoadFirstVehMap(irid);
+        else
+            % 自動車の位置
+            obj.RoadPosVehsMap(order) = [];
 
-        elseif strcmp(intersection_struct.input_road_directions(irid), 'south')
-            if ~isempty(vehs_data)
-                obj.pos_vehs.south = vehs_data(:,1);
-                obj.route_vehs.south = vehs_data(:,2);
-            else
-                obj.pos_vehs.south = [];
-                obj.route_vehs.south = [];
-            end
-
-            obj.first_veh_ids.south = RoadFirstVehMap(irid);
-
-        elseif strcmp(intersection_struct.input_road_directions(irid), 'east')
-            if ~isempty(vehs_data)
-                obj.pos_vehs.east = vehs_data(:,1);
-                obj.route_vehs.east = vehs_data(:,2);
-            else
-                obj.pos_vehs.east = [];
-                obj.route_vehs.east = [];
-            end
-
-            obj.first_veh_ids.east = RoadFirstVehMap(irid);
-
-        elseif strcmp(intersection_struct.input_road_directions(irid), 'west')
-            if ~isempty(vehs_data)
-                obj.pos_vehs.west = vehs_data(:,1);
-                obj.route_vehs.west = vehs_data(:,2);
-            else
-                obj.pos_vehs.west = [];
-                obj.route_vehs.west = [];
-            end
-
-            obj.first_veh_ids.west = RoadFirstVehMap(irid);
+            % 自動車の進路
+            obj.RoadRouteVehsMap(order) = [];
         end
 
-    end
+        % 道路ごとの先頭車に関する情報を取得
+        obj.RoadFirstVehStructMap(order) = RoadFirstVehMap(irid);
 
-    % num_vehsを計算
-    obj.num_vehs.north = length(obj.pos_vehs.north);
-    obj.num_vehs.south = length(obj.pos_vehs.south);
-    obj.num_vehs.east = length(obj.pos_vehs.east);
-    obj.num_vehs.west = length(obj.pos_vehs.west);
-    
+        % num_vehsを計算
+        obj.RoadNumVehsMap(order) = length(obj.RoadPosVehsMap(order));
+    end
 end
