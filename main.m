@@ -7,7 +7,7 @@ file_dir = strcat(pwd, '\layout\');
 Config = config.Config(file_name, file_dir);
 
 % 制御方法の表示
-Config.showControlMethod();
+Config.displayControlMethod();
 
 % Vissimクラスの作成
 Vissim = simulator.Vissim(Config);
@@ -28,14 +28,14 @@ for sim_count = 1:Config.sim_count
       
     end
 
-    data_analysis = tool.data_analysis(Vissim.get('VissimMeasurements'), Config);
+    ResultVisualizer = tool.ResultVisualizer(Vissim.get('VissimMeasurements'), Config);
 
     % 性能指標の表示
-    fprintf("Queue Length: %f\n", data_analysis.get_performance_index());
+    fprintf("Queue Length: %f\n", ResultVisualizer.get_performance_index());
 
-    data_analysis.save_figure_structs();
+    ResultVisualizer.save_figure_structs();
 
-    data_analysis.compare_results();
+    ResultVisualizer.compare_results();
 end
 
 

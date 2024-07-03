@@ -1,30 +1,43 @@
-classdef data_analysis < handle
-    properties(GetAccess = public)
+classdef ResultVisualizer < handle
+    properties
+        VissimMeasurements;  % VissimMeasurementsクラスの変数
+        Config;              % Configクラスの変数
     end
 
-    properties(GetAccess = private)
-        time_data; % 時間のデータ
-        measurements;  % vissim_measurementsクラスの変数
-        plot_list; % プロットするデータのリスト
+    properties
+        ResultsMap;          % 出力するデータのマップ
+        PerformanceIndexMap; % 評価指標のデータのマップ
+    end
 
-        line_width; % 線の太さ
+    properties
+        figure_structs; % キー：figure名、値：figure構造体のディクショナリ
+    end
+
+    properties
+        line_width;      % 線の太さ
         label_font_size; % ラベルのフォントサイズ
         title_font_size; % タイトルのフォントサイズ
-        gca_font_size; % gcaのフォントサイズ
-
-        figure_structs; % キー：figure名、値：figure構造体のディクショナリ
+        gca_font_size;   % gcaのフォントサイズ
     end
 
     methods(Access = public)
 
-        function obj = data_analysis(measurements, Config)
-            obj.measurements = measurements;
-            obj.plot_list = Config.plot_list;
+        function obj = ResultVisualizer(VissimMeasurements, Config)
+            % ConfigクラスとVissimMeasurementsクラスの変数を設定
+            obj.Config = Config;
+            obj.VissimMeasurements = VissimMeasurements;
 
+            % ResultsMapを取得
+            obj.ResultsMap = Config.ResultsMap;
+
+            % PerformanceIndexMapを初期化
+            obj.PerformanceIndexMap = containers.Map('KeyType', 'char', 'ValueType', 'any');
+            
+            % 時間のデータを設定
             time_step = Config.time_step;
             num_loop = Config.num_loop;
             control_horizon = Config.control_horizon;
-            obj.time_data = 0:time_step*control_horizon:time_step*control_horizon*num_loop;
+            obj.PerformanceIndexMap('time') = 0:time_step*control_horizon:time_step*control_horizon*num_loop;
 
             obj.line_width = 2;
             obj.label_font_size = 15;
