@@ -1,4 +1,4 @@
-function emergencyTreatmentCopy(obj)
+function emergencyTreatment(obj)
     % SignalGroupごとの車両数を格納するマップ
     SignalGroupVehicleMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
@@ -7,29 +7,16 @@ function emergencyTreatmentCopy(obj)
         SignalGroupVehicleMap(i) = 0;
     end
 
-    for route = obj.route_vehs.north'
-        SignalGroupVehicleMap(route) = SignalGroupVehicleMap(route) + 1;
-    end
-
-    for route = obj.route_vehs.east'
-        SignalGroupVehicleMap(route + 3) = SignalGroupVehicleMap(route + 3) + 1;
-    end
-
-    for route = obj.route_vehs.south'
-        SignalGroupVehicleMap(route + 6) = SignalGroupVehicleMap(route + 6) + 1;
-    end
-
-    for route = obj.route_vehs.west'
-        SignalGroupVehicleMap(route + 9) = SignalGroupVehicleMap(route + 9) + 1;
+    for road_id = 1: obj.road_num
+        for route = transpose(obj.RoadRouteVehsMap(road_id))
+            SignalGroupVehicleMap(route + (road_id-1)*(obj.road_num-1)) = SignalGroupVehicleMap(route + (road_id-1)*(obj.road_num-1)) + 1;
+        end
     end
 
     % フェーズごとの車両数を格納するマップ
     PhaseVehicleMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
-    % PhaseSignalGrouMapのkeyを取得（セル配列→配列）
-    keys_phase_id = cell2mat(obj.PhaseSignalGroupMap.keys);
-
-    for phase_id = keys_phase_id
+    for phase_id = 1: obj.phase_num
         for signal_group_id = obj.PhaseSignalGroupMap(phase_id)
             if ~isKey(PhaseVehicleMap, phase_id)
                 PhaseVehicleMap(phase_id) = SignalGroupVehicleMap(signal_group_id);
