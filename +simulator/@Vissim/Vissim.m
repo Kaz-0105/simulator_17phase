@@ -26,6 +26,7 @@ classdef Vissim < handle
     properties
         % その他の変数
         break_time = 0;                     % シミュレーションのブレイクポイントの時間
+        current_time = 0;                   % 現在のシミュレーションの時間
     end
 
     methods(Access = public)
@@ -140,7 +141,7 @@ classdef Vissim < handle
 
     methods(Access = public)
         value = get(obj, property_name);
-        updateSimulation(obj, sim_step);
+        run(obj);
     end
 
     methods(Access = private)
@@ -153,6 +154,7 @@ classdef Vissim < handle
         makeIntersectionStructMap(obj);
         updateStates(obj);
         optimize(obj);
+        runSingleHorizon(obj, sim_step);
     end
 
     methods(Static)

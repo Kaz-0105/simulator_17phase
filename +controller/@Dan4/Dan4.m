@@ -76,22 +76,22 @@ classdef Dan4 < handle
             
 
             % サンプリング時間
-            obj.dt = Config.time_step;
+            obj.dt = Config.mpc.time_step;
 
             % 予測ホライゾンと制御ホライゾン
-            obj.N_p = Config.predictive_horizon;
-            obj.N_c = Config.control_horizon; 
+            obj.N_p = Config.mpc.predictive_horizon;
+            obj.N_c = Config.mpc.control_horizon; 
 
             % 最適化時間の上限
-            obj.max_time = Config.max_time;
+            obj.max_time = Config.mpc.max_time;
 
             % 最低の連続回数、ホライゾン内の最大変化回数、固定するステップ数
-            obj.N_s = Config.model_prms.N_s;
-            obj.m = Config.model_prms.m;
-            obj.fix_num = Config.model_prms.fix_num;
+            obj.N_s = Config.model.dan.N_s;
+            obj.m = Config.model.dan.m;
+            obj.fix_num = Config.model.dan.fix_num;
 
             % 微小量
-            obj.eps = Config.model_prms.eps; 
+            obj.eps = Config.model.dan.eps; 
             
             % 制御入力の変数の長さ
             obj.u_length = obj.signal_num;

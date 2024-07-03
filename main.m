@@ -16,26 +16,4 @@ Vissim = simulator.Vissim(Config);
 Com = Vissim.get('Com');
 
 % シミュレーションを行う
-
-for sim_count = 1:Config.sim_count
-    fprintf('%d回目のシミュレーションを開始します。\n', sim_count);
-    Vissim.clear_states();
-
-    for sim_step = 1:Config.num_loop
-        fprintf('%d回目の最適化計算を行っています。\n', sim_step);
-        
-        Vissim.updateSimulation(sim_step);
-      
-    end
-
-    ResultVisualizer = tool.ResultVisualizer(Vissim.get('VissimMeasurements'), Config);
-
-    % 性能指標の表示
-    fprintf("Queue Length: %f\n", ResultVisualizer.get_performance_index());
-
-    ResultVisualizer.save_figure_structs();
-
-    ResultVisualizer.compare_results();
-end
-
-
+Vissim.run();
