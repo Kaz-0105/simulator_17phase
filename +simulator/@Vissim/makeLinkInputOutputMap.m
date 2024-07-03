@@ -2,8 +2,8 @@ function makeLinkInputOutputMap(obj)
     obj.LinkInputOutputMap = containers.Map('KeyType', 'int32', 'ValueType', 'char');
     
     % 流入末端リンクを調べる
-    for group = obj.Config.groups
-        group = group{1};
+    for group_id = cell2mat(keys(obj.Config.network.GroupsMap))
+        group = obj.Config.network.GroupsMap(group_id);
         for road_id = cell2mat(keys(group.RoadsMap))
             road = group.RoadsMap(road_id);
             if isfield(road, 'input')
