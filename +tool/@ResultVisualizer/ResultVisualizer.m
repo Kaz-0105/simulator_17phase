@@ -7,18 +7,11 @@ classdef ResultVisualizer < handle
     end
 
     properties
-        PerformanceIndexMap; % 評価指標のデータのマップ
-    end
-
-    properties
-        figure_structs; % キー：figure名、値：figure構造体のディクショナリ
-    end
-
-    properties
         line_width;      % 線の太さ
-        label_font_size; % ラベルのフォントサイズ
-        title_font_size; % タイトルのフォントサイズ
-        gca_font_size;   % gcaのフォントサイズ
+        font_size; % ラベルのフォントサイズ
+
+        isSave; % データを保存するかどうか
+        isCompare; % データを比較するかどうか
     end
 
     methods(Access = public)
@@ -31,30 +24,13 @@ classdef ResultVisualizer < handle
             % VissimMeasurementsクラスの変数を設定
             obj.VissimMeasurements = Vissim.get('VissimMeasurements');
 
-            % PerformanceIndexMapを初期化
-            obj.PerformanceIndexMap = containers.Map('KeyType', 'char', 'ValueType', 'any');
-            
-            % 時間のデータを設定
+            % line_widthとfont_sizeの設定
+            obj.line_width = Config.graph.line_width;
+            obj.font_size = Config.graph.font_size;
 
-            obj.line_width = 2;
-            obj.label_font_size = 15;
-            obj.title_font_size = 20;
-            obj.gca_font_size = 15;
-
-            obj.figure_structs = dictionary(string.empty, struct.empty); 
-
-            obj.make_input_output_figure();
-            obj.make_queue_figure();
-            obj.make_calc_time_figure();
-
-            
-
-        end
-
-        function performance_index = get_performance_index(obj)
-            queue_figure_struct = obj.figure_structs('queue_length_all');
-            queue_data = queue_figure_struct.y_data;
-            performance_index = sum(queue_data) / length(queue_data);
+            % isSaveとisCompareの設定
+            obj.isSave = Config.result.save;
+            obj.isCompare = Config.result.comparison;
         end
 
         function save_figure_structs(obj)
@@ -155,18 +131,21 @@ classdef ResultVisualizer < handle
             xlim([0, obj.time_data(end)]);
             legend(file_names);        
         end
+    end
 
-        
+    methods(Access = public)
+        value = get(obj, property_name);
+        run(obj);
     end
 
     methods(Access = private)
+        showResult(obj);
+        showCompare(obj);
+        saveResult(obj);
 
-        make_calc_time_figure(obj);
-        make_queue_figure(obj);
-        make_input_output_figure(obj);
-
-    end
-
-    methods(Static)
+        showCalcTime(obj, varargin);
+        showQueueLength(obj, varargin);
+        showNumVehs(obj, varargin);
+        showDelay(obj, varargin);
     end
 end

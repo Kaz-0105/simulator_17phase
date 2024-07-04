@@ -9,13 +9,8 @@ function run(obj)
             obj.runSingleHorizon();
         end
     
+        % 結果を表示するクラスを初期化
         ResultVisualizer = tool.ResultVisualizer(obj, obj.Config);
-    
-        % 性能指標の表示
-        fprintf("Queue Length: %f\n", ResultVisualizer.get_performance_index());
-    
-        ResultVisualizer.save_figure_structs();
-    
-        ResultVisualizer.compare_results();
+        ResultVisualizer.run();
     end
 end

@@ -29,18 +29,25 @@ simulation :
   count : 1  # シミュレーション回数
 
 result :
-  calc_time :
+  save :
     active : 'on'
-    scale : 'system'
-  queue :
-    active : 'on'
-    scale : 'intersection'
-  num_vehs : 
-    active : 'on'
-    scale : 'system'
-  delay : 
-    active : 'on'
-    scale : 'system'
+    path : '\results\1-1_network'
+  compare : 
+    active : 'off'
+    path : '\results\1-1_network\~.mat'
+  contents :
+    calc_time :
+      active : 'on'
+      scale : 'system'
+    queue :
+      active : 'on'
+      scale : 'intersection'
+    num_vehs : 
+      active : 'on'
+      scale : 'system'
+    delay : 
+      active : 'on'
+      scale : 'system'
 
 graph :
   line_width : 2

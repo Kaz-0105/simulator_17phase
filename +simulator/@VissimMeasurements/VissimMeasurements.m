@@ -12,7 +12,7 @@ classdef VissimMeasurements < handle
         RoadOutputMap;                     % ネットワークから流出する車両数のマップ                           
         IntersectionRoadQueueMap;          % 信号待ちの長さのマップ
         IntersectionCalcTimeMap;           % 計算時間のマップ
-        IntersectionNumVehsMap;            % 車両数のマップ
+        IntersectionRoadNumVehsMap;        % 車両数のマップ
         IntersectionRoadDelayMap;          % 遅れ時間のマップ
     end
 
@@ -44,16 +44,15 @@ classdef VissimMeasurements < handle
     end
 
     methods(Access = private)
-
-        % Data Collection Pointのリンクごとのディクショナリを作成する関数
+        % マップを初期化する関数
+        initMaps(obj)
         
-
         % 計測データの更新を行う関数
         updateRoadInputMap(obj)
         updateRoadOutputMap(obj)
         updateIntersectionRoadQueueMap(obj)
         updateIntersectionCalcTimeMap(obj)
-        updateRoadNumVehsMap(obj)
+        updateIntersectionRoadNumVehsMap(obj)
 
     end
 end

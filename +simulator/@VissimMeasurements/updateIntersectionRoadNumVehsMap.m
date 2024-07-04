@@ -1,4 +1,4 @@
-function updateRoadNumVehsMap(obj)
+function updateIntersectionRoadNumVehsMap(obj)
     % IntesectionControllerMapを取得
     IntersectionControllerMap = obj.Vissim.get('IntersectionControllerMap');
 
@@ -9,13 +9,15 @@ function updateRoadNumVehsMap(obj)
         % RoadNumVehsMapを取得
         RoadNumVehsMap = Controller.get('RoadNumVehsMap');
 
-        % システム内に存在する自動車の数を計算
-        sum = 0;
         for road_id = cell2mat(keys(RoadNumVehsMap))
-            sum = sum + RoadNumVehsMap(road_id);
-        end
+            % 現在のデータを取得
+            tmp_data = obj.IntersectionRoadNumVehsMap.get(intersection_id, road_id);
 
-        % データを追加
-        obj.RoadNumVehsMap(intersection_id) = [obj.RoadNumVehsMap(intersection_id), sum]; 
+            % データを追加
+            tmp_data(end+1) = RoadNumVehsMap(road_id);
+
+            % マップに格納
+            obj.IntersectionRoadNumVehsMap.set(intersection_id, road_id, tmp_data);
+        end 
     end
 end
