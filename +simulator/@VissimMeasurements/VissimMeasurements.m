@@ -8,13 +8,14 @@ classdef VissimMeasurements < handle
 
     properties
         % Map
-        RoadInputMap;    % 末端道路ごとの流入量の時系列データ格納するMap
-        RoadOutputMap;   % 末端道路ごとの流出量の時系列データ格納するMap
-        IntersectionRoadQueueMap;    % 交差点ごとの待ち行列の時系列データを格納するMap
-        IntersectionCalcTimeMap; % 交差点ごとの計算時間の時系列データを格納するMap
-        RoadNumVehsMap;  % 交差点ごとの車両数の時系列データを格納するMap
+        RoadInputMap;                      % ネットワークに流入する車両数のマップ    
+        RoadOutputMap;                     % ネットワークから流出する車両数のマップ                           
+        IntersectionRoadQueueMap;          % 信号待ちの長さのマップ
+        IntersectionCalcTimeMap;           % 計算時間のマップ
+        RoadNumVehsMap;                    % 車両数のマップ
+        IntersectionRoadDelayMap;          % 遅れ時間のマップ
 
-        LinkDataCollectionMeasurementMap; % キー：リンクのID、バリュー：DataCollectionMeasurementのIDのMap
+        LinkDataCollectionMeasurementMap;  
     end
 
     properties
@@ -32,14 +33,10 @@ classdef VissimMeasurements < handle
             obj.Vissim = Vissim;
 
             % Mapの初期化
-            obj.RoadInputMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            obj.RoadOutputMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            obj.IntersectionRoadQueueMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
-            obj.IntersectionCalcTimeMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            obj.RoadNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-
+            obj.initMaps();
+            
             % timeの初期化
-            obj.time = [];
+            obj.time = 0;
 
             % LinkDataCollectionMeasurementMapの作成
             obj.makeLinkDataCollectionMeasurementMap();
@@ -48,7 +45,7 @@ classdef VissimMeasurements < handle
 
     methods
         value = get(obj, property_name);
-        updateData(obj);
+        update(obj);
     end
 
     methods(Access = private)
@@ -57,10 +54,11 @@ classdef VissimMeasurements < handle
         makeLinkDataCollectionMeasurementMap(obj)
 
         % 計測データの更新を行う関数
-        updateInputOutputData(obj)
-        updateQueueData(obj)
-        updateCalcTimeData(obj)
-        updateNumVehsData(obj)
+        updateRoadInputMap(obj)
+        updateRoadOutputMap(obj)
+        updateIntersectionRoadQueueMap(obj)
+        updateIntersectionCalcTimeMap(obj)
+        updateRoadNumVehsMap(obj)
 
     end
 end

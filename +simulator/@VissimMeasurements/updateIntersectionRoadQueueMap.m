@@ -1,11 +1,7 @@
-function updateQueueData(obj)
-    % IntesectionStructMapを取得
+function updateIntersectionRoadQueueMap(obj)
+    % IntesectionStructMap, RoadLinkMap, LinkQueueMapを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
-
-    % RoadLinkMapを取得
     RoadLinkMap = obj.Vissim.get('RoadLinkMap');
-
-    % LinkQueueMapを取得
     LinkQueueMap = obj.Vissim.get('LinkQueueMap');
     
     for intersection_id = cell2mat(keys(IntersectionStructMap))
@@ -28,11 +24,7 @@ function updateQueueData(obj)
             end
 
             % キューの長さをマップに格納
-            if ~obj.IntersectionRoadQueueMap.isKey(intersection_struct.id, order)
-                obj.IntersectionRoadQueueMap.add(intersection_struct.id, order, tmp_queue_length);
-            else
-                obj.IntersectionRoadQueueMap.set(intersection_struct.id, order, [obj.IntersectionRoadQueueMap.get(intersection_struct.id, order), tmp_queue_length]);
-            end
+            obj.IntersectionRoadQueueMap.set(intersection_struct.id, order, [obj.IntersectionRoadQueueMap.get(intersection_struct.id, order), tmp_queue_length]);
         end
     end
 end

@@ -1,4 +1,4 @@
-function updateNumVehsData(obj)
+function updateRoadNumVehsMap(obj)
     IntersectionControllerMap = obj.Vissim.get('IntersectionControllerMap');
 
     for intersection_id = cell2mat(keys(IntersectionControllerMap))
