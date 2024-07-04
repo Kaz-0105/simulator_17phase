@@ -1,10 +1,10 @@
 function make_queue_figure(obj)
-    QueueDataMap = obj.measurements.get('QueueDataMap');
+    IntersectionRoadQueueMap = obj.measurements.get('IntersectionRoadQueueMap');
 
     % 全てのqueueのデータに0秒のデータを加える
 
-    for intersection_id = cell2mat(keys(QueueDataMap))
-        queue_data = QueueDataMap(intersection_id);
+    for intersection_id = cell2mat(keys(IntersectionRoadQueueMap))
+        queue_data = IntersectionRoadQueueMap(intersection_id);
         if isfield(queue_data, 'north')
             queue_data.north = [0, queue_data.north];
         end
@@ -17,13 +17,13 @@ function make_queue_figure(obj)
         if isfield(queue_data, 'west')
             queue_data.west = [0, queue_data.west];
         end
-        QueueDataMap(intersection_id) = queue_data;
+        IntersectionRoadQueueMap(intersection_id) = queue_data;
     end
 
     % 平均のデータをqueue_dataに加える
     
-    for intersection_id = cell2mat(keys(QueueDataMap))
-        queue_data = QueueDataMap(intersection_id);
+    for intersection_id = cell2mat(keys(IntersectionRoadQueueMap))
+        queue_data = IntersectionRoadQueueMap(intersection_id);
         if ~isfield(queue_data, 'north')
             queue_data.average = mean([queue_data.south; queue_data.east; queue_data.west], 1);
         elseif ~isfield(queue_data, 'south')
@@ -35,15 +35,15 @@ function make_queue_figure(obj)
         else
             queue_data.average = mean([queue_data.north; queue_data.south; queue_data.east; queue_data.west], 1);
         end
-        QueueDataMap(intersection_id) = queue_data;
+        IntersectionRoadQueueMap(intersection_id) = queue_data;
     end
 
     queue_data_all = [];
 
     num_intersections = 0;
 
-    for intersection_id = cell2mat(keys(QueueDataMap))
-        queue_data = QueueDataMap(intersection_id);
+    for intersection_id = cell2mat(keys(IntersectionRoadQueueMap))
+        queue_data = IntersectionRoadQueueMap(intersection_id);
         if isempty(queue_data_all)
             queue_data_all = queue_data.average;
         else
@@ -85,8 +85,8 @@ function make_queue_figure(obj)
         plot_member = plot_member{1};
         if strcmp(plot_member.data, "queue_length") && strcmp(plot_member.type, "one")
             
-            for intersection_id = cell2mat(keys(QueueDataMap))
-                queue_data = QueueDataMap(intersection_id);
+            for intersection_id = cell2mat(keys(IntersectionRoadQueueMap))
+                queue_data = IntersectionRoadQueueMap(intersection_id);
 
                 figure_struct = [];
                 figure("Name", "Queue");

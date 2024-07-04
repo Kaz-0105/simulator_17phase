@@ -17,7 +17,6 @@ classdef Vissim < handle
         LinkInputOutputMap;                 % キー：リンクのID、バリュー：そのリンクが末端流入リンクまたは末端流出リンクであるかどうか
         IntersectionStructMap;              % キー：交差点のID、バリュー：交差点の流入出道路に関する構造体
         LinkQueueMap;                       % キー：リンクのID、バリュー：そのリンクのキューカウンターのID
-        Maps;                               % キー：Mapの名前、バリュー：そのMapの変数
         IntersectionControllerMap;          % キー：交差点のID、バリュー：制御器のクラスのオブジェクト
         IntersectionSignalControllerMap;    % キー：交差点のID、バリュー：SignalControllerのCOMオブジェクト
         IntersectionOptStateMap;            % キー：交差点のID、バリュー：その交差点の信号現示の最適解
@@ -27,6 +26,7 @@ classdef Vissim < handle
         % その他の変数
         break_time = 0;                     % シミュレーションのブレイクポイントの時間
         current_time = 0;                   % 現在のシミュレーションの時間
+        prediction_count = 0;               % 予測回数
     end
 
     methods(Access = public)
@@ -89,48 +89,14 @@ classdef Vissim < handle
             % LinkQueueMapの作成
             obj.makeLinkQueueMap();
 
-            % mapをまとめたmapの作成
-            obj.Maps = containers.Map('KeyType', 'char', 'ValueType', 'any');
-            obj.Maps('LinkRoadMap') = obj.LinkRoadMap;
-            obj.Maps('LinkTypeMap') = obj.LinkTypeMap;
-            obj.Maps('RoadLinkMap') = obj.RoadLinkMap;
-            obj.Maps('RoadStructMap') = obj.RoadStructMap;
-            obj.Maps('LinkInputOutputMap') = obj.LinkInputOutputMap;
-            obj.Maps('IntersectionStructMap') = obj.IntersectionStructMap;
-            obj.Maps('LinkQueueMap') = obj.LinkQueueMap;
+            % IntersectionControllerMapの作成
+            obj.makeIntersectionControllerMap();
 
-            % 制御器の設定
-            obj.IntersectionControllerMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-
-            for intersection_struct = values(obj.IntersectionStructMap)
-                intersection_struct = intersection_struct{1};
-                switch intersection_struct.control_method
-                    case 'Dan4'
-                        obj.IntersectionControllerMap(intersection_struct.id) = controller.Dan4(intersection_struct.id, Config, obj.Maps);
-                    case 'Dan3'
-                        obj.IntersectionControllerMap(intersection_struct.id) = controller.Dan3(intersection_struct.id, Config, obj.Maps);
-                    case 'DanOld4'
-                        obj.IntersectionControllerMap(intersection_struct.id) = controller.DanOld4(intersection_struct.id, Config, obj.Maps);
-                    case 'Fix3'
-                        obj.IntersectionControllerMap(intersection_struct.id) = controller.Fix3(intersection_struct.id, Config, obj.Maps);
-                    case 'Fix4'
-                        obj.IntersectionControllerMap(intersection_struct.id) = controller.Fix4(intersection_struct.id, Config, obj.Maps);
-                end    
-            end
+            % IntersectionSignalControllerMapの作成
+            obj.makeIntersectionSignalControllerMap();
 
             % VissimMeasurementsクラスの変数の設定
-            obj.VissimMeasurements = simulator.VissimMeasurements(obj.Com);
-
-            % 制御器のCOMオブジェクトの設定
-            obj.IntersectionSignalControllerMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-
-            for group_id = cell2mat(keys(obj.Config.network.GroupsMap))
-                group = obj.Config.network.GroupsMap(group_id);
-                for intersection_id = cell2mat(keys(group.IntersectionsMap))
-                    intersection = group.IntersectionsMap(intersection_id);
-                    obj.IntersectionSignalControllerMap(intersection.id) = obj.Com.Net.SignalControllers.ItemByKey(intersection.id);
-                end
-            end
+            obj.VissimMeasurements = simulator.VissimMeasurements(obj);
         end
         
         function clear_states(obj)
@@ -152,6 +118,7 @@ classdef Vissim < handle
         makeLinkInputOutputMap(obj);
         makeLinkQueueMap(obj);
         makeIntersectionStructMap(obj);
+        makeIntersectionControllerMap(obj);
         updateStates(obj);
         optimize(obj);
         runSingleHorizon(obj, sim_step);

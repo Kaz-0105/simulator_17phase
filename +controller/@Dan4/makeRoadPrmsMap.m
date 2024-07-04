@@ -1,10 +1,10 @@
 function makeRoadPrmsMap(obj)
     % intersection構造体の取得
-    IntersectionStructMap = obj.Maps('IntersectionStructMap');
+    IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
     intersection_struct = IntersectionStructMap(obj.id);
 
     % road構造体の辞書型配列を取得
-    RoadStructMap = obj.Maps('RoadStructMap');
+    RoadStructMap = obj.Vissim.get('RoadStructMap');
 
     % RoadPrmsMapの初期化
     obj.RoadPrmsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');

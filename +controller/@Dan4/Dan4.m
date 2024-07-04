@@ -1,5 +1,10 @@
 classdef Dan4 < handle
     properties
+        %　クラス
+        Config; % Configクラスの変数
+        Vissim; % Vissimクラスの変数
+    end
+    properties
         % 普通のプロパティ
         id;         % 交差点のID
         signal_num; % 信号機の数
@@ -63,11 +68,14 @@ classdef Dan4 < handle
         RoadRouteVehsMap;      % 道路ごとの車の進行方向情報を収納するMap
         RoadFirstVehStructMap; % 道路ごとの先頭車の情報を収納するMap
         RoadNumVehsMap;        % 道路ごとの車の数を収納するMap
-        Maps;                  % Vissimクラスで作成したMap群
     end
 
     methods(Access = public)
-        function obj = Dan4(id, Config, Maps) 
+        function obj = Dan4(id, Vissim) 
+            % ConfigクラスとVissimクラスの変数の設定
+            obj.Config = Vissim.get('Config');
+            obj.Vissim = Vissim;
+
             % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
             obj.id = id;
             obj.road_num = 4;
@@ -76,28 +84,25 @@ classdef Dan4 < handle
             
 
             % サンプリング時間
-            obj.dt = Config.mpc.time_step;
+            obj.dt = obj.Config.mpc.time_step;
 
             % 予測ホライゾンと制御ホライゾン
-            obj.N_p = Config.mpc.predictive_horizon;
-            obj.N_c = Config.mpc.control_horizon; 
+            obj.N_p = obj.Config.mpc.predictive_horizon;
+            obj.N_c = obj.Config.mpc.control_horizon; 
 
             % 最適化時間の上限
-            obj.max_time = Config.mpc.max_time;
+            obj.max_time = obj.Config.mpc.max_time;
 
             % 最低の連続回数、ホライゾン内の最大変化回数、固定するステップ数
-            obj.N_s = Config.model.dan.N_s;
-            obj.m = Config.model.dan.m;
-            obj.fix_num = Config.model.dan.fix_num;
+            obj.N_s = obj.Config.model.dan.N_s;
+            obj.m = obj.Config.model.dan.m;
+            obj.fix_num = obj.Config.model.dan.fix_num;
 
             % 微小量
-            obj.eps = Config.model.dan.eps; 
+            obj.eps = obj.Config.model.dan.eps; 
             
             % 制御入力の変数の長さ
             obj.u_length = obj.signal_num;
-
-            % Mapsの設定
-            obj.Maps = Maps;
 
             % 道路に関するパラメータを格納する構造体を作成
             obj.makeRoadPrmsMap();
@@ -138,7 +143,7 @@ classdef Dan4 < handle
     end
 
     methods(Access = private)
-        makeRoadPrms(obj, Maps);
+        makeRoadPrms(obj);
         makeVehiclesData(obj, intersection_struct_map, VissimData);
 
         % PhaseとSignalGroupのマップを作成する関数

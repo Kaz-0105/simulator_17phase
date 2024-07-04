@@ -1,6 +1,6 @@
 function make_calc_time_figure(obj)
-    CalcTimeDataMap = obj.measurements.get('CalcTimeDataMap');
-    NumVehsDataMap = obj.measurements.get('NumVehsDataMap');
+    IntersectionCalcTimeMap = obj.measurements.get('IntersectionCalcTimeMap');
+    RoadNumVehsMap = obj.measurements.get('RoadNumVehsMap');
 
     % 系全体
     
@@ -15,11 +15,11 @@ function make_calc_time_figure(obj)
             calc_time_data_all = [];
             num_vehs_data_all = [];
 
-            for intersection_id = cell2mat(keys(CalcTimeDataMap))
-                calc_time_data = CalcTimeDataMap(intersection_id);
+            for intersection_id = cell2mat(keys(IntersectionCalcTimeMap))
+                calc_time_data = IntersectionCalcTimeMap(intersection_id);
                 calc_time_data_all = [calc_time_data_all, calc_time_data];
 
-                num_vehs_data = NumVehsDataMap(intersection_id);
+                num_vehs_data = RoadNumVehsMap(intersection_id);
                 num_vehs_data_all = [num_vehs_data_all, num_vehs_data];
             end
 
@@ -42,9 +42,9 @@ function make_calc_time_figure(obj)
     for plot_member = obj.plot_list
         plot_member = plot_member{1};
         if strcmp(plot_member.data, 'calc_time') && strcmp(plot_member.type, 'one')
-            for intersection_id = keys(CalcTimeDataMap)'
-                calc_time_data = CalcTimeDataMap(intersection_id);
-                num_vehs_data = NumVehsDataMap(intersection_id);
+            for intersection_id = keys(IntersectionCalcTimeMap)'
+                calc_time_data = IntersectionCalcTimeMap(intersection_id);
+                num_vehs_data = RoadNumVehsMap(intersection_id);
 
                 figure_struct = [];
                 figure('Name', 'Calculation Time');

@@ -1,8 +1,8 @@
-function makeIntersectionNumRoadMap(obj, Maps)
+function makeIntersectionNumRoadMap(obj)
     % IntersectionStructMapを初期化
     obj.IntersectionNumRoadMap = containers.Map('KeyType','int32','ValueType','int32');
     % IntersectionStructMapを取得
-    IntersectionStructMap = Maps('IntersectionStructMap');
+    IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
 
     % IntersectionNumRoadMapを作成
     for intersection_id = cell2mat(keys(IntersectionStructMap))

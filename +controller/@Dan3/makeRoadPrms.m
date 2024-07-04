@@ -1,10 +1,10 @@
 function makeRoadPrms(obj)
     % intersection構造体の取得
-    IntersectionStructMap = obj.Maps('IntersectionStructMap');
+    IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
     intersection_struct = IntersectionStructMap(obj.id);
 
     % road構造体の辞書型配列を取得
-    RoadStructMap = obj.Maps('RoadStructMap');
+    RoadStructMap = obj.Vissim.get('RoadStructMap');
 
     % モデル内の道路のパラメータを収納する構造体を定義
     north_road = [];

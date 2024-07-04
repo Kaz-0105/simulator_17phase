@@ -1,9 +1,7 @@
-function updateNumVehsData(obj, IntersectionControllerMap)
-    % IntersectionControllerMapのキーを取得
-    keys_intersection_controller_map = keys(IntersectionControllerMap);
-    keys_intersection_controller_map = [keys_intersection_controller_map{:}];
-    
-    for intersection_id = keys_intersection_controller_map
+function updateNumVehsData(obj)
+    IntersectionControllerMap = obj.Vissim.get('IntersectionControllerMap');
+
+    for intersection_id = cell2mat(keys(IntersectionControllerMap))
         Controller = IntersectionControllerMap(intersection_id);
         RoadNumVehsMap = Controller.get('RoadNumVehsMap');
 
@@ -12,10 +10,10 @@ function updateNumVehsData(obj, IntersectionControllerMap)
             sum = sum + RoadNumVehsMap(road_id);
         end
 
-        if ~ismember(intersection_id, cell2mat(keys(obj.NumVehsDataMap)))
-            obj.NumVehsDataMap(intersection_id) = sum;
+        if ~ismember(intersection_id, cell2mat(keys(obj.RoadNumVehsMap)))
+            obj.RoadNumVehsMap(intersection_id) = sum;
         else
-            obj.NumVehsDataMap(intersection_id) = [obj.NumVehsDataMap(intersection_id), sum];
+            obj.RoadNumVehsMap(intersection_id) = [obj.RoadNumVehsMap(intersection_id), sum];
         end
     end
     

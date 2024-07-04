@@ -3,49 +3,52 @@ classdef VissimMeasurements < handle
     properties
         % クラス
         Com; % VissimのCOMオブジェクト
+        Vissim; % Vissimクラスの変数
     end
 
     properties
         % Map
-        InputDataMap;    % 末端道路ごとの流入量の時系列データ格納するMap
-        OutputDataMap;   % 末端道路ごとの流出量の時系列データ格納するMap
-        QueueDataMap;    % 交差点ごとの待ち行列の時系列データを格納するMap
-        CalcTimeDataMap; % 交差点ごとの計算時間の時系列データを格納するMap
-        NumVehsDataMap;  % 交差点ごとの車両数の時系列データを格納するMap
+        RoadInputMap;    % 末端道路ごとの流入量の時系列データ格納するMap
+        RoadOutputMap;   % 末端道路ごとの流出量の時系列データ格納するMap
+        IntersectionRoadQueueMap;    % 交差点ごとの待ち行列の時系列データを格納するMap
+        IntersectionCalcTimeMap; % 交差点ごとの計算時間の時系列データを格納するMap
+        RoadNumVehsMap;  % 交差点ごとの車両数の時系列データを格納するMap
 
         LinkDataCollectionMeasurementMap; % キー：リンクのID、バリュー：DataCollectionMeasurementのIDのMap
     end
 
+    properties
+        % リスト
+        time; % 時間のリスト
+    end
+
     methods(Access = public)
 
-        function obj = VissimMeasurements(Com)
-            % コンストラクタ
-
+        function obj = VissimMeasurements(Vissim)
             % VissimのCOMオブジェクトを設定
-            obj.Com = Com;
+            obj.Com = Vissim.Com;
+
+            % Vissimクラスの変数を設定
+            obj.Vissim = Vissim;
 
             % Mapの初期化
-            obj.InputDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            obj.OutputDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            obj.QueueDataMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
-            obj.CalcTimeDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-            obj.NumVehsDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            obj.RoadInputMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            obj.RoadOutputMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            obj.IntersectionRoadQueueMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
+            obj.IntersectionCalcTimeMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            obj.RoadNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+
+            % timeの初期化
+            obj.time = [];
 
             % LinkDataCollectionMeasurementMapの作成
             obj.makeLinkDataCollectionMeasurementMap();
         end
+    end
 
-        function updateData(obj, Maps, IntersectionControllerMap)
-            % 計測データの更新を行う関数
-            obj.updateInputOutputData(Maps);
-            obj.updateQueueData(Maps);
-            obj.updateCalcTimeData(IntersectionControllerMap);
-            obj.updateNumVehsData(IntersectionControllerMap);
-        end
-
-        function value = get(obj, property_name)
-            value = obj.(property_name);
-        end
+    methods
+        value = get(obj, property_name);
+        updateData(obj);
     end
 
     methods(Access = private)
@@ -54,10 +57,10 @@ classdef VissimMeasurements < handle
         makeLinkDataCollectionMeasurementMap(obj)
 
         % 計測データの更新を行う関数
-        updateInputOutputData(obj, Maps)
-        updateQueueData(obj, Maps)
-        updateCalcTimeData(obj, controllers)
-        updateNumVehsData(obj, controllers)
+        updateInputOutputData(obj)
+        updateQueueData(obj)
+        updateCalcTimeData(obj)
+        updateNumVehsData(obj)
 
     end
 end

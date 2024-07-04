@@ -1,4 +1,9 @@
 classdef VissimData<handle
+    properties
+        % クラス
+        Vissim;
+        Com;
+    end
 
     properties(GetAccess = private)
         % Map
@@ -9,15 +14,21 @@ classdef VissimData<handle
     end
 
     methods(Access = public)
-        function obj = VissimData(Com, Maps)
+        function obj = VissimData(Vissim)
+            % Vissimクラスを取得
+            obj.Vissim = Vissim;
+
+            % VissimのCOMオブジェクトを取得
+            obj.Com = obj.Vissim.get('Com');
+
             % IntersectionNumRoadMap を作成する
-            obj.makeIntersectionNumRoadMap(Maps);
+            obj.makeIntersectionNumRoadMap();
 
             % RoadIntersectionMap を作成する
-            obj.makeRoadIntersectionMap(Maps);
+            obj.makeRoadIntersectionMap();
 
             % RoadVehsMap と RoadFirstVehMap を作成する
-            obj.makeVehicleData(Com, Maps);
+            obj.makeVehicleData();
         end    
     end
 
@@ -26,6 +37,6 @@ classdef VissimData<handle
     end
 
     methods(Access = private)
-        makeVehicleData(obj, Com, Maps);
+        makeVehicleData(obj);
     end
 end

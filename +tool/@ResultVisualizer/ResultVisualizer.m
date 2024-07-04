@@ -1,11 +1,12 @@
 classdef ResultVisualizer < handle
     properties
+        % クラス
+        Vissim;              % Vissimクラスの変数
         VissimMeasurements;  % VissimMeasurementsクラスの変数
         Config;              % Configクラスの変数
     end
 
     properties
-        ResultsMap;          % 出力するデータのマップ
         PerformanceIndexMap; % 評価指標のデータのマップ
     end
 
@@ -22,22 +23,18 @@ classdef ResultVisualizer < handle
 
     methods(Access = public)
 
-        function obj = ResultVisualizer(VissimMeasurements, Config)
-            % ConfigクラスとVissimMeasurementsクラスの変数を設定
+        function obj = ResultVisualizer(Vissim, Config)
+            % ConfigクラスとVissimクラスの変数を設定
             obj.Config = Config;
-            obj.VissimMeasurements = VissimMeasurements;
+            obj.Vissim = Vissim;
 
-            % ResultsMapを取得
-            obj.ResultsMap = Config.ResultsMap;
+            % VissimMeasurementsクラスの変数を設定
+            obj.VissimMeasurements = Vissim.get('VissimMeasurements');
 
             % PerformanceIndexMapを初期化
             obj.PerformanceIndexMap = containers.Map('KeyType', 'char', 'ValueType', 'any');
             
             % 時間のデータを設定
-            time_step = Config.time_step;
-            num_loop = Config.num_loop;
-            control_horizon = Config.control_horizon;
-            obj.PerformanceIndexMap('time') = 0:time_step*control_horizon:time_step*control_horizon*num_loop;
 
             obj.line_width = 2;
             obj.label_font_size = 15;

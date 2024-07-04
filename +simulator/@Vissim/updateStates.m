@@ -1,5 +1,5 @@
 function updateStates(obj)
-    obj.VissimData = simulator.VissimData(obj.Com, obj.Maps);
+    obj.VissimData = simulator.VissimData(obj);
     
     for Controller = values(obj.IntersectionControllerMap)'
         Controller = Controller{1};

@@ -2,7 +2,7 @@ clear;
 close all;
 
 % Configクラスの変数の作成
-file_name = 'Config.yaml';
+file_name = 'config.yaml';
 file_dir = strcat(pwd, '\layout\');
 Config = config.Config(file_name, file_dir);
 

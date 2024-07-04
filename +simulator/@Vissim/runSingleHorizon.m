@@ -1,6 +1,6 @@
-function runSingleHorizon(obj, sim_step)
+function runSingleHorizon(obj)
 
-    if sim_step == 1
+    if obj.prediction_count == 1
         % break_timeを設定
         obj.break_time = obj.break_time + obj.Config.mpc.control_interval;
         obj.Com.Simulation.set('AttValue','SimBreakAt',obj.break_time);
@@ -54,11 +54,11 @@ function runSingleHorizon(obj, sim_step)
                 break;
             end
         end
-
-        % current_timeを更新
-        obj.current_time = obj.break_time;
     end
 
+    % current_timeを更新
+    obj.current_time = obj.break_time;
+
     % 結果の測定を行う
-    obj.VissimMeasurements.updateData(obj.Maps, obj.IntersectionControllerMap);
+    obj.VissimMeasurements.updateData();
 end

@@ -1,6 +1,6 @@
 function make_input_output_figure(obj)
-    InputDataMap = obj.measurements.get('InputDataMap'); 
-    OutputDataMap = obj.measurements.get('OutputDataMap');
+    RoadInputMap = obj.measurements.get('RoadInputMap'); 
+    RoadOutputMap = obj.measurements.get('RoadOutputMap');
     
     for plot_member = obj.plot_list
         plot_member = plot_member{1};
@@ -14,8 +14,8 @@ function make_input_output_figure(obj)
 
             inflow_data = [];
 
-            for road_id = cell2mat(keys(InputDataMap))
-                input_data = InputDataMap(road_id);
+            for road_id = cell2mat(keys(RoadInputMap))
+                input_data = RoadInputMap(road_id);
 
                 if isempty(inflow_data)
                     inflow_data = input_data;
@@ -27,8 +27,8 @@ function make_input_output_figure(obj)
 
             outflow_data = []; 
 
-            for road_id = cell2mat(keys(OutputDataMap))
-                output_data = OutputDataMap(road_id);
+            for road_id = cell2mat(keys(RoadOutputMap))
+                output_data = RoadOutputMap(road_id);
 
                 if isempty(outflow_data)
                     outflow_data = output_data;

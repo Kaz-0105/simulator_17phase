@@ -1,4 +1,4 @@
-function makeVehicleData(obj, Com, Maps)
+function makeVehicleData(obj)
     % RoadVehsMap を作成する
     obj.RoadVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
@@ -6,17 +6,17 @@ function makeVehicleData(obj, Com, Maps)
     obj.RoadFirstVehMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
     % RoadStructMapを取得
-    RoadStructMap = Maps('RoadStructMap');
+    RoadStructMap = obj.Vissim.get('RoadStructMap');
 
     % RoadLinkMapを取得
-    RoadLinkMap = Maps('RoadLinkMap');
+    RoadLinkMap = obj.Vissim.get('RoadLinkMap');
 
     % RoadLinkMapのキーを取得
     keys_road_link_map = keys(RoadLinkMap);
     keys_road_link_map = [keys_road_link_map{:}];
 
     % LinkTypeMapを取得
-    LinkTypeMap = Maps('LinkTypeMap');
+    LinkTypeMap = obj.Vissim.get('LinkTypeMap');
 
     for road_id = keys_road_link_map
 
@@ -27,7 +27,7 @@ function makeVehicleData(obj, Com, Maps)
         vehs_data = [];
 
         for link_id = link_ids
-            link_obj = Com.Net.Links.ItemByKey(link_id);
+            link_obj = obj.Com.Net.Links.ItemByKey(link_id);
             vehs_pos = link_obj.Vehs.GetMultiAttValues('Pos');
             vehs_route = link_obj.Vehs.GetMultiAttValues('RouteNo');
             [num_veh,~] = size(vehs_pos);
