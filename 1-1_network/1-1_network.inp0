@@ -614,7 +614,7 @@
 				<vehClassDesSpeedDistribution desSpeedDistr="60" vehClass="30"/>
 			</vehClassDesSpeedDistr>
 		</desSpeedDecision>
-		<desSpeedDecision anmFlag="false" lane="2 1" name="" no="2" pos="0.1" timeFrom="0" timeTo="99999">
+		<desSpeedDecision anmFlag="false" lane="10005 1" name="" no="2" pos="0.58890562629916232" timeFrom="0" timeTo="99999">
 			<vehClassDesSpeedDistr>
 				<vehClassDesSpeedDistribution desSpeedDistr="60" vehClass="10"/>
 				<vehClassDesSpeedDistribution desSpeedDistr="60" vehClass="20"/>
@@ -2578,7 +2578,7 @@
 		</signalController>
 	</signalControllers>
 	<signalHeads>
-		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10005 1" localNo="0" name="" no="1" pos="1" sg="1 1" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
+		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10005 1" localNo="0" name="" no="1" pos="0.62704235306411205" sg="1 1" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10004 1" localNo="0" name="" no="2" pos="0" sg="1 2" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10006 1" localNo="0" name="" no="3" pos="0" sg="1 3" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10008 1" localNo="0" name="" no="4" pos="1" sg="1 4" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
@@ -2734,7 +2734,7 @@
 		<vehicleRoutingDecisionStatic allVehTypes="true" anmFlag="false" combineStaRoutDec="false" link="5" name="" no="1" pos="0.01" routeChoiceMeth="STATIC">
 			<vehRoutSta>
 				<vehicleRouteStatic destLink="10005" destPos="0.63662587057797482" formula="" name="" no="1" relFlow=""/>
-				<vehicleRouteStatic destLink="10004" destPos="0.51714244872581205" formula="" name="" no="2" relFlow="2 0:0"/>
+				<vehicleRouteStatic destLink="10004" destPos="0.51714244872581205" formula="" name="" no="2" relFlow=""/>
 				<vehicleRouteStatic destLink="10006" destPos="0.51742086166105905" formula="" name="" no="3" relFlow="">
 					<linkSeq>
 						<intObjectRef key="10002"/>
@@ -2745,7 +2745,7 @@
 		</vehicleRoutingDecisionStatic>
 		<vehicleRoutingDecisionStatic allVehTypes="true" anmFlag="false" combineStaRoutDec="false" link="4" name="" no="2" pos="0.01" routeChoiceMeth="STATIC">
 			<vehRoutSta>
-				<vehicleRouteStatic destLink="10008" destPos="0.61546231125571516" formula="" name="" no="1" relFlow="2 0:0"/>
+				<vehicleRouteStatic destLink="10008" destPos="0.61546231125571516" formula="" name="" no="1" relFlow=""/>
 				<vehicleRouteStatic destLink="10007" destPos="0.51154562725063446" formula="" name="" no="2" relFlow=""/>
 				<vehicleRouteStatic destLink="10009" destPos="0.35395892847190263" formula="" name="" no="3" relFlow="">
 					<linkSeq>
@@ -2758,7 +2758,7 @@
 		<vehicleRoutingDecisionStatic allVehTypes="true" anmFlag="false" combineStaRoutDec="false" link="8" name="" no="3" pos="0.01" routeChoiceMeth="STATIC">
 			<vehRoutSta>
 				<vehicleRouteStatic destLink="10011" destPos="0.82161628042964097" formula="" name="" no="1" relFlow=""/>
-				<vehicleRouteStatic destLink="10010" destPos="0.63744666153408802" formula="" name="" no="2" relFlow="2 0:0"/>
+				<vehicleRouteStatic destLink="10010" destPos="0.63744666153408802" formula="" name="" no="2" relFlow=""/>
 				<vehicleRouteStatic destLink="10012" destPos="0.58156408193968878" formula="" name="" no="3" relFlow="">
 					<linkSeq>
 						<intObjectRef key="10003"/>
@@ -2769,7 +2769,7 @@
 		</vehicleRoutingDecisionStatic>
 		<vehicleRoutingDecisionStatic allVehTypes="true" anmFlag="false" combineStaRoutDec="false" link="1" name="" no="4" pos="0.01" routeChoiceMeth="STATIC">
 			<vehRoutSta>
-				<vehicleRouteStatic destLink="10014" destPos="0.2827352210530033" formula="" name="" no="1" relFlow="2 0:0"/>
+				<vehicleRouteStatic destLink="10014" destPos="0.2827352210530033" formula="" name="" no="1" relFlow=""/>
 				<vehicleRouteStatic destLink="10013" destPos="0.29465034597216394" formula="" name="" no="2" relFlow=""/>
 				<vehicleRouteStatic destLink="10015" destPos="0.42188762144913572" formula="" name="" no="3" relFlow="">
 					<linkSeq>
@@ -2782,51 +2782,51 @@
 	</vehicleRoutingDecisionsStatic>
 	<vehicleTravelTimeMeasurements>
 		<vehicleTravelTimeMeasurement name="" no="1">
-			<end link="6" pos="199.9"/>
+			<end link="10005" pos="0"/>
 			<start link="5" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="2">
-			<end link="2" pos="199.9"/>
+			<end link="10004" pos="0"/>
 			<start link="5" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="3">
-			<end link="3" pos="199.9"/>
+			<end link="10006" pos="0"/>
 			<start link="5" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="4">
-			<end link="3" pos="199.9"/>
+			<end link="10008" pos="0"/>
 			<start link="4" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="5">
-			<end link="6" pos="199.9"/>
+			<end link="10007" pos="0"/>
 			<start link="4" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="6">
-			<end link="7" pos="199.9"/>
+			<end link="10009" pos="0"/>
 			<start link="4" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="7">
-			<end link="7" pos="199.9"/>
+			<end link="10011" pos="0"/>
 			<start link="8" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="8">
-			<end link="3" pos="199.9"/>
+			<end link="10010" pos="0"/>
 			<start link="8" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="9">
-			<end link="2" pos="199.9"/>
+			<end link="10012" pos="0"/>
 			<start link="8" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="10">
-			<end link="2" pos="199.9"/>
+			<end link="10014" pos="0"/>
 			<start link="1" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="11">
-			<end link="7" pos="199.9"/>
+			<end link="10013" pos="0"/>
 			<start link="1" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 		<vehicleTravelTimeMeasurement name="" no="12">
-			<end link="6" pos="199.9"/>
+			<end link="10015" pos="0"/>
 			<start link="1" pos="0.01"/>
 		</vehicleTravelTimeMeasurement>
 	</vehicleTravelTimeMeasurements>

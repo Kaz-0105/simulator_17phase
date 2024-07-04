@@ -12,10 +12,8 @@ classdef VissimMeasurements < handle
         RoadOutputMap;                     % ネットワークから流出する車両数のマップ                           
         IntersectionRoadQueueMap;          % 信号待ちの長さのマップ
         IntersectionCalcTimeMap;           % 計算時間のマップ
-        RoadNumVehsMap;                    % 車両数のマップ
+        IntersectionNumVehsMap;            % 車両数のマップ
         IntersectionRoadDelayMap;          % 遅れ時間のマップ
-
-        LinkDataCollectionMeasurementMap;  
     end
 
     properties
@@ -37,9 +35,6 @@ classdef VissimMeasurements < handle
             
             % timeの初期化
             obj.time = 0;
-
-            % LinkDataCollectionMeasurementMapの作成
-            obj.makeLinkDataCollectionMeasurementMap();
         end
     end
 
@@ -51,7 +46,7 @@ classdef VissimMeasurements < handle
     methods(Access = private)
 
         % Data Collection Pointのリンクごとのディクショナリを作成する関数
-        makeLinkDataCollectionMeasurementMap(obj)
+        
 
         % 計測データの更新を行う関数
         updateRoadInputMap(obj)

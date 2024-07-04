@@ -60,5 +60,5 @@ function runSingleHorizon(obj)
     obj.current_time = obj.break_time;
 
     % 結果の測定を行う
-    obj.VissimMeasurements.updateData();
+    obj.VissimMeasurements.update();
 end

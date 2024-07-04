@@ -1,4 +1,4 @@
-function updateIntersectionRoadQueueMap(obj)
+function updateIntersectionRoadDelayMap
     % IntesectionStructMap, RoadLinkMap, LinkQueueCounterMapを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
     RoadLinkMap = obj.Vissim.get('RoadLinkMap');

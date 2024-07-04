@@ -1,6 +1,7 @@
 function updateRoadInputMap(obj)
-    % LinkInputOutputMapを取得
+    % LinkInputOutputMapとLinkDataCollectionMeasurementMapを取得
     LinkInputOutputMap = obj.Vissim.get('LinkInputOutputMap');
+    LinkDataCollectionMeasurementMap = obj.Vissim.get('LinkDataCollectionMeasurementMap');
 
     % LinkRoadMapを取得
     LinkRoadMap = obj.Vissim.get('LinkRoadMap');
@@ -10,7 +11,7 @@ function updateRoadInputMap(obj)
             road_id = LinkRoadMap(link_id);
 
             % DataCollectionMeasurementのCOMオブジェクトを取得
-            data_collection_measurement_id = obj.LinkDataCollectionMeasurementMap(link_id);
+            data_collection_measurement_id = LinkDataCollectionMeasurementMap(link_id);
             DataCollectionMeasurement = obj.Com.Net.DataCollectionMeasurement.ItemByKey(data_collection_measurement_id);
 
             % データを追加

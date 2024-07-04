@@ -2,8 +2,8 @@ function makeLinkDataCollectionMeasurementMap(obj)
     % Mapの初期化
     obj.LinkDataCollectionMeasurementMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
     
-    % キー：DataCollectionPointのID、バリュー：リンクIDのディクショナリを作成
-    DataCollectionPointLinkMap = dictionary(int32.empty, int32.empty);
+    % キー：DataCollectionPointのID、バリュー：リンクIDのマップを作成
+    DataCollectionPointLinkMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
     DataCollectionPoints = obj.Com.Net.DataCollectionPoints;
 

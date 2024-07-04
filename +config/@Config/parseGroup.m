@@ -39,9 +39,6 @@ function group = parseGroup(obj, group_data)
             tmp_road.link_ids(end + 1) = link_id{1};
         end
 
-        % 道路を構成するリンクのうち直進車線のメインのリンクのIDを取得
-        tmp_road.main_link_id = road_data.v_mid;
-
         % Signal Controller（1つの交差点の信号機をまとめたグループのこと）のIDを取得
         if isfield(road_data, 'v_sc')
             tmp_road.signal_controller_id = road_data.v_sc;
@@ -75,11 +72,6 @@ function group = parseGroup(obj, group_data)
         %     end
         % end
 
-        % 自動車の流入量を取得
-        if isfield(road_data, 'input')
-            tmp_road.input = road_data.input;
-        end
-
         % sig_head_idを取得
         if isfield(road_data, 'sig_head_ids')
             tmp_sig_head_ids = [];
@@ -94,12 +86,6 @@ function group = parseGroup(obj, group_data)
             tmp_road.speed = road_data.speed;
         else
             tmp_road.speed = 60;
-        end
-
-        % queue_counterのIDを取得
-        tmp_road.queue_counter_ids = [];
-        for queue_counter_id = [road_data.queue_counter_ids{:}]
-            tmp_road.queue_counter_ids(end + 1) = queue_counter_id;
         end
 
         group.RoadsMap(tmp_road.id) = tmp_road;

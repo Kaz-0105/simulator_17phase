@@ -1,6 +1,5 @@
 function makeIntersectionControllerMap(obj)
     obj.IntersectionControllerMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-
     for intersection_id = cell2mat(keys(obj.IntersectionStructMap))
         intersection_struct = obj.IntersectionStructMap(intersection_id);
         switch intersection_struct.control_method

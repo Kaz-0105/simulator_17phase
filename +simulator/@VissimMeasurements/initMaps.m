@@ -4,7 +4,7 @@ function initMaps(obj)
     obj.RoadOutputMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
     obj.IntersectionRoadQueueMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
     obj.IntersectionCalcTimeMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-    obj.RoadNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+    obj.IntersectionNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
     obj.IntersectionRoadDelayMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
 
     % シミュレーション時間0秒のときのデータを設定
@@ -24,7 +24,7 @@ function initMaps(obj)
         end
     end
 
-    % IntersectionStructMap, RoadLinkMap, LinkQueueMapを取得
+    % IntersectionStructMap, RoadLinkMap, LinkQueueCounterMapを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
 
     % IntersectionRoadQueueMapについて
@@ -43,7 +43,25 @@ function initMaps(obj)
 
     % IntersectionCalcTimeMapについて
     for intersection_id = cell2mat(keys(IntersectionStructMap))
-        obj.IntersectionCalcTimeMap(intersection_id) = 0;
+        obj.IntersectionCalcTimeMap(intersection_id) = [];
     end
 
+    % IntersectionNumVehsMapについて
+    for intersection_id = cell2mat(keys(IntersectionStructMap))
+        obj.IntersectionNumVehsMap(intersection_id) = [];
+    end
+
+    % IntersectionRoadDelayMapについて
+    for intersection_id = cell2mat(keys(IntersectionStructMap))
+        % intersection構造体の取得
+        intersection_struct = IntersectionStructMap(intersection_id);
+
+        for road_id = intersection_struct.input_road_ids
+            % 道路の順番を取得（時計回りで設定するのがルール）
+            order = intersection_struct.InputRoadOrderMap(road_id);
+
+            % 0をマップに格納
+            obj.IntersectionRoadDelayMap.add(intersection_id, order, 0);
+        end
+    end
 end

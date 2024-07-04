@@ -10,16 +10,18 @@ classdef Vissim < handle
 
     properties
         % Mapの変数
-        LinkRoadMap;                        % キー：リンクのID、バリュー：そのリンクが属する道路のID
-        LinkTypeMap;                        % キー：リンクのID、バリュー：リンクの種類
-        RoadLinkMap;                        % キー：道路のID、バリュー：その道路に属するリンクのIDの配列が入ったセル配列
-        RoadStructMap;                      % キー：道路のID、バリュー：道路の長さに関する構造体
-        LinkInputOutputMap;                 % キー：リンクのID、バリュー：そのリンクが末端流入リンクまたは末端流出リンクであるかどうか
-        IntersectionStructMap;              % キー：交差点のID、バリュー：交差点の流入出道路に関する構造体
-        LinkQueueMap;                       % キー：リンクのID、バリュー：そのリンクのキューカウンターのID
-        IntersectionControllerMap;          % キー：交差点のID、バリュー：制御器のクラスのオブジェクト
-        IntersectionSignalControllerMap;    % キー：交差点のID、バリュー：SignalControllerのCOMオブジェクト
-        IntersectionOptStateMap;            % キー：交差点のID、バリュー：その交差点の信号現示の最適解
+        LinkRoadMap;                         % キー：リンクのID、バリュー：そのリンクが属する道路のID
+        LinkTypeMap;                         % キー：リンクのID、バリュー：リンクの種類
+        RoadLinkMap;                         % キー：道路のID、バリュー：その道路に属するリンクのIDの配列が入ったセル配列
+        RoadStructMap;                       % キー：道路のID、バリュー：道路の長さに関する構造体
+        LinkInputOutputMap;                  % キー：リンクのID、バリュー：そのリンクが末端流入リンクまたは末端流出リンクであるかどうか
+        IntersectionStructMap;               % キー：交差点のID、バリュー：交差点の流入出道路に関する構造体
+        LinkQueueCounterMap;                 % キー：リンクのID、バリュー：そのリンクのキューカウンターのID
+        IntersectionControllerMap;           % キー：交差点のID、バリュー：制御器のクラスのオブジェクト
+        IntersectionSignalControllerMap;     % キー：交差点のID、バリュー：SignalControllerのCOMオブジェクト
+        IntersectionOptStateMap;             % キー：交差点のID、バリュー：その交差点の信号現示の最適解
+        RoadDelayMeasurementMap;             % キー：道路のID、バリュー：DelayMeasurementのID
+        LinkDataCollectionMeasurementMap;    % キー：リンクのID、バリュー：DataCollectionMeasurementのID
     end
 
     properties
@@ -86,14 +88,20 @@ classdef Vissim < handle
             % LinkInputOutputMapの作成
             obj.makeLinkInputOutputMap();
 
-            % LinkQueueMapの作成
-            obj.makeLinkQueueMap();
+            % LinkQueueCounterMapの作成
+            obj.makeLinkQueueCounterMap();
 
             % IntersectionControllerMapの作成
             obj.makeIntersectionControllerMap();
 
             % IntersectionSignalControllerMapの作成
             obj.makeIntersectionSignalControllerMap();
+
+            % IntersectionRoadDelayMeasurementMapの作成
+            obj.makeRoadDelayMeasurementMap();
+
+            % LinkDataCollectionMeasurementMapの作成
+            obj.makeLinkDataCollectionMeasurementMap();
 
             % VissimMeasurementsクラスの変数の設定
             obj.VissimMeasurements = simulator.VissimMeasurements(obj);
@@ -116,12 +124,16 @@ classdef Vissim < handle
         makeRoadLinkMap(obj);
         makeRoadStructMap(obj);
         makeLinkInputOutputMap(obj);
-        makeLinkQueueMap(obj);
+        makeLinkQueueCounterMap(obj);
         makeIntersectionStructMap(obj);
         makeIntersectionControllerMap(obj);
+        makeRoadDelayMeasurementMap(obj);
+        makeLinkDataCollectionMeasurementMap(obj)
+        
         updateStates(obj);
         optimize(obj);
         runSingleHorizon(obj, sim_step);
+        main_link_id = getMainLink(obj, link_ids);
     end
 
     methods(Static)
