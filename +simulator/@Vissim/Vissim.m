@@ -26,9 +26,12 @@ classdef Vissim < handle
 
     properties
         % その他の変数
-        break_time = 0;                     % シミュレーションのブレイクポイントの時間
-        current_time = 0;                   % 現在のシミュレーションの時間
-        prediction_count = 0;               % 予測回数
+        break_time = 0;         % シミュレーションのブレイクポイントの時間
+        current_time = 0;       % 現在のシミュレーションの時間
+        prediction_count = 0;   % 予測回数
+
+        is_save;                % シミュレーション結果を保存するかどうかのフラグ
+        save_path;              % シミュレーション結果を保存する
     end
 
     methods(Access = public)
@@ -37,6 +40,10 @@ classdef Vissim < handle
 
             % yamlクラスの変数の設定
             obj.Config = Config;
+
+            % 結果の保存に関する設定
+            obj.is_save = Config.result.save.active;
+            obj.save_path = Config.result.save.path;
 
             % COMのオブジェクトの設定
             obj.Com = actxserver('VISSIM.vissim');

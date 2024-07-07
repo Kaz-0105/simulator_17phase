@@ -7,11 +7,18 @@ classdef ResultVisualizer < handle
     end
 
     properties
-        line_width;      % 線の太さ
-        font_size; % ラベルのフォントサイズ
+        CompareDataPathMap; % 比較するデータのパスのマップ
+    end
 
-        isSave; % データを保存するかどうか
-        isCompare; % データを比較するかどうか
+    properties
+        line_width;          % 線の太さ
+        font_size;           % ラベルのフォントサイズ
+
+        queue_length_flag; % キューの長さの表示の有無に関するフラグ
+        num_vehs_flag;     % 自動車台数の表示の有無に関するフラグ
+        delay_time_flag;   % 遅れ時間の表示の有無に関するフラグ
+        calc_time_flag;    % 計算時間の表示の有無に関するフラグ
+        compare_flag;      % 結果の比較の有無に関するフラグ
     end
 
     methods(Access = public)
@@ -28,108 +35,23 @@ classdef ResultVisualizer < handle
             obj.line_width = Config.graph.line_width;
             obj.font_size = Config.graph.font_size;
 
-            % isSaveとisCompareの設定
-            obj.isSave = Config.result.save;
-            obj.isCompare = Config.result.comparison;
-        end
+            % queue_length_flagの設定
+            obj.queue_length_flag = Config.result.contents.queue_length.active;
 
-        function save_figure_structs(obj)
-            tmp_figure_structs = obj.figure_structs;
-        
-            fprintf("シミュレーション結果のデータを保存しますか？(y/n)\n")
-            answer = string(input('>> ', 's'));
-        
-            if answer == "y"
-                fprintf("保存するフォルダを教えてください。\n");
-                save_dir = uigetdir(pwd+"/results/data");
-        
-                if save_dir == 0
-                    fprintf("保存するフォルダが選択されませんでした。\n");
-                    return;
-                end
-        
-                fprintf("ファイル名を指定しましょう。\n");
-                file_name = input('>> ', 's');
-        
-                save(fullfile(save_dir, file_name), 'tmp_figure_structs');
-        
-                fprintf("データの保存が完了しました。\n");
-            end
-        end
+            % num_vehs_flagの設定
+            obj.num_vehs_flag = Config.result.contents.num_vehs.active;
 
-        function compare_results(obj)
+            % delay_time_flagの設定
+            obj.delay_time_flag = Config.result.contents.delay_time.active;
 
-            fprintf("シミュレーション結果を比較しますか？(y/n)\n")
-            answer = string(input('>> ', 's'));
-        
-            if answer == "y"
-                fprintf("比較するファイルを選択してください。\n");
-                [file_names, file_dir] = uigetfile(pwd +"\results\data\comparison", 'MultiSelect', 'on');
-        
-                if ~iscell(file_names)
-                    fprintf("ファイルが選択されませんでした。\n");
-                    return;
-                end
+            % calc_time_flagの設定
+            obj.calc_time_flag = Config.result.contents.calc_time.active;
 
-                num_vehs_map = dictionary(int32.empty, struct.empty);
-                calc_time_map = dictionary(int32.empty, struct.empty);
-                queue_length_map = dictionary(int32.empty, struct.empty);
-        
-                data_id = 0;
+            % compare_flagの設定
+            obj.compare_flag = Config.result.compare.active;
 
-                for file_name = file_names
-                    data_id = data_id + 1;
-
-                    file_name = file_name{1};
-                    load(fullfile(file_dir, file_name));
-
-                    num_vehs_map(data_id) = tmp_figure_structs('num_vehs_all');
-                    calc_time_map(data_id) = tmp_figure_structs('calc_time_all');
-                    queue_length_map(data_id) = tmp_figure_structs('queue_length_all');
-
-                end
-            
-            else
-                return;
-            end
-
-            % 車両数の比較
-
-            figure("Name", "Number of Vehicles in the Network (Comparison)");
-            grid on;
-            hold on;
-
-            for data_id = keys(num_vehs_map)'
-                num_vehs_data = num_vehs_map(data_id);
-                plot(num_vehs_data.x_data, num_vehs_data.y_data, "LineWidth", obj.line_width);
-            end
-
-            set(gca, "FontSize", obj.gca_font_size);
-            xlabel("Time [s]", "FontSize", obj.label_font_size);
-            ylabel("Number of Vehicles", "FontSize", obj.label_font_size);
-            title("Vehicles in the Network (Comparison)", "FontSize", obj.title_font_size);
-
-            xlim([0, obj.time_data(end)]);
-            legend(file_names);
-
-            % 車列の比較
-
-            figure("Name", "Queue Length (Comparison)");
-            grid on;
-            hold on;
-
-            for data_id = keys(queue_length_map)'
-                queue_length_data = queue_length_map(data_id);
-                plot(queue_length_data.x_data, queue_length_data.y_data, "LineWidth", obj.line_width);
-            end
-
-            set(gca, "FontSize", obj.gca_font_size);
-            xlabel("Time [s]", "FontSize", obj.label_font_size);
-            ylabel("Queue Length [m]", "FontSize", obj.label_font_size);
-            title("Queue Length (Comparison)", "FontSize", obj.title_font_size);
-
-            xlim([0, obj.time_data(end)]);
-            legend(file_names);        
+            % Config.result.compare.PathMapの取得
+            obj.CompareDataPathMap = Config.result.compare.PathMap;
         end
     end
 
@@ -140,12 +62,10 @@ classdef ResultVisualizer < handle
 
     methods(Access = private)
         showResult(obj);
-        showCompare(obj);
-        saveResult(obj);
 
-        showCalcTime(obj, varargin);
-        showQueueLength(obj, varargin);
-        showNumVehs(obj, varargin);
-        showDelay(obj, varargin);
+        showQueueLength(obj);
+        showNumVehs(obj);
+        showDelayTime(obj);
+        showCalcTime(obj);
     end
 end

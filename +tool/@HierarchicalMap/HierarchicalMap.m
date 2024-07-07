@@ -46,5 +46,6 @@ classdef HierarchicalMap < handle
         values = innerKeys(obj, key1);
         displayCounter(obj);
         flag = isKey(obj, key1, key2);
+        values = average(obj, scale);
     end
 end

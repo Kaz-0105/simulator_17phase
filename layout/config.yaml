@@ -30,28 +30,35 @@ simulation :
 
 result :
   save :
-    active : 'on'
+    active : 'off'
     path : '\results\1-1_network'
   compare : 
     active : 'off'
-    path : '\results\1-1_network\~.mat'
+    path : 
+      - '\results\1-1_network\~.mat'
+      - '\results\1-1_network\~.mat'
   contents :
     calc_time :
       active : 'on'
       scale : 'system'
-    queue :
-      active : 'on'
+    queue_length :
+      active : 'off'
       scale : 'intersection'
     num_vehs : 
-      active : 'on'
+      active : 'off'
       scale : 'system'
-    delay : 
-      active : 'on'
+    delay_time : 
+      active : 'off'
       scale : 'system'
 
 graph :
-  line_width : 2
+  line_graph : 
+    line_width : 2
+  histgram :
+    bin_width : 1
+    face_alpha : 0.5
   font_size :
     title : 20
     label : 15
-    gca : 15
+    axis : 15
+  
