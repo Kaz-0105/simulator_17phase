@@ -1,8 +1,7 @@
-function updateIntersectionRoadDelayMap
-    % IntesectionStructMap, RoadLinkMap, LinkQueueCounterMapを取得
+function updateIntersectionRoadDelayMap(obj)
+    % IntesectionStructMap, RoadDelayMeasurementMapを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
-    RoadLinkMap = obj.Vissim.get('RoadLinkMap');
-    LinkQueueCounterMap = obj.Vissim.get('LinkQueueCounterMap');
+    RoadDelayMeasurementMap = obj.Vissim.get('RoadDelayMeasurementMap');
     
     for intersection_id = cell2mat(keys(IntersectionStructMap))
         % intersection構造体の取得
@@ -12,19 +11,37 @@ function updateIntersectionRoadDelayMap
             % 道路の順番を取得（時計回りで設定するのがルール）
             order = intersection_struct.InputRoadOrderMap(road_id);
 
-            % キューの長さを計算
-            tmp_queue_length = 0;
-            link_ids = RoadLinkMap(road_id);
-            for link_id = link_ids
-                if isKey(LinkQueueCounterMap, link_id)
-                    queue_counter_id = LinkQueueCounterMap(link_id);
-                    queue_counter_obj = obj.Com.Net.QueueCounters.ItemByKey(queue_counter_id);
-                    tmp_queue_length = tmp_queue_length + queue_counter_obj.get('AttValue', 'QLen(Current, Last)');
+            % 前回までの遅れ時間を取得
+            delay_time_data = obj.IntersectionRoadDelayMap.get(intersection_struct.id, order);
+
+            % 遅れ時間の合計値を初期化
+            sum = 0;
+
+            % DelayTimeMeasurementのカウンターの初期化
+            count = 0;
+
+            % 遅れ時間の計算
+            for delay_measurement_id = RoadDelayMeasurementMap(road_id)
+                % DelayMeasurementのCOMオブジェクトから情報を取得
+                tmp_delay_time = obj.Com.Net.DelayMeasurements.ItemByKey(delay_measurement_id).get('AttValue', 'VehDelay(Current, Last, All)');
+
+                % tmp_delay_timeがNaNの場合は前回のデータを使う
+                if isnan(tmp_delay_time)
+                    tmp_delay_time = delay_time_data(end);
                 end
+                
+                % 遅れ時間を加算
+                sum = sum + tmp_delay_time;
+
+                % DelayTimeMeasurementのカウンターを更新
+                count = count + 1;
             end
 
-            % キューの長さをマップに格納
-            obj.IntersectionRoadQueueMap.set(intersection_struct.id, order, [obj.IntersectionRoadQueueMap.get(intersection_struct.id, order), tmp_queue_length]);
+            % 平均をとる
+            delay_time = sum / count;
+
+            % 遅れ時間をMapにプッシュ
+            obj.IntersectionRoadDelayMap.set(intersection_struct.id, order, [delay_time_data, delay_time]);
         end
     end
 end

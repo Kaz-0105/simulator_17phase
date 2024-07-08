@@ -2,7 +2,8 @@ classdef VissimMeasurements < handle
 
     properties
         % クラス
-        Com; % VissimのCOMオブジェクト
+        Config; % Configクラスの変数
+        Com;    % VissimのCOMオブジェクト
         Vissim; % Vissimクラスの変数
     end
 
@@ -25,7 +26,10 @@ classdef VissimMeasurements < handle
 
         function obj = VissimMeasurements(Vissim)
             % VissimのCOMオブジェクトを設定
-            obj.Com = Vissim.Com;
+            obj.Com = Vissim.get('Com');
+
+            % Configクラスの変数を設定
+            obj.Config = Vissim.get('Config');
 
             % Vissimクラスの変数を設定
             obj.Vissim = Vissim;
@@ -35,6 +39,9 @@ classdef VissimMeasurements < handle
             
             % timeの初期化
             obj.time = 0;
+
+            % Vissim側の計測データに関する設定
+            obj.applyToVissim();
         end
     end
 
@@ -46,6 +53,9 @@ classdef VissimMeasurements < handle
     methods(Access = private)
         % マップを初期化する関数
         initMaps(obj)
+
+        % Vissim上の設定を行う関数
+        applyToVissim(obj)
         
         % 計測データの更新を行う関数
         updateRoadInputMap(obj)

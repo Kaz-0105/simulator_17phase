@@ -55,7 +55,7 @@ graph :
   line_graph : 
     line_width : 2
   histogram :
-    bin_width : 0.1
+    bin_width : 1
     face_alpha : 0.5
   font_size :
     title : 20

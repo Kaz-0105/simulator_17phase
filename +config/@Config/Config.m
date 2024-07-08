@@ -11,6 +11,7 @@ classdef Config<handle
     end
 
     properties
+        % 普通の変数
         file_name;
         file_dir;
     end

@@ -2,6 +2,9 @@ function showCalcTime(obj)
     % histogramの設定を取得
     setting = obj.GraphSettingMap('histogram');
 
+    % max_timeの取得
+    max_time = obj.Config.mpc.max_time;
+
     % 他の結果と比較するか、系全体と交差点ごとのどちらで表示するか場合分け
     if strcmp(obj.Config.result.contents.calc_time.scale, 'system')
         % IntersectionCalcTimeMapの取得
@@ -15,7 +18,7 @@ function showCalcTime(obj)
         figure(obj.tmp_figure_id);
 
         % histogramの表示
-        histogram(combine, 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha);
+        histogram(combine, 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha, 'BinLimits', [-1, 2*max_time]);
 
         % グラフのタイトル、ラベルの設定
         title('Calculation Time (all intersection)', 'FontSize', obj.font_sizes.title);
@@ -52,7 +55,7 @@ function showCalcTime(obj)
                 combine = tool.map.combine(IntersectionCalcTimeMap);
 
                 % histogramの表示
-                histogram(combine, 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha);
+                histogram(combine, 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha, 'BinLimits', [-1, 2*max_time]);
 
                 % 凡例の表示
                 legend(strcat('Compare ', num2str(path_id), ' data'))
@@ -78,7 +81,7 @@ function showCalcTime(obj)
             IntersectionFigureMap(intersection_id) = obj.tmp_figure_id;
 
             % histogramの表示
-            histogram(IntersectionCalcTimeMap(intersection_id), 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha);
+            histogram(IntersectionCalcTimeMap(intersection_id), 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha, 'BinLimits', [-1, 2*max_time]);
 
             % グラフのタイトル、ラベルの設定
             title(strcat('Calculation Time (intersection : ', num2str(intersection_id), ')'), 'FontSize', obj.font_sizes.title);
@@ -119,7 +122,7 @@ function showCalcTime(obj)
                     hold on;
 
                     % histogramの表示
-                    histogram(IntersectionCalcTimeMap(intersection_id), 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha);
+                    histogram(IntersectionCalcTimeMap(intersection_id), 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha, 'BinLimits', [-1, 2*max_time]);
 
                     % 凡例の表示
                     legend(strcat('Compare ', num2str(path_id), ' data'));

@@ -49,34 +49,7 @@ classdef Vissim < handle
             obj.Com = actxserver('VISSIM.vissim');
             obj.Com.LoadNet(Config.network.inpx_file);
             obj.Com.LoadLayout(Config.network.layx_file);
-
-            % Vehicle Network Performanceの設定
-            obj.Com.Evaluation.set('AttValue','VehNetPerfCollectData',true);
-            obj.Com.Evaluation.set('AttValue','VehNetPerfFromTime',0);
-            obj.Com.Evaluation.set('AttValue','VehNetPerfToTime',Config.simulation.time);
-            obj.Com.Evaluation.set('AttValue','VehNetPerfInterval',Config.mpc.control_interval);
-
-            % Delay Timeの設定
-            obj.Com.Evaluation.set('AttValue','DelaysCollectData',true);                     % Delayの計測をONにする
-            obj.Com.Evaluation.set('AttValue','DelaysFromTime',0);                           % Delayの計測の開始時間の設定
-            obj.Com.Evaluation.set('AttValue','DelaysToTime',Config.simulation.time);        % Delayの計測の終了時間の設定
-            obj.Com.Evaluation.set('AttValue','DelaysInterval',Config.mpc.control_interval); % データの収集間隔の設定
-
-            % Queue Lengthの設定
-            obj.Com.Evaluation.set('AttValue','QueuesCollectData',true);                     % Queueの計測をONにする
-            obj.Com.Evaluation.set('AttValue','QueuesFromTime',0);                           % Queueの計測の開始時間の設定
-            obj.Com.Evaluation.set('AttValue','QueuesToTime',Config.simulation.time);        % Queueの計測の終了時間の設定
-            obj.Com.Evaluation.set('AttValue','QueuesInterval',Config.mpc.control_interval); % データの収集間隔の設定
-
-            % シミュレーション用の設定
-            obj.Com.Simulation.set('AttValue', 'NumRuns', Config.simulation.count);                       % シミュレーション回数の設定をVissimに渡す
-            obj.Com.Simulation.set('AttValue','RandSeed',Config.vissim.seed);                             % 乱数シードの設定をVissimに渡す
-            obj.Com.Graphics.CurrentNetworkWindow.set('AttValue','QuickMode',Config.vissim.graphic_mode); % 描画設定をVissimに渡す
-            obj.Com.Simulation.set('AttValue','UseMaxSimSpeed',false);                                    % シミュレーションを最高速度で行うようにVissimを設定する
-            obj.Com.Simulation.set('AttValue','UseAllCores',true);                                        % シミュレーションに全てのコアを使うようにVissimを設定する
-            obj.Com.Simulation.set('AttValue','SimPeriod',Config.simulation.time);                        % シミュレーション時間を設定する
-            obj.Com.Simulation.set('AttValue','SimRes',Config.vissim.resolution);                         % 解像度を設定                            % シミュレーションの解像度を設定する
-
+            
             % linkRoadMapの作成                                                        
             obj.makeLinkRoadMap();
 
@@ -110,6 +83,9 @@ classdef Vissim < handle
             % LinkDataCollectionMeasurementMapの作成
             obj.makeLinkDataCollectionMeasurementMap();
 
+            % Vissim上の設定を行う
+            obj.applyToVissim();
+
             % VissimMeasurementsクラスの変数の設定
             obj.VissimMeasurements = simulator.VissimMeasurements(obj);
         end
@@ -135,7 +111,9 @@ classdef Vissim < handle
         makeIntersectionStructMap(obj);
         makeIntersectionControllerMap(obj);
         makeRoadDelayMeasurementMap(obj);
-        makeLinkDataCollectionMeasurementMap(obj)
+        makeLinkDataCollectionMeasurementMap(obj);
+
+        applyToVissim(obj);
         
         updateStates(obj);
         optimize(obj);
