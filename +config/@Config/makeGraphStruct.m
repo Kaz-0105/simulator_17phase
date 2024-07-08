@@ -1,7 +1,10 @@
 function makeGraphStruct(obj, data)
-    % line_width
-    obj.graph.line_width = data.graph.line_width;   
+    % LineGraphの設定
+    obj.graph.line_graph = data.graph.line_graph;   
 
-    % font_size
+    % Histogramの設定
+    obj.graph.histogram = data.graph.histogram;
+
+    % FontSizeの設定
     obj.graph.font_size = data.graph.font_size;
 end

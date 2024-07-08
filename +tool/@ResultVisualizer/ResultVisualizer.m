@@ -7,18 +7,19 @@ classdef ResultVisualizer < handle
     end
 
     properties
-        CompareDataPathMap; % 比較するデータのパスのマップ
+        % マップ
+        ComparePathMap; % キー：比較するデータのID、バリュー：比較するデータの相対パス
+        GraphSettingMap; % キー：グラフの種類、バリュー：設定をまとめた構造体のマップ
     end
 
     properties
-        line_width;          % 線の太さ
-        font_size;           % ラベルのフォントサイズ
+        % 構造体
+        flags;      % 表示の有無に関するフラグの構造体
+        font_sizes; % フォントサイズの構造体
+    end
 
-        queue_length_flag; % キューの長さの表示の有無に関するフラグ
-        num_vehs_flag;     % 自動車台数の表示の有無に関するフラグ
-        delay_time_flag;   % 遅れ時間の表示の有無に関するフラグ
-        calc_time_flag;    % 計算時間の表示の有無に関するフラグ
-        compare_flag;      % 結果の比較の有無に関するフラグ
+    properties
+        tmp_figure_id; % 現在のfigureの番号
     end
 
     methods(Access = public)
@@ -31,27 +32,24 @@ classdef ResultVisualizer < handle
             % VissimMeasurementsクラスの変数を設定
             obj.VissimMeasurements = Vissim.get('VissimMeasurements');
 
-            % line_widthとfont_sizeの設定
-            obj.line_width = Config.graph.line_width;
-            obj.font_size = Config.graph.font_size;
+            % フォントサイズの設定
+            obj.font_sizes = Config.graph.font_size;
 
-            % queue_length_flagの設定
-            obj.queue_length_flag = Config.result.contents.queue_length.active;
+            % 表示の有無のフラグの設定
+            obj.flags.queue_length = Config.result.contents.queue_length.active;
+            obj.flags.num_vehs = Config.result.contents.num_vehs.active;
+            obj.flags.delay_time = Config.result.contents.delay_time.active;
+            obj.flags.calc_time = Config.result.contents.calc_time.active;
+            obj.flags.compare = Config.result.compare.active;
 
-            % num_vehs_flagの設定
-            obj.num_vehs_flag = Config.result.contents.num_vehs.active;
+            % ComparePathMapの設定
+            obj.ComparePathMap = Config.result.compare.PathMap;
 
-            % delay_time_flagの設定
-            obj.delay_time_flag = Config.result.contents.delay_time.active;
+            % GraphSettingMapの設定
+            obj.makeGraphSettingMap();
 
-            % calc_time_flagの設定
-            obj.calc_time_flag = Config.result.contents.calc_time.active;
-
-            % compare_flagの設定
-            obj.compare_flag = Config.result.compare.active;
-
-            % Config.result.compare.PathMapの取得
-            obj.CompareDataPathMap = Config.result.compare.PathMap;
+            % tmp_figure_idの初期化
+            obj.tmp_figure_id = 0;
         end
     end
 
@@ -61,6 +59,8 @@ classdef ResultVisualizer < handle
     end
 
     methods(Access = private)
+        makeGraphSettingMap(obj);
+
         showResult(obj);
 
         showQueueLength(obj);

@@ -21,11 +21,11 @@ model :
   dan :
     N_s : 4              # 最低の連続ステップ数
     m : 1                # 最大変化回数
-    eps : 0.000001       # 微小量
+    eps : 0.00000001     # 微小量
     fix_num : 2          # 初期値の固定する数
 
 simulation :
-  time : 10  # シミュレーション時間
+  time : 100 # シミュレーション時間
   count : 1  # シミュレーション回数
 
 result :
@@ -42,7 +42,7 @@ result :
       active : 'on'
       scale : 'system'
     queue_length :
-      active : 'off'
+      active : 'on'
       scale : 'intersection'
     num_vehs : 
       active : 'off'
@@ -54,8 +54,8 @@ result :
 graph :
   line_graph : 
     line_width : 2
-  histgram :
-    bin_width : 1
+  histogram :
+    bin_width : 0.1
     face_alpha : 0.5
   font_size :
     title : 20

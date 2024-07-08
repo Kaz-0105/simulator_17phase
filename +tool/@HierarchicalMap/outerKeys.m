@@ -1,3 +1,3 @@
 function values = outerKeys(obj)
-    values = cell2mat(keys(obj.OuterMap));
+    values = keys(obj.OuterMap);
 end

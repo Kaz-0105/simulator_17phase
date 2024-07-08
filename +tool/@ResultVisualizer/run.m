@@ -1,21 +1,23 @@
 function run(obj)
+    % フラグがTrueの場合のみ描画
+    
     % QueueLengthについて
-    if obj.queue_length_flag
+    if obj.flags.queue_length
         obj.showQueueLength();
     end
 
     % NumVehsについて
-    if obj.num_vehs_flag
+    if obj.flags.num_vehs
         obj.showNumVehs();
     end
 
     % DelayTimeについて
-    if obj.delay_time_flag
+    if obj.flags.delay_time
         obj.showDelayTime();
     end
 
     % CalcTimeについて
-    if obj.calc_time_flag
+    if obj.flags.calc_time
         obj.showCalcTime();
     end
 end

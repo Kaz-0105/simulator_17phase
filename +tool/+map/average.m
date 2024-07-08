@@ -2,7 +2,8 @@ function value = average(map)
     is_first = true;
     count = 0;
 
-    for key = cell2mat(map.keys)
+    for key = map.keys
+        key = key{1};
         if ~isnumeric(map(key))
             error('The value is not numeric. We cannot calculate the average.');
         end
