@@ -48,7 +48,7 @@ result :
       active : 'off'
       scale : 'system'
     delay_time : 
-      active : 'off'
+      active : 'on'
       scale : 'system'
 
 graph :

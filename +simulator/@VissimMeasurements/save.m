@@ -23,9 +23,10 @@ function save(obj, base_name, directory)
     IntersectionCalcTimeMap = obj.IntersectionCalcTimeMap;           
     IntersectionRoadNumVehsMap = obj.IntersectionRoadNumVehsMap;        
     IntersectionRoadDelayMap = obj.IntersectionRoadDelayMap;
+    time = obj.time;
 
     data = { RoadInputMap, RoadOutputMap, IntersectionRoadQueueMap, ...
-             IntersectionCalcTimeMap, IntersectionRoadNumVehsMap, IntersectionRoadDelayMap};
+             IntersectionCalcTimeMap, IntersectionRoadNumVehsMap, IntersectionRoadDelayMap, time};
 
     % データを保存
     save(file_path, 'data');
