@@ -11,6 +11,9 @@ function makeResultStruct(obj, data)
     % 保存するディレクトリのパス
     obj.result.save.path = char(data.result.save.path);
 
+    % 保存するファイルの名前
+    obj.result.save.name = char(data.result.save.name);
+
     % 結果の比較の有無
     if strcmp(char(data.result.compare.active), 'on')
         obj.result.compare.active = true;

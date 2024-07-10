@@ -43,8 +43,8 @@ function showNumVehs(obj)
         ax = gca;
         ax.FontSize = obj.font_sizes.axis;
 
-        % 凡例の表示
-        legend('Current data');
+        % 凡例をまとめるセル配列を作成
+        legend_list = {'Current data'};
 
         % 過去の結果と比較する場合
         if obj.flags.compare
@@ -63,9 +63,9 @@ function showNumVehs(obj)
                 end
 
                 % matファイルの読み込み（timeとRoadInputMap、RoadOutputMapの取得）
-                time = load(path, 'time');
-                RoadInputMap = load(path, 'RoadInputMap');
-                RoadOutputMap = load(path, 'RoadOutputMap');
+                load(path, 'time');
+                load(path, 'RoadInputMap');
+                load(path, 'RoadOutputMap');
 
                 % 流入口と流出口の通過車両数の合計を時系列で取得
                 input_sum = tool.map.sum(RoadInputMap);
@@ -84,9 +84,12 @@ function showNumVehs(obj)
                 % LineGraphの表示
                 plot(time, num_vehs, 'LineWidth', setting.line_width);
 
-                % 凡例の表示
-                legend('Compare ', num2str(path_id), ' data');
+                % 凡例を追加
+                legend_list{end+1} = strcat('Compare ', num2str(path_id), ' data');
             end
+            
+            % 凡例の表示
+            legend(legend_list);
         end
     elseif strcmp(obj.Config.result.contents.num_vehs.scale, 'intersection')
         % IntersectionRoadNumVehsMapの取得
@@ -94,6 +97,9 @@ function showNumVehs(obj)
 
         % IntersectionFigureMapの初期化
         IntersectionFigureMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+
+        % 凡例をまとめるセル配列のマップを作成
+        IntersectionLegendListMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
         for intersection_id = cell2mat(IntersectionRoadNumVehsMap.outerKeys())
             % RoadNumVehsMapの取得
@@ -105,6 +111,9 @@ function showNumVehs(obj)
             % figureのウィンドウを開く
             obj.tmp_figure_id = obj.tmp_figure_id + 1;
             figure(obj.tmp_figure_id);
+
+            % IntersectionFigureMapに追加
+            IntersectionFigureMap(intersection_id) = obj.tmp_figure_id;
 
             % LineGraphの表示
             plot(time, num_vehs, 'LineWidth', setting.line_width);
@@ -118,12 +127,21 @@ function showNumVehs(obj)
             ax = gca;
             ax.FontSize = obj.font_sizes.axis;
 
+            % 凡例をまとめるセル配列を作成
+            legend_list = {'Current data'};
+
             % 凡例の表示
-            legend('Current data');
+            legend(legend_list);
+
+            % IntersectionLegendListMapにプッシュ
+            IntersectionLegendListMap(intersection_id) = legend_list;
         end
 
         % 過去の結果と比較する場合
         if obj.flags.compare
+            % path_idの最大値を取得
+            max_path_id = max(cell2mat(obj.ComparePathMap.keys));
+
             for path_id = cell2mat(obj.ComparePathMap.keys)
                 % 比較するデータの相対パスの取得
                 relative_path = obj.ComparePathMap(path_id);
@@ -136,14 +154,14 @@ function showNumVehs(obj)
                 end
 
                 % matファイルの読み込み（timeとIntersectionRoadNumVehsMapの取得）
-                time = load(path, 'time');
-                IntersectionRoadNumVehsMap = load(path, 'IntersectionRoadNumVehsMap');
+                load(path, 'time');
+                load(path, 'IntersectionRoadNumVehsMap');
 
                 % 交差点ごとの車両数を取得
                 for intersection_id = cell2mat(IntersectionRoadNumVehsMap.outerKeys())
                     % figureのウィンドウを開く
                     figure_id = IntersectionFigureMap(intersection_id);
-                    figure(figure_id);
+                    figure(double(figure_id));
 
                     % 座標を固定
                     hold on;
@@ -157,8 +175,15 @@ function showNumVehs(obj)
                     % LineGraphの表示
                     plot(time, num_vehs, 'LineWidth', setting.line_width);
 
+                    % 凡例の追加
+                    legend_list = IntersectionLegendListMap(intersection_id);
+                    legend_list{end+1} = strcat('Compare ', num2str(path_id), ' data');
+                    IntersectionLegendListMap(intersection_id) = legend_list;
+
                     % 凡例の表示
-                    legend(strcat('Compare ', num2str(path_id), ' data'));
+                    if path_id == max_path_id
+                        legend(legend_list);
+                    end
 
                     % 座標の固定を解除
                     hold off;

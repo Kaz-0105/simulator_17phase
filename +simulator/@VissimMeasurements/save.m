@@ -1,4 +1,18 @@
-function save(obj, base_name, directory)
+function save(obj)
+    % base_nameの取得
+    base_name = obj.Config.result.save.name;
+
+    % 保存先の相対パスの取得
+    relative_path = obj.Config.result.save.path;
+
+    % 絶対パスに変換
+    if strcmp(relative_path(1), '\')
+        directory = strcat(pwd, relative_path);
+    else
+        directory = strcat(pwd, '\', relative_path);
+    end
+
+
     % ディレクトリが存在しない場合は作成
     if ~exist(directory, 'dir')
         mkdir(directory);
@@ -16,7 +30,6 @@ function save(obj, base_name, directory)
     end
 
     % 保存したい変数を指定
-
     RoadInputMap = obj.RoadInputMap;                       
     RoadOutputMap = obj.RoadOutputMap;                          
     IntersectionRoadQueueMap = obj.IntersectionRoadQueueMap;
@@ -25,11 +38,8 @@ function save(obj, base_name, directory)
     IntersectionRoadDelayMap = obj.IntersectionRoadDelayMap;
     time = obj.time;
 
-    data = { RoadInputMap, RoadOutputMap, IntersectionRoadQueueMap, ...
-             IntersectionCalcTimeMap, IntersectionRoadNumVehsMap, IntersectionRoadDelayMap, time};
-
     % データを保存
-    save(file_path, 'data');
+    save(file_path, 'RoadInputMap', 'RoadOutputMap', 'IntersectionRoadQueueMap', 'IntersectionCalcTimeMap', 'IntersectionRoadNumVehsMap', 'IntersectionRoadDelayMap', 'time');
     fprintf('Data saved to %s\n', file_path);
     
 

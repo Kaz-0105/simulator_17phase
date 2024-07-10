@@ -29,8 +29,11 @@ function showDelayTime(obj)
         ax = gca;
         ax.FontSize = obj.font_sizes.axis;
 
+        % 凡例をまとめるセル配列を作成
+        legend_list = {'Current data'};
+
         % 凡例の表示
-        legend('Current data');
+        legend(legend_list);
 
         % 過去の結果と比較する場合
         if obj.flags.compare
@@ -49,8 +52,8 @@ function showDelayTime(obj)
                 end
         
                 % matファイルの読み込み（timeとIntersectionRoadDelayMapの取得）
-                time = load(path, 'time');
-                IntersectionRoadDelayMap = load(path, 'IntersectionRoadDelayMap');
+                load(path, 'time');
+                load(path, 'IntersectionRoadDelayMap');
 
                 % 全ての交差点でのキューの長さを取得
                 delay_avg = IntersectionRoadDelayMap.average('all');
@@ -58,8 +61,11 @@ function showDelayTime(obj)
                 % LineGraphの表示
                 plot(time, delay_avg, 'LineWidth', setting.line_width);
 
+                % 凡例の追加
+                legend_list{end+1} = strcat('Compare ', num2str(path_id), ' data');
+
                 % 凡例の表示
-                legend(strcat('Compare ', num2str(path_id), ' data'));
+                legend(legend_list);
             end
 
             % 座標の固定を解除
@@ -74,6 +80,9 @@ function showDelayTime(obj)
 
         % IntersectionFigureMapの取得
         IntersectionFigureMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+
+        % IntersectionLegendListMapの初期化
+        IntersectionLegendListMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
         % 交差点ごとにグラフを作成
         for intersection_id = cell2mat(IntersectionDelayMap.keys)
@@ -99,12 +108,21 @@ function showDelayTime(obj)
             ax = gca;
             ax.FontSize = obj.font_sizes.axis;
 
+            % 凡例をまとめるセル配列を作成
+            legend_list = {'Current data'};
+
+            % IntersectionLegendListMapにプッシュ
+            IntersectionLegendListMap(intersection_id) = legend_list;
+
             % 凡例の表示
-            legend('Current data');
+            legend(legend_list);
         end
 
         % 過去の結果と比較する場合
         if obj.flags.compare
+            % path_idの最大値を取得
+            max_path_id = max(cell2mat(obj.ComparePathMap.keys));
+
             for path_id = cell2mat(obj.ComparePathMap.keys)
                 % 比較するデータの相対パスの取得
                 relative_path = obj.ComparePathMap(path_id);
@@ -116,10 +134,9 @@ function showDelayTime(obj)
                     path = strcat(pwd, '\', relative_path);
                 end
 
-
                 % matファイルの読み込み（timeとIntersectionRoadDelayMapの取得）
-                time = load(path, 'time');
-                IntersectionRoadDelayMap = load(path, 'IntersectionRoadDelayMap');
+                load(path, 'time');
+                load(path, 'IntersectionRoadDelayMap');
 
                 % IntersectionDelayMapを作成
                 IntersectionDelayMap = IntersectionRoadDelayMap.average('outer');
@@ -127,7 +144,7 @@ function showDelayTime(obj)
                 for intersection_id = cell2mat(IntersectionDelayMap.keys)
                     % figureのウィンドウを開く
                     figure_id = IntersectionFigureMap(intersection_id);
-                    figure(figure_id);
+                    figure(double(figure_id));
 
                     % 座標を固定
                     hold on;
@@ -138,8 +155,17 @@ function showDelayTime(obj)
                     % LineGraphの表示
                     plot(time, delay_avg, 'LineWidth', setting.line_width);
 
+                    % 凡例の追加
+                    legend_list = IntersectionLegendListMap(intersection_id);
+                    legend_list{end+1} = strcat('Compare ', num2str(path_id), ' data');
+
+                    % IntersectionLegendListMapにプッシュ
+                    IntersectionLegendListMap(intersection_id) = legend_list;
+
                     % 凡例の表示
-                    legend(strcat('Compare ', num2str(path_id), ' data'));
+                    if path_id == max_path_id
+                        legend(legend_list);
+                    end
 
                     % 座標の固定を解除
                     hold off;

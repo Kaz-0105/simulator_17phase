@@ -44,34 +44,6 @@ function group = parseGroup(obj, group_data)
             tmp_road.signal_controller_id = road_data.v_sc;
         end
 
-        % % Signal Group（1つの交差点で挙動ごとに信号機を分けたグループのこと）のIDを取得
-        % if isfield(road_data, 'v_sg')
-        %     tmp_road.signal_group = {};
-
-        %     for signal_group = road_data.v_sg
-        %         tmp_signal_group = [];
-        %         signal_group = signal_group{1};
-        %         tmp_signal_group.id = signal_group.id;
-        %         tmp_signal_group.dirct = char(signal_group.dirct);
-        %         tmp_road.signal_group{end + 1} = tmp_signal_group;
-        %     end
-        % end
-
-
-        % % 進路の割合を取得
-        % if isfield(road_data, 'v_rfs')
-        %     tmp_road.rel_flows = {};
-
-        %     for rel_flow = road_data.v_rfs
-        %         tmp_rel_flow = [];
-        %         rel_flow = rel_flow{1};
-        %         tmp_rel_flow.id = rel_flow.id;
-        %         tmp_rel_flow.rf = rel_flow.rf;
-        %         tmp_rel_flow.dirct = char(rel_flow.dirct);
-        %         tmp_road.rel_flows{end + 1} = tmp_rel_flow;
-        %     end
-        % end
-
         % sig_head_idを取得
         if isfield(road_data, 'sig_head_ids')
             tmp_sig_head_ids = [];
