@@ -40,6 +40,7 @@ classdef HierarchicalMap < handle
     methods
         add(obj, key1, key2, value);
         value = get(obj, key1, key2);
+        Map = getInnerMap(obj, key1);
         set(obj, key1, key2, value);
         remove(obj, key1, key2);
         values = outerKeys(obj);

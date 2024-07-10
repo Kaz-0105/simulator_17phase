@@ -1,6 +1,5 @@
-function values = average(Map)
+function values = sum(Map)
     is_first = true;
-    count = 0;
 
     for key = Map.keys
         key = key{1};
@@ -14,9 +13,7 @@ function values = average(Map)
         else
             sum = sum + Map(key);
         end
-
-        count = count + 1;
     end
 
-    values = double(sum) / count;
+    values = sum;
 end

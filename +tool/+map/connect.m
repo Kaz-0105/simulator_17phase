@@ -1,6 +1,6 @@
-function values = combine(map)
+function values = connect(Map)
     values = [];
-    for value = map.values
+    for value = Map.values
         value = value{1};
 
         if ~ isnumeric(value)

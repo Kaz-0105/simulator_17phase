@@ -11,14 +11,14 @@ function showCalcTime(obj)
         IntersectionCalcTimeMap = obj.VissimMeasurements.get('IntersectionCalcTimeMap');
 
         % 全ての交差点での計算時間の時系列を結合
-        combine = tool.map.combine(IntersectionCalcTimeMap);
+        connect = tool.map.connect(IntersectionCalcTimeMap);
 
         % figureのウィンドウを開く
         obj.tmp_figure_id = obj.tmp_figure_id + 1;
         figure(obj.tmp_figure_id);
 
         % histogramの表示
-        histogram(combine, 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha, 'BinLimits', [-1, 2*max_time]);
+        histogram(connect, 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha, 'BinLimits', [-1, 2*max_time]);
 
         % グラフのタイトル、ラベルの設定
         title('Calculation Time (all intersection)', 'FontSize', obj.font_sizes.title);
@@ -52,10 +52,10 @@ function showCalcTime(obj)
                 IntersectionCalcTimeMap = load(path, 'IntersectionCalcTimeMap');
 
                 % 全ての交差点での計算時間の時系列を結合
-                combine = tool.map.combine(IntersectionCalcTimeMap);
+                connect = tool.map.connect(IntersectionCalcTimeMap);
 
                 % histogramの表示
-                histogram(combine, 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha, 'BinLimits', [-1, 2*max_time]);
+                histogram(connect, 'BinWidth', setting.bin_width, 'FaceAlpha', setting.face_alpha, 'BinLimits', [-1, 2*max_time]);
 
                 % 凡例の表示
                 legend(strcat('Compare ', num2str(path_id), ' data'))

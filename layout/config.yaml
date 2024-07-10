@@ -25,7 +25,7 @@ model :
     fix_num : 2          # 初期値の固定する数
 
 simulation :
-  time : 100 # シミュレーション時間
+  time : 300 # シミュレーション時間
   count : 1  # シミュレーション回数
 
 result :
@@ -45,7 +45,7 @@ result :
       active : 'on'
       scale : 'intersection'
     num_vehs : 
-      active : 'off'
+      active : 'on'
       scale : 'system'
     delay_time : 
       active : 'on'
