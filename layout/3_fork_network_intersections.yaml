@@ -1,7 +1,19 @@
 id : 1
 intersections : 
   - id : 1
-    irids : [1, 4, 6]
-    ir_directions : ['west', 'east', 'south']
-    orids : [2, 3, 5]
+    input_roads : 
+      - id : 1
+        order : 1
+      - id : 4
+        order : 2
+      - id : 6
+        order : 3
+    output_roads :
+      - id : 2
+        order : 2
+      - id : 3 
+        order : 1
+      - id : 5
+        order : 3
+    signal_controller_id : 1
     control_method : 'Dan3'

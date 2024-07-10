@@ -3,7 +3,11 @@ classdef Dan4 < handle
         %　クラス
         Config; % Configクラスの変数
         Vissim; % Vissimクラスの変数
+
+        PhiResults; % phiの結果を格納するクラス
+        UResults;   % uの結果を格納するクラス
     end
+
     properties
         % 普通のプロパティ
         id;         % 交差点のID
@@ -41,12 +45,6 @@ classdef Dan4 < handle
         % 構造体
         mld_matrices;  % 混合論理動的システムの係数行列を収納する構造体
         milp_matrices; % 混合整数線形計画問題の係数行列を収納する構造体
-    end
-
-    properties
-        % クラス
-        PhiResults; % phiの結果を格納するクラス
-        UResults;   % uの結果を格納するクラス
     end
 
     properties

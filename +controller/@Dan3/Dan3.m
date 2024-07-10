@@ -1,19 +1,28 @@
 classdef Dan3 < handle
     properties
+        % クラス
+        Config; % Configクラスの変数
+        Vissim; % Vissimクラスの変数
+
+        PhiResults; % phiの結果を格納するクラス
+        UResults;   % uの結果を格納するクラス
+    end
+
+    properties
         % 普通のプロパティ
-        id;         % 交差点のID
+        id;         % 交差点のID 
         signal_num; % 信号機の数
         phase_num;  % 信号機のフェーズの数
         road_num;   % 道路の数
-        
-        dt;  % サンプリング時間
-        N_p; % 予測ホライゾン
-        N_c; % 制御ホライゾン
+
+        dt;       % サンプリング時間
+        N_p;      % 予測ホライゾン
+        N_c;      % 制御ホライゾン
         max_time; % 最適化時間の上限
 
-        N_s;      % 最低の連続回数
-        m;        % ホライゾン内の最大変化回数
-        fix_num;  % 固定するステップ数
+        N_s;     % 最低の連続回数
+        m;       % ホライゾン内の最大変化回数
+        fix_num; % 固定するステップ数
 
         eps; % 微小量
 
@@ -34,20 +43,17 @@ classdef Dan3 < handle
 
     properties
         % 構造体
-        road_prms;     % 道路に関するパラメータを格納する構造体
-        pos_vehs;      % 車の位置情報を格納する構造体
-        route_vehs;    % 車の進行方向の情報を格納する構造体
-        num_vehs;      % 車の数を格納する構造体
-        first_veh_ids; % 先頭車の情報を格納する構造体
-
         mld_matrices;  % 混合論理動的システムの係数行列を収納する構造体
         milp_matrices; % 混合整数線形計画問題の係数行列を収納する構造体
     end
 
     properties
-        % クラス
-        PhiResults; % phiの結果を格納するクラス
-        UResults;   % uの結果を格納するクラス
+        % 構造体
+        road_prms;     % 道路に関するパラメータを格納する構造体
+        pos_vehs;      % 車の位置情報を格納する構造体
+        route_vehs;    % 車の進行方向の情報を格納する構造体
+        num_vehs;      % 車の数を格納する構造体
+        first_veh_ids; % 先頭車の情報を格納する構造体
     end
 
     properties
