@@ -2,6 +2,10 @@ function updateIntersectionRoadDelayMap(obj)
     % IntesectionStructMap, RoadDelayMeasurementMapを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
     RoadDelayMeasurementMap = obj.Vissim.get('RoadDelayMeasurementMap');
+
+    % 系内の平均を出力するための変数を初期化
+    sum = 0;
+    count = 0;
     
     for intersection_id = cell2mat(keys(IntersectionStructMap))
         % intersection構造体の取得
@@ -15,10 +19,10 @@ function updateIntersectionRoadDelayMap(obj)
             delay_time_data = obj.IntersectionRoadDelayMap.get(intersection_struct.id, order);
 
             % 遅れ時間の合計値を初期化
-            sum = 0;
+            sum1 = 0;
 
             % DelayTimeMeasurementのカウンターの初期化
-            count = 0;
+            count1 = 0;
 
             % 遅れ時間の計算
             for delay_measurement_id = RoadDelayMeasurementMap(road_id)
@@ -31,17 +35,27 @@ function updateIntersectionRoadDelayMap(obj)
                 end
                 
                 % 遅れ時間を加算
-                sum = sum + tmp_delay_time;
+                sum1 = sum1 + tmp_delay_time;
 
                 % DelayTimeMeasurementのカウンターを更新
-                count = count + 1;
+                count1 = count1 + 1;
             end
 
             % 平均をとる
-            delay_time = sum / count;
+            delay_time = sum1 / count1;
 
             % 遅れ時間をMapにプッシュ
             obj.IntersectionRoadDelayMap.set(intersection_struct.id, order, [delay_time_data, delay_time]);
+
+            % 遅れ時間の合計値とカウンターを加算
+            sum = sum + delay_time;
+            count = count + 1;
         end
     end
+
+    % 平均を計算
+    average = sum / count;
+    
+    % 表示
+    fprintf('Delay Time: %f\n', average);
 end
