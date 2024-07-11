@@ -1,8 +1,8 @@
 function makeVehiclesData(obj, IntersectionStructMap, VissimData)
-    % RoadPosVehsMap、RoadRouteVehsMap、RoadFirstVehStructMapの初期化
+    % RoadPosVehsMap、RoadRouteVehsMap、RoadFirstVehMapの初期化
     obj.RoadPosVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
     obj.RoadRouteVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-    obj.RoadFirstVehStructMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+    obj.RoadFirstVehMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
     % VissimDataからRoadVehsMapとRoadFirstVehMapを取得
     RoadVehsMap = VissimData.get('RoadVehsMap');
@@ -36,7 +36,7 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
         end
 
         % 道路ごとの先頭車に関する情報を取得
-        obj.RoadFirstVehStructMap(order) = RoadFirstVehMap(irid);
+        obj.RoadFirstVehMap(order) = RoadFirstVehMap(irid);
 
         % num_vehsを計算
         obj.RoadNumVehsMap(order) = length(obj.RoadPosVehsMap(order));

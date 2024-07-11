@@ -48,33 +48,32 @@ classdef Dan3 < handle
     end
 
     properties
-        % 構造体
-        road_prms;     % 道路に関するパラメータを格納する構造体
-        pos_vehs;      % 車の位置情報を格納する構造体
-        route_vehs;    % 車の進行方向の情報を格納する構造体
-        num_vehs;      % 車の数を格納する構造体
-        first_veh_ids; % 先頭車の情報を格納する構造体
-    end
-
-    properties
         % リスト
         pos_vehs_initial; % 自動車の初期位置のリスト
         pos_vehs_result;  % 予測の最終結果のリスト
 
         x_opt;   % 最適解のリスト
         u_opt;   % uの最適解のリスト
-        phi_opt; % phiの最適解のリスト 
+        phi_opt; % phiの最適解のリスト
     end
 
     properties
         % Map
-        VariableListMap;     % 決定変数のリストを格納するMap
-        PhaseSignalGroupMap; % フェーズを構成するSignalGroupを収納するMap
-        Maps;                % Vissimクラスで作成したMap群
+        RoadPrmsMap;         % キー：道路ID、バリュー：道路パラメータの構造体
+        VariableListMap;     % キー：決定変数の種類、バリュー：決定変数のリスト
+        PhaseSignalGroupMap; % キー：フェーズID、バリュー：フェーズを構成するSignalGroupのリスト
+        RoadPosVehsMap;      % キー：道路ID、バリュー：道路の車の位置情報を格納するリスト
+        RoadRouteVehsMap;    % キー：道路ID、バリュー：道路の車の進行方向情報を格納するリスト
+        RoadFirstVehMap;     % キー：道路ID、バリュー：道路の先頭車の情報を格納する構造体
+        RoadNumVehsMap;      % キー：道路ID、バリュー：道路の車の数を格納する構造体
     end
 
     methods(Access = public)
-        function obj = Dan3(id, Config, Maps)
+        function obj = Dan3(id, Vissim)
+            % ConfigクラスとVissimクラスの変数の設定
+            obj.Config = Vissim.get('Config');
+            obj.Vissim = Vissim;
+
             % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
             obj.id = id;
             obj.road_num = 3;
@@ -82,31 +81,28 @@ classdef Dan3 < handle
             obj.phase_num = 4;
             
             % サンプリング時間
-            obj.dt = Config.time_step;
+            obj.dt = obj.Config.mpc.time_step;
 
             % 予測ホライゾン、制御ホライゾン
             obj.N_p = Config.predictive_horizon;
             obj.N_c = Config.control_horizon;
 
             % 最適化時間の上限
-            obj.max_time = Config.max_time;
+            obj.max_time = obj.Config.mpc.max_time;
 
             % 最低の連続回数、ホライゾン内の最大変化回数、固定するステップ数
-            obj.N_s = Config.model_prms.N_s;
-            obj.m = Config.model_prms.m;
-            obj.fix_num = Config.model_prms.fix_num;
+            obj.N_s = obj.Config.model.dan.N_s;
+            obj.m = obj.Config.model.dan.m;
+            obj.fix_num = obj.Config.model.dan.fix_num;
 
             % 微小量
-            obj.eps = Config.model_prms.eps;
+            obj.eps = obj.Config.model.dan.eps;
 
             % 制御入力の変数の長さ
             obj.u_length = obj.signal_num;
-            
-            % Mapsの設定
-            obj.Maps = Maps;
 
             % 道路に関するパラメータを格納する構造体を作成
-            obj.makeRoadPrms();
+            obj.makeRoadPrmsMap();
 
             % PhaseとSignalGroupのMapを作成
             obj.makePhaseSignalGroupMap();
@@ -128,7 +124,12 @@ classdef Dan3 < handle
             % それぞれの種類の決定変数に対して該当するリストを作成
             obj.VariableListMap = containers.Map('KeyType', 'char', 'ValueType', 'any'); 
 
-            
+            % RoadNumVehsMapの初期化
+            obj.RoadNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+
+            for road_id = 1: obj.road_num
+                obj.RoadNumVehsMap(road_id) = 0;
+            end
         end
     end
 
@@ -139,7 +140,7 @@ classdef Dan3 < handle
     end
 
     methods(Access = private)
-        makeRoadPrms(obj, Maps);
+        makeRoadPrmsMap(obj);
         makeVehiclesData(obj, IntersectionStructMap, VissimData);
 
         % PhaseとSignalGroupのMapを作成する関数
@@ -182,7 +183,7 @@ classdef Dan3 < handle
         % 混合整数線形計画問題の形にMLDの係数と信号機制約の係数を変形する関数群
         makeMilp(obj);
         makeObjectiveFunction(obj);
-        makeConstraints(obj, mld_matrices, pos_vehs);
+        makeConstraints(obj);
         makeBoundary(obj);
         makeIntcon(obj);
 

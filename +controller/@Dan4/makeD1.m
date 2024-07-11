@@ -1,110 +1,52 @@
 % D1行列を作成する関数
-function makeD1(obj, route_vehs, first_veh_ids, order)
+function makeD1(obj)
+    % D1行列を初期化
+    obj.mld_matrices.D1 = [];
 
-    % D1_rを初期化
-    D1_r = [];
+    % 道路ごとに計算
+    for road_id = 1: obj.road_num
+        % 各道路のD1行列を初期化
+        D1 = [];
 
-    % 自動車が存在しない場合は何もしない
-    if isempty(route_vehs)
-        return;
-    end
-
-    % 方向と対応する信号のバイナリのIDを取得
-    if order == 1
-        signal_id = [1, 2, 3];
-    elseif order == 2
-        signal_id = [4, 5, 6];
-    elseif order == 3
-        signal_id = [7, 8, 9];
-    elseif order == 4
-        signal_id = [10, 11, 12];
-    end
-
-    % パラメータを取得
-    num_veh = length(route_vehs); % 自動車台数
-
-    % D1_rを計算
-    if first_veh_ids.straight == 1
-        % IDが1の自動車が直進車線の先頭の場合
-        for veh_id = 1: num_veh
-            if veh_id == 1
-                % IDが1の自動車の場合
-                d1 = zeros(12, obj.signal_num);
-                if route_vehs(veh_id) == 1
-                    d1(1:2,signal_id(1)) = [-1;1];
-                elseif route_vehs(veh_id) == 2
-                    d1(1:2,signal_id(2)) = [-1;1];
-                else
-                    disp('Error: route_veh is not 1 or 2');
-                end
-
-            elseif veh_id == first_veh_ids.right
-                % 右折車線の先頭車（IDが１ではないかつ先頭車）の場合
-                d1 = zeros(28,obj.signal_num);
-                if route_vehs(veh_id) == 3
-                    d1(1:2,signal_id(3)) = [-1;1];
-                else
-                    disp('Error: route_veh is not 3');
-                end
-            else
-                % それ以外の場合
-                d1 = zeros(42,obj.signal_num);
-                if route_vehs(veh_id) == 1
-                    d1(1:2,signal_id(1)) = [-1;1];
-                elseif route_vehs(veh_id) == 2
-                    d1(1:2,signal_id(2)) = [-1;1];
-                elseif route_vehs(veh_id) == 3
-                    d1(1:2,signal_id(3)) = [-1;1];
-                else 
-                    disp('Error: route_veh is not 1, 2 or 3');
-                end
-            end
-            % D1_rに追加
-            D1_r = [D1_r;d1];
+        % 道路IDに対応するSignalGroupのIDを取得
+        if road_id == 1
+            signal_id = [1, 2, 3];
+        elseif road_id == 2
+            signal_id = [4, 5, 6];
+        elseif road_id == 3
+            signal_id = [7, 8, 9];
+        elseif road_id == 4
+            signal_id = [10, 11, 12];
         end
 
-    elseif first_veh_ids.right == 1
-        % IDが1の自動車が右折車線の先頭の場合
-        for veh_id = 1: num_veh
-            if veh_id == 1
-                % IDが1の自動車の場合
-                d1 = zeros(12, obj.signal_num);
-                if route_vehs(veh_id) == 3
-                    d1(1:2,signal_id(3)) = [-1;1];
-                else
-                    disp('Error: route_veh is not 3');
-                end
-                
-            elseif veh_id == first_veh_ids.straight
-                % 直進車線の先頭車（IDが１ではないかつ先頭車）の場合
-                d1 = zeros(28,obj.signal_num);
-                if route_vehs(veh_id) == 1
-                    d1(1:2,signal_id(1)) = [-1;1];
-                elseif route_vehs(veh_id) == 2
-                    d1(1:2,signal_id(2)) = [-1;1];
-                else
-                    disp('Error: route_veh is not 1 or 2');
-                end
+        % route_vehsを取得
+        route_vehs = obj.RoadRouteVehsMap(road_id);
 
+        % D1行列を計算
+        for veh_id = 1: obj.RoadNumVehsMap(road_id)
+            if veh_id == 1
+                % 先頭車
+                d1 = zeros(12, obj.signal_num);
+                d1(1:2, signal_id(route_vehs(veh_id))) = [1; -1];
+            elseif veh_id == obj.RoadFirstVehMap(road_id).right
+                % 右折先頭車
+                d1 = zeros(28, obj.signal_num);
+                d1(1:2, signal_id(route_vehs(veh_id))) = [1; -1];
+            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+                % 直進先頭車
+                d1 = zeros(28, obj.signal_num);
+                d1(1:2, signal_id(route_vehs(veh_id))) = [1; -1];
             else
                 % それ以外の場合
-                d1 = zeros(42,obj.signal_num);
-                if route_vehs(veh_id) == 1
-                    d1(1:2,signal_id(1)) = [-1;1];
-                elseif route_vehs(veh_id) == 2
-                    d1(1:2,signal_id(2)) = [-1;1];
-                elseif route_vehs(veh_id) == 3
-                    d1(1:2,signal_id(3)) = [-1;1];
-                else 
-                    disp('Error: route_veh is not 1, 2 or 3');
-                end
-                
+                d1 = zeros(42, obj.signal_num);
+                d1(1:2, signal_id(route_vehs(veh_id))) = [1; -1];
             end
-            % D1_rに追加
-            D1_r = [D1_r;d1];
+
+            % D1に追加
+            D1 = [D1; d1];
         end
+        
+        % D1行列に追加
+        obj.mld_matrices.D1 = [obj.mld_matrices.D1; D1];
     end
-    
-    % D1に追加
-    obj.mld_matrices.D1 = [obj.mld_matrices.D1; D1_r];
 end

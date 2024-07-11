@@ -64,7 +64,7 @@ classdef Dan4 < handle
         PhaseSignalGroupMap;   % フェーズを構成するSignalGroupを収納するMap
         RoadPosVehsMap;        % 道路ごとの車の位置情報を収納するMap
         RoadRouteVehsMap;      % 道路ごとの車の進行方向情報を収納するMap
-        RoadFirstVehStructMap; % 道路ごとの先頭車の情報を収納するMap
+        RoadFirstVehMap; % 道路ごとの先頭車の情報を収納するMap
         RoadNumVehsMap;        % 道路ごとの車の数を収納するMap
     end
 
@@ -141,7 +141,7 @@ classdef Dan4 < handle
     end
 
     methods(Access = private)
-        makeRoadPrms(obj);
+        makeRoadPrmsMap(obj);
         makeVehiclesData(obj, intersection_struct_map, VissimData);
 
         % PhaseとSignalGroupのマップを作成する関数
@@ -149,15 +149,18 @@ classdef Dan4 < handle
 
         % 混合論理動的システムの係数行列を作成する関数群
         makeMld(obj);
-        makeA(obj, pos_vehs);
-        makeB1(obj, pos_vehs, route_vehs, first_veh_ids, RoadPrmsMap);
-        makeB2(obj, route_vehs, first_veh_ids, RoadPrmsMap);
-        makeB3(obj, route_vehs, first_veh_ids, RoadPrmsMap);
-        makeC(obj, pos_vehs, route_vehs, first_veh_ids, RoadPrmsMap);    
-        makeD1(obj, route_vehs, first_veh_ids, direction);
-        makeD2(obj, pos_vehs, first_veh_ids, RoadPrmsMap);
-        makeD3(obj, pos_vehs, first_veh_ids, RoadPrmsMap);
-        makeE(obj, pos_vehs, first_veh_ids, RoadPrmsMap);
+        makeA(obj);
+        makeB1(obj);
+        makeB2(obj);
+        makeB3(obj);
+        makeC(obj);    
+        makeD1(obj);
+        makeD2(obj);
+        makeD3(obj);
+        makeE(obj);
+
+        % 先行車を見つける関数
+        value = getFrontVehicle(obj, veh_id, route_vehs);
 
         % 決定変数の種類ごとのリストを作成する関数群
 
@@ -194,10 +197,5 @@ classdef Dan4 < handle
         makePhiOpt(obj, x_opt);
 
         makePosVehsResult(obj);
-
-    end
-
-    methods(Static)
-        front_veh_id = getFrontVehicle(veh_id, route_vehs);
     end
 end

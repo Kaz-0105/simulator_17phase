@@ -1,61 +1,45 @@
-function makeB2(obj, route_vehs, first_veh_ids, road_prms)
-    B2_r = []; % B2_rを初期化
+function makeB2(obj)
+    % B2行列を初期化
+    obj.mld_matrices.B2 = [];
 
-    % 自動車が存在しない場合は何もしない
-    if isempty(route_vehs)
-        return;
-    end
+    % 道路ごとに計算
+    for road_id = 1: obj.road_num
+        % 各道路のB2行列を初期化
+        B2 = [];
 
-    % パラメータを取得
-    num_veh = length(route_vehs); % 自動車台数
+        % パラメータの構造体を取得
+        road_prms = obj.RoadPrmsMap(road_id);
 
-    D_s = road_prms.D_s; % 信号の影響圏に入る距離
-    d_s = road_prms.d_s; % 信号と信号の停止線の間の距離
-    D_f = road_prms.D_f; % 先行車の影響圏に入る距離
-    d_f = road_prms.d_f; % 先行車と最接近したときの距離
+        % 各パラメータを取得
+        D_s = road_prms.D_s; % 信号の影響圏に入る距離
+        d_s = road_prms.d_s; % 信号と信号の停止線の間の距離
+        D_f = road_prms.D_f; % 先行車の影響圏に入る距離
+        d_f = road_prms.d_f; % 先行車と最接近したときの距離
+        v = road_prms.v;     % 速度[m/s]
+        k_s = 1/(D_s - d_s); % モデルに登場する係数（その１）
+        k_f = 1/(D_f - d_f); % モデルに登場する係数（その２）
 
-    k_s = 1/(D_s - d_s); % モデルに登場する係数（その１）
-    k_f = 1/(D_f - d_f); % モデルに登場する係数（その２）
-
-    dt = obj.dt; % タイムステップ[s]
-    v = road_prms.v; % 速度[m/s]
-
-    % B2_rを計算
-    if first_veh_ids.straight == 1
-        % IDが1の自動車が直進車線の先頭の場合
-        for veh_id = 1:num_veh
+        % B2行列を計算
+        for veh_id = 1: obj.RoadNumVehsMap(road_id)
             if veh_id == 1
-                % IDが1の自動車の場合
-                b2 = [-k_s]*v*dt;
-            elseif veh_id == first_veh_ids.right
-                % 右折車線の先頭車（IDが１ではないかつ先頭車）の場合
-                b2 = [-k_s, k_f, -k_f]*v*dt;
+                % 先頭車
+                b2 = -k_s*v*obj.dt;
+            elseif veh_id == obj.RoadFirstVehMap(road_id).right 
+                % 右折先頭車
+                b2 = [-k_s, k_f, -k_f]*v*obj.dt;
+            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+                % 直進先頭車
+                b2 = [-k_s, k_f, -k_f]*v*obj.dt;
             else
                 % それ以外の場合
-                b2 = [-k_s, k_f, -k_f, k_f, -k_f]*v*dt;
+                b2 = [-k_s, k_f, -k_f, k_f, -k_f]*v*obj.dt;
             end
-            % B2_rに追加
-            B2_r = blkdiag(B2_r, b2);
+
+            % tmp_B2に追加
+            B2 = blkdiag(B2, b2);
         end
 
-    elseif first_veh_ids.right == 1
-        % IDが1の自動車が右折車線の先頭の場合
-        for veh_id = 1:num_veh
-            if veh_id == 1
-                % IDが1の自動車の場合
-                b2 = [-k_s]*v*dt;
-            elseif veh_id == first_veh_ids.straight
-                % 直進車線の先頭車（IDが１ではないかつ先頭車）の場合
-                b2 = [-k_s, k_f, -k_f]*v*dt;
-            else
-                % それ以外の場合
-                b2 = [-k_s, k_f, -k_f, k_f, -k_f]*v*dt;
-            end
-            B2_r = blkdiag(B2_r, b2);
-        end
+        % B2行列に追加
+        obj.mld_matrices.B2 = blkdiag(obj.mld_matrices.B2, B2);
     end
-
-    obj.mld_matrices.B2 = blkdiag(obj.mld_matrices.B2, B2_r);
-
-
 end

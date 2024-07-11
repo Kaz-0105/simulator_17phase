@@ -18,7 +18,7 @@ function makeWeight(obj)
     % 重み行列を作成
     for road_id = 1: obj.road_num
         route_vehs = obj.RoadRouteVehsMap(road_id);
-        first_veh_ids = obj.RoadFirstVehStructMap(road_id);
+        first_veh_ids = obj.RoadFirstVehMap(road_id);
 
         for veh_id = 1: length(route_vehs)
             if veh_id == first_veh_ids.straight

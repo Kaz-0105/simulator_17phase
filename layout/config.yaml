@@ -1,10 +1,10 @@
 network :
-  inpx_file : '3_fork_network\3_fork_network.inpx'   # vissimのinpxファイル
-  layx_file : '3_fork_network\3_fork_network.layx'   # vissimのlayxファイル
+  inpx_file : '1-1_network\1-1_network.inpx'   # vissimのinpxファイル
+  layx_file : '1-1_network\1-1_network.layx'   # vissimのlayxファイル
   groups :
     - id : 1                                           # グループのID
-      roads : '3_fork_network_roads.yaml'                 # 道路の情報がまとまったyamlファイル
-      intersections : '3_fork_network_intersections.yaml' # 交差点の情報がまとまったyamlファイル
+      roads : '1-1_network_roads.yaml'                 # 道路の情報がまとまったyamlファイル
+      intersections : '1-1_network_intersections.yaml' # 交差点の情報がまとまったyamlファイル
 
 vissim :
   graphic_mode : 0 # 描画モードON=0
@@ -31,12 +31,12 @@ simulation :
 result :
   save :
     active : 'on'
-    path : '\results\3_fork_network'
+    path : '\results\1-1_network'
     name : 'data'
   compare : 
     active : 'off'
     path : 
-      - '\results\3_fork_network\data.mat'
+      - '\results\1-1_network\data.mat'
   contents :
     calc_time :
       active : 'on'
