@@ -21,6 +21,11 @@ function makeE(obj)
         % 自動車の位置のリストを取得
         pos_vehs = obj.RoadPosVehsMap(road_id);
 
+        % 自動車が0台の場合はスキップ（pos_vehs(end)がエラー吐くため）
+        if isempty(pos_vehs)
+            continue;
+        end
+
         % 自動車の位置を評価
         p_min = pos_vehs(end);
         p_max = pos_vehs(1) + v*obj.dt*obj.N_p;
@@ -98,7 +103,7 @@ function makeE(obj)
                 e(26) = 0;
                 e(27) = p_max;
                 e(28) = -p_min;
-            elseif veh_Id == obj.RoadFirstVehMap(road_id).straight
+            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
                 % 直進先頭車
                 % eを初期化
                 e = zeros(28, 1);
@@ -162,19 +167,19 @@ function makeE(obj)
                 e(12) = 0;
 
                 e(13) = p_s - h1_min - D_s;
-                e(14) = -p_s + D_s - epsilon;
+                e(14) = -p_s + D_s - obj.eps;
 
                 e(15) = -p_s + d_s - h2_min;
-                e(16) = p_s - d_s - epsilon;
+                e(16) = p_s - d_s - obj.eps;
 
                 e(17) = D_f - h3_min;
-                e(18) = -D_f - epsilon;
+                e(18) = -D_f - obj.eps;
 
                 e(19) = D_f - h4_min;
-                e(20) = -D_f - epsilon;
+                e(20) = -D_f - obj.eps;
 
                 e(21) = p_s - D_b - h5_min;
-                e(22) = -p_s + D_b - epsilon;
+                e(22) = -p_s + D_b - obj.eps;
 
                 e(23) = 0;
                 e(24) = 0;
