@@ -1,6 +1,4 @@
 function makeVariablesList(obj)
-    
-
     obj.makeZ1List();
     obj.makeZ2List();
     obj.makeZ3List();

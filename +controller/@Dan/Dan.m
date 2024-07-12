@@ -1,4 +1,4 @@
-classdef Dan4 < handle
+classdef Dan < handle
     properties
         %　クラス
         Config; % Configクラスの変数
@@ -69,7 +69,7 @@ classdef Dan4 < handle
     end
 
     methods(Access = public)
-        function obj = Dan4(id, Vissim) 
+        function obj = Dan(id, Vissim) 
             % ConfigクラスとVissimクラスの変数の設定
             obj.Config = Vissim.get('Config');
             obj.Vissim = Vissim;

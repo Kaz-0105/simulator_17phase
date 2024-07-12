@@ -3,8 +3,8 @@ function makeIntersectionControllerMap(obj)
     for intersection_id = cell2mat(keys(obj.IntersectionStructMap))
         intersection_struct = obj.IntersectionStructMap(intersection_id);
         switch intersection_struct.control_method
-            case 'Dan4'
-                obj.IntersectionControllerMap(intersection_struct.id) = controller.Dan4(intersection_struct.id, obj);
+            case 'Dan'
+                obj.IntersectionControllerMap(intersection_struct.id) = controller.Dan(intersection_struct.id, obj);
             case 'Dan3'
                 obj.IntersectionControllerMap(intersection_struct.id) = controller.Dan3(intersection_struct.id, obj);
             case 'DanOld4'
