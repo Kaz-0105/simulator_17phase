@@ -27,19 +27,19 @@ function makeD1(obj)
             if veh_id == 1
                 % 先頭車
                 d1 = zeros(12, obj.signal_num);
-                d1(1:2, signal_id(route_vehs(veh_id))) = [1; -1];
+                d1(1:2, signal_id(route_vehs(veh_id))) = [-1; 1];
             elseif veh_id == obj.RoadFirstVehMap(road_id).right
                 % 右折先頭車
                 d1 = zeros(28, obj.signal_num);
-                d1(1:2, signal_id(route_vehs(veh_id))) = [1; -1];
+                d1(1:2, signal_id(route_vehs(veh_id))) = [-1; 1];
             elseif veh_id == obj.RoadFirstVehMap(road_id).straight
                 % 直進先頭車
                 d1 = zeros(28, obj.signal_num);
-                d1(1:2, signal_id(route_vehs(veh_id))) = [1; -1];
+                d1(1:2, signal_id(route_vehs(veh_id))) = [-1; 1];
             else
                 % それ以外の場合
                 d1 = zeros(42, obj.signal_num);
-                d1(1:2, signal_id(route_vehs(veh_id))) = [1; -1];
+                d1(1:2, signal_id(route_vehs(veh_id))) = [-1; 1];
             end
 
             % D1に追加
