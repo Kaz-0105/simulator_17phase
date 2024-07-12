@@ -12,13 +12,13 @@ function makeD2(obj)
                 % 先頭車
                 d2 = zeros(12, 1);
                 d2(9:12, 1) = [-1, 1, -1, 1]';
-            elseif veh_id == obj.RoadFirstVehMap(road_id).right
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).right
                 % 右折先頭車
                 d2 = zeros(28, 3);
                 d2(17:20, 1) = [-1, 1, -1, 1]';
                 d2(21:24, 2) = [-1, 1, -1, 1]';
                 d2(25:28, 3) = [-1, 1, -1, 1]';
-            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).straight
                 % 直進先頭車
                 d2 = zeros(28, 3);
                 d2(17:20, 1) = [-1, 1, -1, 1]';

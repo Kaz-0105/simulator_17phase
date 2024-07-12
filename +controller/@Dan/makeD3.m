@@ -65,7 +65,7 @@ function makeD3(obj)
                 d3(10, 3) = -p_max;
                 d3(11, 3) = p_max;
                 d3(12, 3) = -p_min;
-            elseif veh_id == obj.RoadFirstVehMap(road_id).right
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).right
                 % 右折先頭車
                 % d3を初期化
                 d3 = zeros(28, 7);
@@ -108,7 +108,7 @@ function makeD3(obj)
                 d3(27, 6) = p_max;
                 d3(28, 6) = -p_min;
 
-            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).straight
                 % 直進先頭車
                 % d3を初期化
                 d3 = zeros(28, 7);

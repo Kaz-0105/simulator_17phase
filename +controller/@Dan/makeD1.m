@@ -28,11 +28,11 @@ function makeD1(obj)
                 % 先頭車
                 d1 = zeros(12, obj.signal_num);
                 d1(1:2, signal_id(route_vehs(veh_id))) = [-1; 1];
-            elseif veh_id == obj.RoadFirstVehMap(road_id).right
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).right
                 % 右折先頭車
                 d1 = zeros(28, obj.signal_num);
                 d1(1:2, signal_id(route_vehs(veh_id))) = [-1; 1];
-            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).straight
                 % 直進先頭車
                 d1 = zeros(28, obj.signal_num);
                 d1(1:2, signal_id(route_vehs(veh_id))) = [-1; 1];

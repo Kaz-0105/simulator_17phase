@@ -24,10 +24,10 @@ function makeB2(obj)
             if veh_id == 1
                 % 先頭車
                 b2 = -k_s*v*obj.dt;
-            elseif veh_id == obj.RoadFirstVehMap(road_id).right 
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).right 
                 % 右折先頭車
                 b2 = [-k_s, k_f, -k_f]*v*obj.dt;
-            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).straight
                 % 直進先頭車
                 b2 = [-k_s, k_f, -k_f]*v*obj.dt;
             else

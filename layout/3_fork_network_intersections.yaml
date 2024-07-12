@@ -16,4 +16,4 @@ intersections :
       - id : 5
         order : 3
     signal_controller_id : 1
-    control_method : 'Dan3'
+    control_method : 'Dan'

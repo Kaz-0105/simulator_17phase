@@ -7,11 +7,7 @@ function displayControlMethod(obj)
             intersection_struct = group.IntersectionsMap(intersection_id);
             if strcmp(intersection_struct.control_method, 'Dan')
                 fprintf('\t\tIntersection %d : MPC\n', intersection_struct.id);
-            elseif strcmp(intersection_struct.control_method, 'Fix4')
-                fprintf('\t\tIntersection %d : Fixed time\n', intersection_struct.id);
-            elseif strcmp(intersection_struct.control_method, 'Dan3')
-                fprintf('\t\tIntersection %d : MPC\n', intersection_struct.id);
-            elseif strcmp(intersection_struct.control_method, 'Fix3')
+            elseif strcmp(intersection_struct.control_method, 'Fix')
                 fprintf('\t\tIntersection %d : Fixed time\n', intersection_struct.id);
             end
         end

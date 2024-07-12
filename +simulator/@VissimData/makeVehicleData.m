@@ -1,9 +1,12 @@
 function makeVehicleData(obj)
-    % RoadVehsMap を作成する
-    obj.RoadVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+    % RoadPosVehsMapを作成する
+    obj.RoadPosVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
-    % RoadFirstVehMap を作成する
-    obj.RoadFirstVehMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+    % RoadRouteVehsMapを初期化
+    obj.RoadRouteVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+
+    % RoadRouteFirstVehMapを初期化
+    obj.RoadRouteFirstVehMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'int32');
 
     % RoadStructMapを取得
     RoadStructMap = obj.Vissim.get('RoadStructMap');
@@ -11,113 +14,119 @@ function makeVehicleData(obj)
     % RoadLinkMapを取得
     RoadLinkMap = obj.Vissim.get('RoadLinkMap');
 
-    % RoadLinkMapのキーを取得
-    keys_road_link_map = keys(RoadLinkMap);
-    keys_road_link_map = [keys_road_link_map{:}];
-
     % LinkTypeMapを取得
     LinkTypeMap = obj.Vissim.get('LinkTypeMap');
 
-    for road_id = keys_road_link_map
+    % IntersectionStructMapを取得
+    IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
 
+    for road_id = cell2mat(RoadLinkMap.keys)
         % RoadVehsMap の作成
         road_struct = RoadStructMap(road_id);
-        link_ids = RoadLinkMap(road_id);
 
         vehs_data = [];
 
-        for link_id = link_ids
-            link_obj = obj.Com.Net.Links.ItemByKey(link_id);
-            vehs_pos = link_obj.Vehs.GetMultiAttValues('Pos');
-            vehs_route = link_obj.Vehs.GetMultiAttValues('RouteNo');
-            [num_veh,~] = size(vehs_pos);
+        for link_id = RoadLinkMap(road_id)
+            % LinkのCOMオブジェクトを取得
+            Link = obj.Com.Net.Links.ItemByKey(link_id);
 
+            % VehiclesのCOMオブジェクトを取得
+            Vehicles = Link.Vehs;
 
+            if Vehicles.Count == 0
+                continue;
+            end
+
+            % 自動車の位置と進路を取得
+            pos_vehs = Vehicles.GetMultiAttValues('Pos');
+            route_vehs = Vehicles.GetMultiAttValues('RouteNo');
+
+            % 2列目を取得
+            pos_vehs = pos_vehs{:, 2};
+            route_vehs = route_vehs{:, 2};
+
+            % 数値行列に変換
+            if iscell(pos_vehs)
+                pos_vehs = cell2mat(pos_vehs);
+            end
+            if iscell(route_vehs)
+                route_vehs = cell2mat(route_vehs);
+            end
+
+            % 進路の値をdouble型に変換
+            route_vehs = cast(route_vehs, 'double');
+
+            % 車両数を取得
+            num_vehs = length(pos_vehs);
+
+            % Linkの種類を取得
             link_type = LinkTypeMap(link_id);
 
+            % Linkの種類によって車両の位置を追加
             if strcmp(link_type, 'main') || strcmp(link_type, 'out')
-                for veh_id = 1:num_veh
-                    vehs_data = [vehs_data; vehs_pos{veh_id,2}, cast(vehs_route{veh_id,2},'double')];
+                for veh_id = 1:num_vehs
+                    vehs_data = [vehs_data; pos_vehs(veh_id), route_vehs(veh_id)];
                 end
             elseif strcmp(link_type, 'sub')
-                for veh_id = 1:num_veh
-                    vehs_data = [vehs_data; vehs_pos{veh_id,2} + road_struct.from_pos + road_struct.con - road_struct.to_pos, cast(vehs_route{veh_id,2}, 'double')];
+                for veh_id = 1:num_vehs
+                    vehs_data = [vehs_data; pos_vehs(veh_id) + road_struct.from_pos + road_struct.con - road_struct.to_pos, route_vehs(veh_id)];
                 end
             elseif strcmp(link_type, 'connector')
-                for veh_id = 1:num_veh
-                    vehs_data = [vehs_data; vehs_pos{veh_id,2} + road_struct.from_pos, cast(vehs_route{veh_id,2}, 'double')];
+                for veh_id = 1:num_vehs
+                    vehs_data = [vehs_data; pos_vehs(veh_id) + road_struct.from_pos, route_vehs(veh_id)];
                 end
             end
 
+            % 降順にソート
             if ~isempty(vehs_data)
                 vehs_data = sortrows(vehs_data, 1, 'descend');
             end
-
         end
 
-        vehs_data(isnan(vehs_data)) = 1; % NaNを1に変換
+        % NaNを1に変換
+        vehs_data(isnan(vehs_data)) = 1;
         
-        obj.RoadVehsMap(road_id) = vehs_data;
-
-        % RoadFirstVehMap の作成
-
-        try
-            % 注目しているRoadが流入道路となっている交差点の流入道路の数を取得
+        % RoadPosVehsMapとRoadRouteVehsMapに追加
+        if isempty(vehs_data)
+            obj.RoadPosVehsMap(road_id) = [];
+            obj.RoadRouteVehsMap(road_id) = [];
+        else
+            obj.RoadPosVehsMap(road_id) = vehs_data(:,1);
+            obj.RoadRouteVehsMap(road_id) = vehs_data(:,2);
+        end
+        
+        % 流入道路かチェックする
+        is_input_road = true;
+        try 
+            % 交差点のIDを取得
             intersection_id = obj.RoadIntersectionMap(road_id);
-            road_num = obj.IntersectionNumRoadMap(intersection_id);
 
-            if road_num == 3
-                first_left_id = 0;
-                first_right_id = 0;
-                first_ids = [];
+            % 交差点の構造体を取得
+            intersection_struct = IntersectionStructMap(intersection_id);
 
-                if ~isempty(vehs_data)
-                    for veh_id = 1: length(vehs_data(:,2))
-                        route = vehs_data(veh_id,2);
-                        if route == 1
-                            if first_left_id == 0
-                                first_left_id = veh_id;
-                            end
-                        elseif route == 2
-                            if first_right_id == 0
-                                first_right_id = veh_id;
-                            end
-                        end
-                    end
-                end
+            % 道路の数を取得
+            road_num = length(intersection_struct.input_road_ids);
 
-                first_ids.left = first_left_id;
-                first_ids.right = first_right_id;
-
-                obj.RoadFirstVehMap(road_id) = first_ids;
-            elseif road_num == 4
-                first_straight_id = 0;
-                first_right_id = 0;
-                first_ids = [];
-
-                if ~isempty(vehs_data)
-                    for veh_id = 1: length(vehs_data(:,2))
-                        route = vehs_data(veh_id,2);
-                        if route == 1 || route == 2
-                            if first_straight_id == 0
-                                first_straight_id = veh_id;
-                            end
-                        elseif route == 3
-                            if first_right_id == 0
-                                first_right_id = veh_id;
-                            end
-                        end
-                    end
-                end
-
-                first_ids.straight = first_straight_id;
-                first_ids.right = first_right_id;
+            % RoadRouteFirstVehMapの初期化
+            for route_id = 1: road_num-1
+                obj.RoadRouteFirstVehMap.add(road_id, route_id, 0);
             end
-
-            obj.RoadFirstVehMap(road_id) = first_ids;
         catch
-            obj.RoadFirstVehMap(road_id) = [];
+            % フラグをfalseにする
+            is_input_road = false;
+        end
+
+        % RoadRouteFirstVehMapの作成
+        if is_input_road
+            if ~isempty(vehs_data)
+                veh_count = 0;
+                for route_id = vehs_data(:,2)'
+                    veh_count = veh_count + 1;
+                    if obj.RoadRouteFirstVehMap.get(road_id, route_id) == 0
+                        obj.RoadRouteFirstVehMap.set(road_id, route_id, veh_count);
+                    end
+                end
+            end
         end
     end
-
 end

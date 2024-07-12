@@ -61,7 +61,7 @@ function makeE(obj)
                 e(11) = p_max;
                 e(12) = -p_min;
 
-            elseif veh_id == obj.RoadFirstVehMap(road_id).right
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).right
                 % 右折先頭車
                 % eを初期化
                 e = zeros(28, 1);
@@ -103,7 +103,7 @@ function makeE(obj)
                 e(26) = 0;
                 e(27) = p_max;
                 e(28) = -p_min;
-            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).straight
                 % 直進先頭車
                 % eを初期化
                 e = zeros(28, 1);

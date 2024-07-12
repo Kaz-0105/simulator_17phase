@@ -25,10 +25,10 @@ function makeB3(obj)
             if veh_id == 1
                 % 先頭車
                 b3 = [0, 0, k_s*(p_s-d_s)-1, 1]*v*obj.dt;
-            elseif veh_id == obj.RoadFirstVehMap(road_id).right
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).right
                 % 右折先頭車
                 b3 = [0, 0, 0, 0, k_s*(p_s-d_s)-1, -k_f*d_f-1, 1]*v*obj.dt;
-            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).straight
                 % 直進先頭車
                 b3 = [0, 0, 0, 0, k_s*(p_s-d_s)-1, -k_f*d_f-1, 1]*v*obj.dt;
             else

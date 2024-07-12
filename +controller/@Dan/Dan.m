@@ -64,19 +64,19 @@ classdef Dan < handle
         PhaseSignalGroupMap;   % フェーズを構成するSignalGroupを収納するMap
         RoadPosVehsMap;        % 道路ごとの車の位置情報を収納するMap
         RoadRouteVehsMap;      % 道路ごとの車の進行方向情報を収納するMap
-        RoadFirstVehMap; % 道路ごとの先頭車の情報を収納するMap
+        RoadRouteFirstVehMap; % 道路ごとの先頭車の情報を収納するMap
         RoadNumVehsMap;        % 道路ごとの車の数を収納するMap
     end
 
     methods(Access = public)
-        function obj = Dan(id, Vissim) 
+        function obj = Dan(id, Vissim, road_num) 
             % ConfigクラスとVissimクラスの変数の設定
             obj.Config = Vissim.get('Config');
             obj.Vissim = Vissim;
 
             % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
             obj.id = id;
-            obj.road_num = 4;
+            obj.road_num = road_num;
             obj.signal_num = obj.road_num * (obj.road_num -1);
             obj.phase_num = 8;
             

@@ -2216,15 +2216,15 @@
 		</powerDistribution>
 	</powerDistributions>
 	<queueCounters>
-		<queueCounter link="1" name="" no="1" pos="199.63603253157174"/>
+		<queueCounter link="1" name="" no="1" pos="199.89758277910656"/>
 		<queueCounter link="2" name="" no="2" pos="199.19759468892113"/>
 		<queueCounter link="3" name="" no="3" pos="199.43491935501831"/>
-		<queueCounter link="4" name="" no="4" pos="199.37843539557468"/>
+		<queueCounter link="4" name="" no="4" pos="199.95494559866972"/>
 		<queueCounter link="5" name="" no="5" pos="199.15085518951011"/>
-		<queueCounter link="6" name="" no="6" pos="199.7158602791572"/>
-		<queueCounter link="7" name="" no="7" pos="48.956637619005363"/>
-		<queueCounter link="8" name="" no="8" pos="49.6301305883689"/>
-		<queueCounter link="9" name="" no="9" pos="49.177231922648751"/>
+		<queueCounter link="6" name="" no="6" pos="200.00593252865261"/>
+		<queueCounter link="7" name="" no="7" pos="50.053662420655897"/>
+		<queueCounter link="8" name="" no="8" pos="49.915590029025765"/>
+		<queueCounter link="9" name="" no="9" pos="49.949607703737101"/>
 	</queueCounters>
 	<reducedSpeedAreas>
 		<reducedSpeedArea anmFlag="false" lane="10005 1" length="13.975278045258701" name="" no="1" pos="0.50658500597498624" timeFrom="0" timeTo="99999">

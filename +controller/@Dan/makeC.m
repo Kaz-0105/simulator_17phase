@@ -16,7 +16,7 @@ function makeC(obj)
                 c(5:6, veh_id) = [1; -1];
                 c(7:8, veh_id) = [-1; 1];
                 c(11:12, veh_id) = [1; -1];
-            elseif veh_id == obj.RoadFirstVehMap(road_id).right
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).right
                 % 右折先頭車
                 c = zeros(28, obj.RoadNumVehsMap(road_id));
 
@@ -28,7 +28,7 @@ function makeC(obj)
                 c(19:20,veh_id) = [1;-1];                    
                 c(23:24,veh_id-1) = [1;-1]; 
                 c(27:28,veh_id) = [1;-1];
-            elseif veh_id == obj.RoadFirstVehMap(road_id).straight
+            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).straight
                 % 直進先頭車
                 c = zeros(28, obj.RoadNumVehsMap(road_id));
 
