@@ -11,17 +11,33 @@ classdef Vissim < handle
     properties
         % Mapの変数
         LinkRoadMap;                         % キー：リンクのID、バリュー：そのリンクが属する道路のID
-        LinkTypeMap;                         % キー：リンクのID、バリュー：リンクの種類
         RoadLinkMap;                         % キー：道路のID、バリュー：その道路に属するリンクのIDの配列が入ったセル配列
-        RoadStructMap;                       % キー：道路のID、バリュー：道路の長さに関する構造体
+        
         LinkInputOutputMap;                  % キー：リンクのID、バリュー：そのリンクが末端流入リンクまたは末端流出リンクであるかどうか
+        
+        LinkTypeMap;                         % キー：リンクのID、バリュー：リンクの種類
+        RoadMainLinkMap;                     % キー：道路のID、バリュー：その道路に属するメインリンクのID
+
+        RoadBranchMap;                       % キー：道路のID、バリュー：その道路の分岐情報
+        
+        ConnectorSubLinkMap;                 % キー：コネクタのID、バリュー：そのコネクタに接続するサブリンクのID
+        ConnectorMainLinkMap;                % キー：コネクタのID、バリュー：そのコネクタに接続するメインリンクのID
+        SubLinkConnectorMap;                 % キー：サブリンクのID、バリュー：そのサブリンクに接続するコネクタのID
+        MainLinkConnectorMap;                % キー：メインリンクのID、バリュー：そのメインリンクに接続するコネクタのID
+
+        RoadStructMap;                       % キー：道路のID、バリュー：道路の長さに関する構造体
         IntersectionStructMap;               % キー：交差点のID、バリュー：交差点の流入出道路に関する構造体
+
         LinkQueueCounterMap;                 % キー：リンクのID、バリュー：そのリンクのキューカウンターのID
+        LinkDataCollectionMeasurementMap;    % キー：リンクのID、バリュー：DataCollectionMeasurementのID
+        RoadDelayMeasurementMap;             % キー：道路のID、バリュー：DelayMeasurementのID
+
         IntersectionControllerMap;           % キー：交差点のID、バリュー：制御器のクラスのオブジェクト
         IntersectionSignalControllerMap;     % キー：交差点のID、バリュー：SignalControllerのCOMオブジェクト
+
         IntersectionOptStateMap;             % キー：交差点のID、バリュー：その交差点の信号現示の最適解
-        RoadDelayMeasurementMap;             % キー：道路のID、バリュー：DelayMeasurementのID
-        LinkDataCollectionMeasurementMap;    % キー：リンクのID、バリュー：DataCollectionMeasurementのID
+        
+        
     end
 
     properties
@@ -49,24 +65,26 @@ classdef Vissim < handle
             obj.Com = actxserver('VISSIM.vissim');
             obj.Com.LoadNet(Config.network.inpx_file);
             obj.Com.LoadLayout(Config.network.layx_file);
-            
-            % linkRoadMapの作成                                                        
-            obj.makeLinkRoadMap();
+
+            % roadLinkMapの作成
+            obj.makeRoadLinkMap();
+
+            % LinkInputOutputMapの作成
+            obj.makeLinkInputOutputMap();
 
             % linkTypeMapの作成                                                   
             obj.makeLinkTypeMap();
 
-            % roadLinkMapの作成
-            obj.makeRoadLinkMap();
+            % ConnectorSubLinkMapとSubLinkConnectorMapの作成
+            obj.makeConnectorSubLinkMap();
+            % ConnectorMainLinkMapとMainLinkConnectorMapの作成
+            obj.makeConnectorMainLinkMap();
 
             % RoadStructMapの作成
             obj.makeRoadStructMap();
 
             % IntersectionStructMapの作成
             obj.makeIntersectionStructMap();
-
-            % LinkInputOutputMapの作成
-            obj.makeLinkInputOutputMap();
 
             % LinkQueueCounterMapの作成
             obj.makeLinkQueueCounterMap();
@@ -82,6 +100,9 @@ classdef Vissim < handle
 
             % LinkDataCollectionMeasurementMapの作成
             obj.makeLinkDataCollectionMeasurementMap();
+
+            % RoadBranchMapの作成
+            obj.makeRoadBranchMap();
 
             % Vissim上の設定を行う
             obj.applyToVissim();
@@ -102,9 +123,14 @@ classdef Vissim < handle
     end
 
     methods(Access = private)
-        makeLinkRoadMap(obj);
-        makeLinkTypeMap(obj);
+        % 道路とリンクの関係について
         makeRoadLinkMap(obj);
+
+        % リンクの種類について
+        makeLinkTypeMap(obj);
+        makeConnectorSubLinkMap(obj);
+        makeConnectorMainLinkMap(obj);
+        
         makeRoadStructMap(obj);
         makeLinkInputOutputMap(obj);
         makeLinkQueueCounterMap(obj);
@@ -112,6 +138,9 @@ classdef Vissim < handle
         makeIntersectionControllerMap(obj);
         makeRoadDelayMeasurementMap(obj);
         makeLinkDataCollectionMeasurementMap(obj);
+        makeRoadBranchMap(obj);
+        makeInputRoadLaneStructMap(obj);
+        makeSubLinkLaneMap(obj);
 
         applyToVissim(obj);
         

@@ -34,23 +34,20 @@ function group = parseGroup(obj, group_data)
         tmp_road.id = road_data.id;
 
         % 道路を構成するリンクのIDを取得
-        tmp_road.link_ids = [];  
-        for link_id = road_data.v_ids
-            tmp_road.link_ids(end + 1) = link_id{1};
+        if isfield(road_data, 'link_ids')
+            tmp_road.link_ids = cell2mat(road_data.link_ids);
+        else
+            error('There is no link_ids information in the configuration file.');
         end
 
         % Signal Controller（1つの交差点の信号機をまとめたグループのこと）のIDを取得
-        if isfield(road_data, 'v_sc')
-            tmp_road.signal_controller_id = road_data.v_sc;
+        if isfield(road_data, 'signal_controller_id')
+            tmp_road.signal_controller_id = road_data.signal_controller_id;
         end
 
         % sig_head_idを取得
         if isfield(road_data, 'sig_head_ids')
-            tmp_sig_head_ids = [];
-            for sig_head_id = [road_data.sig_head_ids{:}]
-                tmp_sig_head_ids(end + 1) = sig_head_id;
-            end
-            tmp_road.sig_head_ids = tmp_sig_head_ids;
+            tmp_road.sig_head_ids = cell2mat(road_data.sig_head_ids);
         end
 
         % 自動車の速度を取得
@@ -58,6 +55,11 @@ function group = parseGroup(obj, group_data)
             tmp_road.speed = road_data.speed;
         else
             tmp_road.speed = 60;
+        end
+
+        % 分岐情報を取得
+        if isfield(road_data, 'branch')
+            tmp_road.branch = road_data.branch;
         end
 
         group.RoadsMap(tmp_road.id) = tmp_road;

@@ -9,7 +9,8 @@ classdef VissimData<handle
         % Map
         RoadPosVehsMap;         % キー：道路ID、値：その道路上の自動車の位置
         RoadRouteVehsMap;       % キー：道路ID、値：その道路上の自動車の進路
-        RoadRouteFirstVehMap;    % キー１：道路のID、キー２：進路のID、値：先頭車のID
+        RoadRouteFirstVehMap;   % キー１：道路のID、キー２：進路のID、値：先頭車のID
+        RoadLaneFirstVehMap;    % キー１：道路のID、キー２：車線のID、値：先頭車のID
         IntersectionNumRoadMap; % キー：交差点ID、値：その交差点に流入する道路の数
         RoadIntersectionMap;    % キー：道路ID、値：その道路が流入道路となる交差点のID
     end
@@ -22,14 +23,17 @@ classdef VissimData<handle
             % VissimのCOMオブジェクトを取得
             obj.Com = obj.Vissim.get('Com');
 
-            % IntersectionNumRoadMap を作成する
+            % IntersectionNumRoadMapを作成する
             obj.makeIntersectionNumRoadMap();
 
-            % RoadIntersectionMap を作成する
+            % RoadIntersectionMapを作成する
             obj.makeRoadIntersectionMap();
 
-            % RoadPosVehsMap と RoadRouteVehsMap と RoadRouteFirstVehMap を作成する
+            % RoadPosVehsMapとRoadRouteVehsMapとRoadRouteFirstVehMapを作成する
             obj.makeVehicleData();
+
+            % RoadLaneFirstVehMapを作成する
+            obj.makeRoadLaneFirstVehMap();
         end    
     end
 
@@ -39,5 +43,8 @@ classdef VissimData<handle
 
     methods(Access = private)
         makeVehicleData(obj);
+        makeIntersectionNumRoadMap(obj);
+        makeRoadIntersectionMap(obj);
+        makeRoadLaneFirstVehMap(obj);
     end
 end

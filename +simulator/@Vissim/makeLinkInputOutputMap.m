@@ -28,4 +28,11 @@ function makeLinkInputOutputMap(obj)
             end
         end
     end 
+
+    % 関係ないリンクを削除
+    for link_id = cell2mat(obj.LinkInputOutputMap.keys)
+        if strcmp(obj.LinkInputOutputMap(link_id),'neither')
+            remove(obj.LinkInputOutputMap, link_id);
+        end
+    end
 end
