@@ -3,6 +3,7 @@ classdef Dan < handle
         %　クラス
         Config; % Configクラスの変数
         Vissim; % Vissimクラスの変数
+        Com;    % COMのオブジェクト
 
         PhiResults; % phiの結果を格納するクラス
         UResults;   % uの結果を格納するクラス
@@ -62,10 +63,15 @@ classdef Dan < handle
         RoadPrmsMap;           % 道路に関するパラメータを格納するMap
         VariableListMap;       % 決定変数のリストを格納するMap
         PhaseSignalGroupMap;   % フェーズを構成するSignalGroupを収納するMap
-        RoadPosVehsMap;        % 道路ごとの車の位置情報を収納するMap
-        RoadRouteVehsMap;      % 道路ごとの車の進行方向情報を収納するMap
-        RoadRouteFirstVehMap; % 道路ごとの先頭車の情報を収納するMap
-        RoadNumVehsMap;        % 道路ごとの車の数を収納するMap
+        
+        RoadLinkPosVehsMap;
+        RoadLinkRouteVehsMap;
+        RoadLinkLaneVehsMap;
+
+        RoadLinkFirstVehsMap;
+
+        RoadLinkNumVehsMap;
+        RoadNumVehsMap;
     end
 
     methods(Access = public)
@@ -73,6 +79,7 @@ classdef Dan < handle
             % ConfigクラスとVissimクラスの変数の設定
             obj.Config = Vissim.get('Config');
             obj.Vissim = Vissim;
+            obj.Com = Vissim.get('Com');
 
             % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
             obj.id = id;

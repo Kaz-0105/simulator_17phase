@@ -13,10 +13,16 @@ roads :
   - id : 2
     link_ids : [2]
     speed : 60
+    branch : 
+      left : 0
+      right : 0
 
   - id : 3
     link_ids : [3]
     speed : 60
+    branch : 
+      left : 0
+      right : 0
 
   - id : 4
     link_ids : [4, 10, 10001]
@@ -39,10 +45,16 @@ roads :
   - id : 6
     link_ids : [6]
     speed : 60
+    branch : 
+      left : 0
+      right : 0
 
   - id : 7
     link_ids : [7]
     speed : 60
+    branch : 
+      left : 0
+      right : 0
 
   - id : 8
     link_ids : [8, 12, 10003]

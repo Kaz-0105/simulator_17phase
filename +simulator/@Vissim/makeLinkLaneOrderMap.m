@@ -30,7 +30,7 @@ function makeLinkLaneOrderMap(obj)
             % メインリンクの車線について
             
             % メインリンクのIDを取得
-            main_link_id = road_struct.main_link_id;
+            main_link_id = obj.RoadMainLinkMap(road_id);
 
             % メインリンクのCOMオブジェクトを取得
             MainLink = obj.Com.Net.Links.ItemByKey(main_link_id);
