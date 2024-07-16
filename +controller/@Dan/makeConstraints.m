@@ -22,23 +22,28 @@ function makeConstraints(obj)
     [~, obj.v_length] = size(D);
 
     % 交差点内の全ての自動車の位置情報をまとめる
-    obj.pos_vehs_initial = [];
+    obj.pos_vehs_init = [];
     
     for road_id = 1: obj.road_num
-        pos_vehs = obj.RoadPosVehsMap(road_id);
-        obj.pos_vehs_initial = [obj.pos_vehs_initial; pos_vehs];
+        for link_id = 1: obj.RoadNumLinksMap(road_id)
+            % pos_vehsを取得
+            pos_vehs = obj.RoadLinkPosVehsMap.get(road_id, link_id);
+
+            % pos_vehs_initに追加
+            obj.pos_vehs_init = [obj.pos_vehs_init; pos_vehs];
+        end
     end
 
-    % ここから具体的な計算
-    A_bar = kron(ones(obj.N_p, 1), A); % A_barの計算
-    B_bar = kron(tril(ones(obj.N_p), -1), B); % B_barの計算
-    C_bar = kron(eye(obj.N_p), C); % C_barの計算
-    D_bar = kron(eye(obj.N_p), D); % D_barの計算
-    E_bar = kron(ones(obj.N_p, 1), E); % E_barの計算
+    % A_bar, B_bar, C_bar, D_bar, E_barを計算
+    A_bar = kron(ones(obj.N_p, 1), A); 
+    B_bar = kron(tril(ones(obj.N_p), -1), B); 
+    C_bar = kron(eye(obj.N_p), C); 
+    D_bar = kron(eye(obj.N_p), D);
+    E_bar = kron(ones(obj.N_p, 1), E);
 
     % P、qに代入  
     obj.milp_matrices.P = [obj.milp_matrices.P; C_bar*B_bar + D_bar];
-    obj.milp_matrices.q = [obj.milp_matrices.q; E_bar - C_bar*A_bar*obj.pos_vehs_initial];
+    obj.milp_matrices.q = [obj.milp_matrices.q; E_bar - C_bar*A_bar*obj.pos_vehs_init];
 
     % 信号機制約を追加していく
 
@@ -51,15 +56,27 @@ function makeConstraints(obj)
         phase_group = obj.PhaseSignalGroupMap(phase_id);
 
         for step = 1:obj.N_p
-            P_tmp = zeros(5, obj.variables_size);
-            P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 0; 1];
-            P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 0; 1];
-            P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 0; 1];
-            P_tmp(:, phase_group(4) + obj.v_length*(step-1)) = [0; 0; 0; -1; 1];
-            P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.phase_num*(step-1)) = [1; 1; 1; 1; -1];
-            obj.milp_matrices.P = [obj.milp_matrices.P; P_tmp];
+            P_tmp = zeros(obj.road_num + 1, obj.variables_size);
 
-            q_tmp = [0; 0; 0; 0; 3];
+            if obj.road_num == 4
+                P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 0; 1];
+                P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 0; 1];
+                P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 0; 1];
+                P_tmp(:, phase_group(4) + obj.v_length*(step-1)) = [0; 0; 0; -1; 1];
+                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.phase_num*(step-1)) = [1; 1; 1; 1; -1];
+
+                q_tmp = [0; 0; 0; 0; 3];
+            elseif obj.road_num == 3
+                P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 1];
+                P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 1];
+                P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 1];
+                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.phase_num*(step-1)) = [1; 1; 1; -1];
+
+                q_tmp = [0; 0; 0; 2];
+            end
+
+            % P、qにプッシュ
+            obj.milp_matrices.P = [obj.milp_matrices.P; P_tmp];
             obj.milp_matrices.q = [obj.milp_matrices.q; q_tmp];
         end
     end
