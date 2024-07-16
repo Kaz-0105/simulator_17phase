@@ -50,7 +50,7 @@ classdef Dan < handle
 
     properties
         % リスト
-        pos_vehs_initial; % 自動車の初期位置のリスト
+        pos_vehs_init; % 自動車の初期位置のリスト
         pos_vehs_result;  % 予測の最終結果のリスト
 
         x_opt;   % 最適解のリスト
@@ -83,12 +83,19 @@ classdef Dan < handle
             obj.Vissim = Vissim;
             obj.Com = Vissim.get('Com');
 
-            % 交差点のID、SignalGroupの数、Phaseの数、道路の数を設定
+            % 交差点のID、SignalGroupの数、道路の数を設定
             obj.id = id;
             obj.road_num = road_num;
             obj.signal_num = obj.road_num * (obj.road_num -1);
-            obj.phase_num = 8;
-            
+
+            % フェーズの数を設定
+            if obj.road_num == 3
+                obj.phase_num = 4;
+
+            elseif obj.road_num == 4
+                obj.phase_num = 8;
+
+            end
 
             % サンプリング時間
             obj.dt = obj.Config.mpc.time_step;
@@ -169,7 +176,7 @@ classdef Dan < handle
         makeE(obj);
 
         % 先行車を見つける関数
-        value = getFrontVehicle(obj, veh_id, route_vehs);
+        value = getFrontVehicle(obj, veh_id, road_id, link_id);
 
         % 決定変数の種類ごとのリストを作成する関数群
 
