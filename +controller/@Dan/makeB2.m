@@ -4,9 +4,6 @@ function makeB2(obj)
 
     % 道路ごとに計算
     for road_id = 1: obj.road_num
-        % 各道路のB2行列を初期化
-        B2 = [];
-
         % パラメータの構造体を取得
         road_prms = obj.RoadPrmsMap(road_id);
 
@@ -19,27 +16,47 @@ function makeB2(obj)
         k_s = 1/(D_s - d_s); % モデルに登場する係数（その１）
         k_f = 1/(D_f - d_f); % モデルに登場する係数（その２）
 
-        % B2行列を計算
-        for veh_id = 1: obj.RoadNumVehsMap(road_id)
-            if veh_id == 1
-                % 先頭車
-                b2 = -k_s*v*obj.dt;
-            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).right 
-                % 右折先頭車
-                b2 = [-k_s, k_f, -k_f]*v*obj.dt;
-            elseif veh_id == obj.RoadRouteFirstVehMap(road_id).straight
-                % 直進先頭車
-                b2 = [-k_s, k_f, -k_f]*v*obj.dt;
-            else
-                % それ以外の場合
-                b2 = [-k_s, k_f, -k_f, k_f, -k_f]*v*obj.dt;
+        % リンクごとに計算
+        for link_id = 1: obj.RoadNumLinksMap(road_id)
+            % 各リンクのB2行列を初期化
+            B2 = [];
+
+            % LinkFirstVehsMapの取得
+            LaneFirstVehsMap = obj.RoadLinkLaneFirstVehsMap.get(road_id, link_id);
+
+            % 自動車ごとに計算
+            for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
+                if veh_id == 1
+                    % 先頭車
+                    b2 = -k_s*v*obj.dt;
+
+                elseif veh_id == LaneFirstVehsMap(1)
+                    % 分岐車線（左）の先頭車
+                    b2 = [-k_s, k_f, -k_f]*v*obj.dt;
+
+                elseif veh_id == LaneFirstVehsMap(2)
+                    % メインの車線の先頭車
+                    b2 = [-k_s, k_f, -k_f]*v*obj.dt;
+
+                elseif veh_id == LaneFirstVehsMap(3)
+                    % 分岐車線（右）の先頭車
+                    b2 = [-k_s, k_f, -k_f]*v*obj.dt;
+
+                else
+                    % それ以外の場合
+                    b2 = [-k_s, k_f, -k_f, k_f, -k_f]*v*obj.dt;
+
+                end
+
+                % B2行列に追加
+                B2 = blkdiag(B2, b2);
             end
 
-            % tmp_B2に追加
-            B2 = blkdiag(B2, b2);
+            % B2行列に追加
+            obj.mld_matrices.B2 = blkdiag(obj.mld_matrices.B2, B2);
+
         end
 
-        % B2行列に追加
-        obj.mld_matrices.B2 = blkdiag(obj.mld_matrices.B2, B2);
+        
     end
 end
