@@ -68,7 +68,9 @@ classdef Dan < handle
         RoadLinkRouteVehsMap;
         RoadLinkLaneVehsMap;
 
-        RoadLinkFirstVehsMap;
+        RoadNumLinksMap;
+
+        RoadLinkLaneFirstVehsMap;
 
         RoadLinkNumVehsMap;
         RoadNumVehsMap;
