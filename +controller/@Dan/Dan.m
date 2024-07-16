@@ -93,7 +93,7 @@ classdef Dan < handle
                 obj.phase_num = 4;
 
             elseif obj.road_num == 4
-                obj.phase_num = 8;
+                obj.phase_num = 17;
 
             end
 

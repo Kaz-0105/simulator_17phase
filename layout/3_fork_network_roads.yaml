@@ -4,7 +4,7 @@ roads :
     link_ids : [1, 7, 10000]
     signal_controller_id : 1
     speed : 60
-    sig_head_ids : [5, 6]
+    signal_head_ids : [5, 6]
     branch : 
       left : 0
       right : 7
@@ -27,7 +27,7 @@ roads :
     link_ids : [4, 8, 10001]
     signal_controller_id : 1
     speed : 60
-    sig_head_ids : [1, 2]
+    signal_head_ids : [1, 2]
     branch : 
       left : 0
       right : 8
@@ -43,7 +43,7 @@ roads :
     link_ids : [6, 9, 10002]
     signal_controller_id : 1
     speed : 60
-    sig_head_ids : [3, 4]
+    signal_head_ids : [3, 4]
     branch : 
       left : 0
       right : 9

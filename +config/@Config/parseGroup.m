@@ -46,8 +46,8 @@ function group = parseGroup(obj, group_data)
         end
 
         % sig_head_idを取得
-        if isfield(road_data, 'sig_head_ids')
-            tmp_road.sig_head_ids = cell2mat(road_data.sig_head_ids);
+        if isfield(road_data, 'signal_head_ids')
+            tmp_road.signal_head_ids = cell2mat(road_data.signal_head_ids);
         end
 
         % 自動車の速度を取得
