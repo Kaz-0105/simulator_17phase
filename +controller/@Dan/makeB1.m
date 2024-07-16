@@ -11,7 +11,7 @@ function makeB1(obj)
             num_vehs = obj.RoadLinkNumVehsMap.get(road_id, link_id);
 
             % B1行列に追加
-            obj.mld_matrices.B1 = blkdiag(obj.mld_matrices.B1, eye(num_vehs, obj.signal_num));
+            obj.mld_matrices.B1 = [obj.mld_matrices.B1; eye(num_vehs, obj.signal_num)];
         end
     end
 end
