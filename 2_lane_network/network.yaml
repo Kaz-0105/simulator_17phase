@@ -1,0 +1,85 @@
+# 交差点のネットワーク構造を定義
+roads:
+  - id: 1
+    main_link_id: 1
+    branches:
+      - id: 1
+        sub_link_id: 9
+        connector_id: 10000
+  - id: 2
+    main_link_id: 2
+  - id: 3
+    main_link_id: 3
+  - id: 4
+    main_link_id: 4
+    branches:
+      - id: 1
+        sub_link_id: 10
+        connector_id: 10001
+  - id: 5
+    main_link_id: 5
+    branches:
+      - id: 1
+        sub_link_id: 11
+        connector_id: 10002
+  - id: 6
+    main_link_id: 6
+  - id: 7
+    main_link_id: 7
+  - id: 8
+    main_link_id: 8
+    branches:
+      - id: 1
+        sub_link_id: 12
+        connector_id: 10003
+
+# 交差点のネットワーク構造を定義
+intersections:
+  - id: 1
+    type: 4
+    input_roads:
+      - id: 1
+        order: 4
+      - id: 4
+        order: 2
+      - id: 5
+        order: 1
+      - id: 8
+        order: 3
+    output_roads:
+      - id: 2
+        order: 4
+      - id: 3
+        order: 2
+      - id: 6
+        order: 1
+      - id: 7
+        order: 3
+    signal_controller:
+      id: 1
+      signal_groups: 
+        - id: 1
+          type: 1
+        - id: 2
+          type: 2
+        - id: 3
+          type: 3
+        - id: 4
+          type: 1
+        - id: 5
+          type: 2
+        - id: 6
+          type: 3
+        - id: 7
+          type: 1
+        - id: 8
+          type: 2
+        - id: 9
+          type: 3
+        - id: 10
+          type: 1
+        - id: 11
+          type: 2
+        - id: 12
+          type: 3
+    

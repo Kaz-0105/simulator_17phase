@@ -1,0 +1,101 @@
+## MPCのパラメータの設定
+MPC: 
+  predictive_horizon: 4
+  control_horizon: 3
+  time_step: 2
+
+## シミュレーションの設定
+simulation:
+  num_loops: 100
+  num_simulations: 2
+  seed: 1
+  use_max_speed: 'OFF'
+  sim_speed: 2
+  animations: 'ON'
+
+## 測定する評価項目の設定
+measurements:
+  queue_length: 'ON'
+  delay_time: 'ON'
+  travel_time: 'ON'
+  num_vehicles: 'ON'  
+  calculation_time: 'ON'
+
+## 制御手法の設定
+control:
+  traffic_signal_control:
+    macro_controllers:
+      - id: 1
+        method: 'None'
+    micro_controllers:
+      - id: 1
+        intersection_id: 1
+        method: 'Dan'
+  
+## ネットワークのパラメータ設定
+network:
+  vehicle_inputs:
+    - id: 1
+      volume: 1400
+    - id: 2
+      volume: 1400
+    - id: 3
+      volume: 1400
+    - id: 4
+      volume: 1400
+
+  vehicle_routes:
+    intersections:
+      - id: 1
+        roads:
+          - order: 1
+            template_id: 1
+          - order: 2
+            template_id: 1
+          - order: 3
+            template_id: 1
+          - order: 4
+            template_id: 1  
+    templates:
+      - id: 1
+        relative_flows:
+          - order: 1
+            ratio: 1
+          - order: 2
+            ratio: 1
+          - order: 3
+            ratio: 1
+
+  desired_speed_decisions:
+    - road_id: 1
+      speed: 60
+    - road_id: 2
+      speed: 60
+    - road_id: 3
+      speed: 60
+    - road_id: 4
+      speed: 60
+    - road_id: 5
+      speed: 60
+    - road_id: 6
+      speed: 60
+    - road_id: 7
+      speed: 60
+    - road_id: 8
+      speed: 60
+  
+  reduced_speed_areas:
+    - intersection_id: 1
+      speeds:
+        - order: 1
+          value: 30
+        - order: 2
+          value: 60
+        - order: 3
+          value: 30
+          
+
+  
+
+
+
