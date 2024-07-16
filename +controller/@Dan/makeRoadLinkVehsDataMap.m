@@ -4,6 +4,9 @@ function makeRoadLinkVehsDataMap(obj)
     obj.RoadLinkRouteVehsMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
     obj.RoadLinkLaneVehsMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
     
+    % RoadNumLinksMapを初期化（後々使う）
+    obj.RoadNumLinksMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+
     % Vissimクラスからデータを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
     RoadMainLinkMap = obj.Vissim.get('RoadMainLinkMap');
@@ -29,6 +32,9 @@ function makeRoadLinkVehsDataMap(obj)
 
         % メインリンクのレーン数を取得
         num_links = MainLink.Lanes.Count;
+
+        % RoadNumLinksMapに追加
+        obj.RoadNumLinksMap(order_id) = num_links;
 
         if num_links == 1
             % 自動車情報の数値行列を初期化

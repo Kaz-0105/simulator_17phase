@@ -2,8 +2,8 @@ function makeVehiclesData(obj, IntersectionStructMap, VissimData)
     % RoadLinkPosVehsMapとRoadLinkRouteVehsMapとRoadLinkLaneVehsMapを作成
     obj.makeRoadLinkVehsDataMap();
 
-    % RoadLinkFirstVehsMapを作成
-    obj.makeRoadLinkFirstVehsMap();
+    % RoadLinkLaneFirstVehsMapを作成
+    obj.makeRoadLinkLaneFirstVehsMap();
 
     % RoadLinkNumVehsMapとRoadNumVehsMapを作成
     obj.makeRoadLinkNumVehsMap();

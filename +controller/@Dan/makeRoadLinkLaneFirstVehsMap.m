@@ -1,6 +1,6 @@
-function makeRoadLinkFirstVehsMap(obj)
-    % RoadLinkFirstVehsMapを初期化
-    obj.RoadLinkFirstVehsMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
+function makeRoadLinkLaneFirstVehsMap(obj)
+    % RoadLinkLaneFirstVehsMapを初期化
+    obj.RoadLinkLaneFirstVehsMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
 
     for road_id = cell2mat(obj.RoadLinkLaneVehsMap.outerKeys())
         % LinkLaneVehsMapを取得
@@ -34,8 +34,8 @@ function makeRoadLinkFirstVehsMap(obj)
                 end
             end
 
-            % RoadLinkFirstVehsMapにLaneFirstVehsMapをプッシュ
-            obj.RoadLinkFirstVehsMap.add(road_id, link_id, LaneFirstVehsMap);
+            % RoadLinkLaneFirstVehsMapにLaneFirstVehsMapをプッシュ
+            obj.RoadLinkLaneFirstVehsMap.add(road_id, link_id, LaneFirstVehsMap);
         end
     end
 end
