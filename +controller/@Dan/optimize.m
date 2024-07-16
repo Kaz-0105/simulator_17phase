@@ -47,7 +47,7 @@ function optimize(obj)
             obj.makePhiOpt();
 
             obj.success_count = obj.success_count + 1;
-            obj.makePosVehsResult();
+            % obj.makePosVehsResult();
         else
             % 例外処理によってu_optとphi_optを作成
             obj.emergencyTreatment();

@@ -35,31 +35,38 @@ function makeRoadLaneVehsDataMap(obj)
                     % セル配列から取り出し
                     Vehicle = Vehicle{1};
 
-                    % 次のリンクのIDを取得
-                    next_link_id = Vehicle.NextLink.get('AttValue', 'No');
+                    % NextLinkのCOMオブジェクトを取得
+                    NextLink = Vehicle.NextLink; 
 
-                    if ismember(next_link_id, link_ids)
-                        % 位置を取得
-                        pos_veh = Vehicle.get('AttValue', 'Pos');
-
-                        % 進路を取得
-                        route_veh = double(Vehicle.get('AttValue', 'RouteNo'));
-
-                        % 信号待ちする車線のIDを取得
-                        lane_id = LinkLaneOrderMap.get(next_link_id, 1);
+                    if isempty(NextLink)
+                        break;
                     else
-                        % 位置を取得
-                        pos_veh = Vehicle.get('AttValue', 'Pos');
+                        % 次のリンクのIDを取得
+                        next_link_id = Vehicle.NextLink.get('AttValue', 'No');
 
-                        % 進路を取得
-                        route_veh = double(Vehicle.get('AttValue', 'RouteNo'));
+                        if ismember(next_link_id, link_ids)
+                            % 位置を取得
+                            pos_veh = Vehicle.get('AttValue', 'Pos');
 
-                        % 信号待ちする車線のIDを取得
-                        lane_id = LinkLaneOrderMap.get(link_id, Vehicle.Lane.get('AttValue', 'Index'));
+                            % 進路を取得
+                            route_veh = double(Vehicle.get('AttValue', 'RouteNo'));
+
+                            % 信号待ちする車線のIDを取得
+                            lane_id = LinkLaneOrderMap.get(next_link_id, 1);
+                        else
+                            % 位置を取得
+                            pos_veh = Vehicle.get('AttValue', 'Pos');
+
+                            % 進路を取得
+                            route_veh = double(Vehicle.get('AttValue', 'RouteNo'));
+
+                            % 信号待ちする車線のIDを取得
+                            lane_id = LinkLaneOrderMap.get(link_id, Vehicle.Lane.get('AttValue', 'Index'));
+                        end
+
+                        % RoadLaneVehsDataMapにプッシュ
+                        obj.RoadLaneVehsDataMap.set(road_id, lane_id, [obj.RoadLaneVehsDataMap.get(road_id, lane_id); pos_veh, route_veh]);
                     end
-
-                    % RoadLaneVehsDataMapにプッシュ
-                    obj.RoadLaneVehsDataMap.set(road_id, lane_id, [obj.RoadLaneVehsDataMap.get(road_id, lane_id); pos_veh, route_veh]);
                 end
             elseif strcmp(link_type, 'connector')
                 % ConnectorのCOMオブジェクトを取得

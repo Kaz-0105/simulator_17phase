@@ -1,37 +1,40 @@
 function emergencyTreatment(obj)
     % SignalGroupごとの車両数を格納するマップ
-    SignalGroupVehicleMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+    SignalGroupNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
     % 初期化
     for i = 1:12
-        SignalGroupVehicleMap(i) = 0;
+        SignalGroupNumVehsMap(i) = 0;
     end
 
     for road_id = 1: obj.road_num
-        for route = transpose(obj.RoadRouteVehsMap(road_id))
-            SignalGroupVehicleMap(route + (road_id-1)*(obj.road_num-1)) = SignalGroupVehicleMap(route + (road_id-1)*(obj.road_num-1)) + 1;
+        for link_id = 1: obj.RoadNumLinksMap(road_id)
+            for route = transpose(obj.RoadLinkRouteVehsMap.get(road_id, link_id))
+                % 数のインクリメント
+                SignalGroupNumVehsMap(route + (road_id-1)*(obj.road_num-1)) = SignalGroupNumVehsMap(route + (road_id-1)*(obj.road_num-1)) + 1;
+            end
         end
     end
 
     % フェーズごとの車両数を格納するマップ
-    PhaseVehicleMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+    PhaseNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
     for phase_id = 1: obj.phase_num
         for signal_group_id = obj.PhaseSignalGroupMap(phase_id)
-            if ~isKey(PhaseVehicleMap, phase_id)
-                PhaseVehicleMap(phase_id) = SignalGroupVehicleMap(signal_group_id);
+            if ~isKey(PhaseNumVehsMap, phase_id)
+                PhaseNumVehsMap(phase_id) = SignalGroupNumVehsMap(signal_group_id);
             else
-                PhaseVehicleMap(phase_id) = PhaseVehicleMap(phase_id) + SignalGroupVehicleMap(signal_group_id);
+                PhaseNumVehsMap(phase_id) = PhaseNumVehsMap(phase_id) + SignalGroupNumVehsMap(signal_group_id);
             end
         end
     end
 
     % 最大のバリューを持つキーを取得
     max_key = 1;
-    max_value = PhaseVehicleMap(1);
+    max_value = PhaseNumVehsMap(1);
 
     for phase_id = 2:obj.phase_num
-        tmp_value = PhaseVehicleMap(phase_id);
+        tmp_value = PhaseNumVehsMap(phase_id);
         if tmp_value > max_value
             max_key = phase_id;
             max_value = tmp_value;
