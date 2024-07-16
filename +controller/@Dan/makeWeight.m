@@ -17,20 +17,31 @@ function makeWeight(obj)
 
     % 重み行列を作成
     for road_id = 1: obj.road_num
-        route_vehs = obj.RoadRouteVehsMap(road_id);
-        first_veh_ids = obj.RoadRouteFirstVehMap(road_id);
+        for link_id = 1: obj.RoadNumLinksMap(road_id)
+            % LaneFirstVehsMapを取得
+            LaneFirstVehsMap = obj.RoadLinkLaneFirstVehsMap.get(road_id, link_id);
 
-        for veh_id = 1: length(route_vehs)
-            if veh_id == first_veh_ids.straight
-                weight_matrix = [weight_matrix, templete(route_vehs(veh_id))*first_veh_scale];
-            elseif veh_id == first_veh_ids.right
-                weight_matrix = [weight_matrix, templete(route_vehs(veh_id))*first_veh_scale];
-            else
-                weight_matrix = [weight_matrix, templete(route_vehs(veh_id))];
+            % route_vehsを取得
+            route_vehs = obj.RoadLinkRouteVehsMap.get(road_id, link_id);
+
+            for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
+                if veh_id == LaneFirstVehsMap(1)
+                    weight_matrix = [weight_matrix, templete(route_vehs(veh_id))*first_veh_scale];
+
+                elseif veh_id == LaneFirstVehsMap(2)
+                    weight_matrix = [weight_matrix, templete(route_vehs(veh_id))*first_veh_scale];
+
+                elseif veh_id == LaneFirstVehsMap(3)
+                    weight_matrix = [weight_matrix, templete(route_vehs(veh_id))*first_veh_scale];
+
+                else
+                    weight_matrix = [weight_matrix, templete(route_vehs(veh_id))];
+
+                end
             end
         end
     end
 
-    % 重み行列をmilp_matricesに追加
+    % 重み行列をmilp_matricesにプッシュ
     obj.milp_matrices.w = weight_matrix;
 end
