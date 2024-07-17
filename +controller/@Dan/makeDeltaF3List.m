@@ -32,7 +32,7 @@ function makeDeltaF3List(obj)
                     deltaf3_list = [deltaf3_list, last_index + 4];
 
                     % last_indexを更新
-                    last_index = last_index + 9;
+                    last_index = last_index + 10;
                     
                 end
             end

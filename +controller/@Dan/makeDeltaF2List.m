@@ -41,7 +41,7 @@ function makeDeltaF2List(obj)
                     deltaf2_list = [deltaf2_list, last_index + 3];
 
                     % last_indexを更新
-                    last_index = last_index + 9;
+                    last_index = last_index + 10;
                     
                 end
             end

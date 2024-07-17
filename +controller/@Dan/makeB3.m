@@ -45,7 +45,7 @@ function makeB3(obj)
 
                 else
                     % それ以外の場合
-                    b3 = [0, 0, 0, 0, 0, k_s*(p_s-d_s)-1, -k_f*d_f-1, -k_f*d_f-1, 1]*v*obj.dt;
+                    b3 = [0, 0, 0, 0, 0, k_s*(p_s-d_s)-1, -k_f*d_f-1, -k_f*d_f-1, 0, 1]*v*obj.dt;
 
                 end
 

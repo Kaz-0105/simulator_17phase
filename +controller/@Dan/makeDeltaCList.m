@@ -41,10 +41,10 @@ function makeDeltaCList(obj)
                     
                 else
                     % deltac_listに追加
-                    deltac_list = [deltac_list, last_index + 9];
+                    deltac_list = [deltac_list, last_index + 10];
 
                     % last_indexを更新
-                    last_index = last_index + 9;
+                    last_index = last_index + 10;
                     
                 end
             end

@@ -8,6 +8,7 @@ function makeVariablesList(obj)
     obj.makeDelta1List();
     obj.makeDelta2List();
     obj.makeDelta3List();
+    obj.makeDelta4List();
 
     obj.makeDeltaDList();
     obj.makeDeltaPList();

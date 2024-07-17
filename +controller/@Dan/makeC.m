@@ -64,20 +64,20 @@ function makeC(obj)
 
                 else
                     % それ以外の場合
-                    c = zeros(42, obj.RoadNumVehsMap(road_id));
+                    c = zeros(45, obj.RoadNumVehsMap(road_id));
 
                     % 車線分岐後の先行車のIDを取得
                     front_veh_id = obj.getFrontVehicle(veh_id, road_id, link_id);
 
                     % 係数が0ではない要素に値を代入
-                    c(13:22,veh_id) = [1;-1;-1;1;-1;1;-1;1;1;-1]; 
-                    c(17:18,veh_id-1) = [1;-1];
-                    c(19:20,front_veh_id) = [1;-1];
-                    c(25:26,veh_id) = [1;-1];
-                    c(29:30,veh_id-1) = [1;-1];                  
-                    c(33:34,veh_id) = [1;-1];
-                    c(37:38,front_veh_id) = [1;-1];
-                    c(41:42,veh_id) = [1;-1];
+                    c(16:25,veh_id) = [1;-1;-1;1;-1;1;-1;1;1;-1]; 
+                    c(20:21,veh_id-1) = [1;-1];
+                    c(22:23,front_veh_id) = [1;-1];
+                    c(28:29,veh_id) = [1;-1];
+                    c(32:33,veh_id-1) = [1;-1];                  
+                    c(36:37,veh_id) = [1;-1];
+                    c(40:41,front_veh_id) = [1;-1];
+                    c(44:45,veh_id) = [1;-1];
 
                 end
 

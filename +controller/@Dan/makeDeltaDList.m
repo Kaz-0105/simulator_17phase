@@ -44,7 +44,7 @@ function makeDeltaDList(obj)
                     deltad_list = [deltad_list, last_index + 1];
 
                     % last_indexを更新
-                    last_index = last_index + 9;
+                    last_index = last_index + 10;
                     
                 end
             end

@@ -47,6 +47,12 @@ function makeD3(obj)
             h5_min = p_s-p_max-D_b;
             h5_max = p_s-p_min-D_b;
 
+            % VehicleDelta4ConstraintMapの初期化
+            VehicleDelta4ConstraintMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+
+            % constraints_counterの初期化
+            constraints_counter = 0;
+
             % 自動車ごとに計算
             for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
                 if veh_id == 1
@@ -70,6 +76,9 @@ function makeD3(obj)
                     d3(10, 3) = -p_max;
                     d3(11, 3) = p_max;
                     d3(12, 3) = -p_min;
+
+                    % constraints_counterを更新
+                    constraints_counter = constraints_counter + 12;
 
                 elseif veh_id == LaneFirstVehsMap(1)
                     % 分岐車線（左）の先頭車
@@ -114,6 +123,9 @@ function makeD3(obj)
                     d3(27, 6) = p_max;
                     d3(28, 6) = -p_min;
 
+                    % variables_counterを更新
+                    constraints_counter = constraints_counter + 28;
+
                 elseif veh_id == LaneFirstVehsMap(2)
                     % メインの車線の先頭車
                     % d3を初期化
@@ -156,6 +168,9 @@ function makeD3(obj)
                     d3(26, 6) = -p_max;
                     d3(27, 6) = p_max;
                     d3(28, 6) = -p_min;
+
+                    % variables_counterを更新
+                    constraints_counter = constraints_counter + 28;
 
                 elseif veh_id == LaneFirstVehsMap(3)
                     % 分岐車線（右）の先頭車
@@ -200,10 +215,13 @@ function makeD3(obj)
                     d3(27, 6) = p_max;
                     d3(28, 6) = -p_min;
 
+                    % variables_counterを更新
+                    constraints_counter = constraints_counter + 28;
+
                 else
                     % それ以外の場合
                     % d3を初期化
-                    d3 = zeros(42, 9);
+                    d3 = zeros(45, 10);
 
                     % 非０要素を代入
                     d3(1, [1, 2, 6]) = [-1, -1, -1];
@@ -221,49 +239,82 @@ function makeD3(obj)
                     d3(11, [4, 5, 6, 8]) = [0, 1, 0, 1];
                     d3(12, [4, 5, 6, 8]) = [-1, 0, 0, 1];
 
-                    d3(13, 1) = -h1_min;
-                    d3(14, 1) = -h1_max-obj.eps;
+                    d3(13, [8, 9]) = [0, 1];
+                    d3(14, [8, 9]) = [-1, 1];
+                    d3(15, [8, 9]) = [1, -1];
 
-                    d3(15, 2) = -h2_min;
-                    d3(16, 2) = -h2_max-obj.eps;
+                    d3(16, 1) = -h1_min;
+                    d3(17, 1) = -h1_max-obj.eps;
 
-                    d3(17, 3) = -h3_min;
-                    d3(18, 3) = -h3_max-obj.eps;
+                    d3(18, 2) = -h2_min;
+                    d3(19, 2) = -h2_max-obj.eps;
 
-                    d3(19, 4) = -h4_min;
-                    d3(20, 4) = -h4_max-obj.eps;
+                    d3(20, 3) = -h3_min;
+                    d3(21, 3) = -h3_max-obj.eps;
 
-                    d3(21, 5) = -h5_min;
-                    d3(22, 5) = -h5_max-obj.eps;
+                    d3(22, 4) = -h4_min;
+                    d3(23, 4) = -h4_max-obj.eps;
 
-                    d3(23, 6) = p_min;
-                    d3(24, 6) = -p_max;
-                    d3(25, 6) = p_max;
-                    d3(26, 6) = -p_min;
+                    d3(24, 5) = -h5_min;
+                    d3(25, 5) = -h5_max-obj.eps;
 
-                    d3(27, 7) = p_min;
-                    d3(28, 7) = -p_max;
-                    d3(29, 7) = p_max;
-                    d3(30, 7) = -p_min;
+                    d3(26, 6) = p_min;
+                    d3(27, 6) = -p_max;
+                    d3(28, 6) = p_max;
+                    d3(29, 6) = -p_min;
 
-                    d3(31, 7) = p_min;
-                    d3(32, 7) = -p_max;
-                    d3(33, 7) = p_max;
-                    d3(34, 7) = -p_min;
+                    d3(30, 7) = p_min;
+                    d3(31, 7) = -p_max;
+                    d3(32, 7) = p_max;
+                    d3(33, 7) = -p_min;
 
-                    d3(35, 8) = p_min;
-                    d3(36, 8) = -p_max;
-                    d3(37, 8) = p_max;
-                    d3(38, 8) = -p_min;
+                    d3(34, 7) = p_min;
+                    d3(35, 7) = -p_max;
+                    d3(36, 7) = p_max;
+                    d3(37, 7) = -p_min;
 
-                    d3(39, 8) = p_min;
-                    d3(40, 8) = -p_max;
-                    d3(41, 8) = p_max;
-                    d3(42, 8) = -p_min;
+                    d3(38, 8) = p_min;
+                    d3(39, 8) = -p_max;
+                    d3(40, 8) = p_max;
+                    d3(41, 8) = -p_min;
+
+                    d3(42, 8) = p_min;
+                    d3(43, 8) = -p_max;
+                    d3(44, 8) = p_max;
+                    d3(45, 8) = -p_min;
+
+                    % VehicleDelta4ConstraintMapに追加
+                    VehicleDelta4ConstraintMap(veh_id) = constraints_counter + 13;
+
+                    % variables_counterを更新
+                    constraints_counter = constraints_counter + 45;
+                    
+
                 end
 
                 % 道路ごとのD3行列に追加
                 D3 = blkdiag(D3, d3);
+            end
+
+            % δ4に関する制約を追加
+            % delta1_listを取得
+            delta1_list = obj.RoadLinkDelta1ListMap.get(road_id, link_id);
+
+            for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
+                if veh_id == 1
+                    continue;
+                elseif veh_id == LaneFirstVehsMap(1)
+                    continue;
+                elseif veh_id == LaneFirstVehsMap(2)
+                    continue;
+                elseif veh_id == LaneFirstVehsMap(3)
+                    continue;
+                else
+                    diff_route_veh_id = obj.getDifferentRouteVehicle(veh_id, road_id, link_id);
+
+                    D3(VehicleDelta4ConstraintMap(veh_id), delta1_list(diff_route_veh_id)) = -1;
+                    D3(VehicleDelta4ConstraintMap(veh_id) + 2, delta1_list(diff_route_veh_id)) = 1;
+                end
             end
 
             % 全体のD3行列に追加

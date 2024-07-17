@@ -1,7 +1,7 @@
 function makeObjectiveFunction(obj, templete_id)
     f = zeros(1, obj.variables_size);
     delta1_list = obj.VariableListMap('delta_1');
-    delta3_list = obj.VariableListMap('delta_3');
+    delta4_list = obj.VariableListMap('delta_4');
     if templete_id == 1
         % delta_1を使用、重みはなし
         for delta1_num = delta1_list
@@ -19,13 +19,18 @@ function makeObjectiveFunction(obj, templete_id)
             end
         end
     elseif templete_id == 3
-        % delta_3を使用、重みはなし
-        for i = 1: length(delta3_list)
-            delta3_num = delta3_list(i);
+        % delta_1とdelta_4を使用
+        for delta1_num = delta1_list
             for step = 1: obj.N_p
-                f(delta3_num + obj.v_length*(step-1)) = 1;
+                f(delta1_num + obj.v_length*(step-1)) = 1;
             end
         end
+        for delta4_num = delta4_list
+            for step = 1: obj.N_p
+                f(delta4_num + obj.v_length*(step-1)) = 1;
+            end
+        end
+
     end
 
     obj.milp_matrices.f = f;

@@ -62,6 +62,8 @@ classdef Dan < handle
         % Map
         RoadPrmsMap;           % 道路に関するパラメータを格納するMap
         VariableListMap;       % 決定変数のリストを格納するMap
+        RoadLinkDelta1ListMap; % リンクごとのdelta1のリストを格納するMap
+        RoadLinkDelta4ListMap; % リンクごとのdelta4のリストを格納するMap
         PhaseSignalGroupMap;   % フェーズを構成するSignalGroupを収納するMap
         
         RoadLinkPosVehsMap;
@@ -177,6 +179,7 @@ classdef Dan < handle
 
         % 先行車を見つける関数
         value = getFrontVehicle(obj, veh_id, road_id, link_id);
+        value = getDifferentRouteVehicle(obj, veh_id, road_id, link_id);
 
         % 決定変数の種類ごとのリストを作成する関数群
 
