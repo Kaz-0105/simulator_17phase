@@ -46,9 +46,21 @@ function optimize(obj)
             obj.makeUOpt();
             obj.makePhiOpt();
 
+            % 最適解が見つかった回数をインクリメント
             obj.success_count = obj.success_count + 1;
+
+            % 4差路の場合はフェーズを17に再設定
+            if obj.road_num == 4
+                obj.phase_num = 17;
+            end
+
             % obj.makePosVehsResult();
         else
+            % 4差路の場合はフェーズを8に再設定
+            if obj.road_num == 4
+                obj.phase_num = 8;
+            end
+            
             % 例外処理によってu_optとphi_optを作成
             obj.emergencyTreatment();
         end
