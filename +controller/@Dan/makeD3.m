@@ -296,24 +296,31 @@ function makeD3(obj)
                 D3 = blkdiag(D3, d3);
             end
 
-            % δ4に関する制約を追加
-            % delta1_listを取得
+            % δ1の変数のリストを取得
             delta1_list = obj.RoadLinkDelta1ListMap.get(road_id, link_id);
 
+            % 先頭車でない場合δ4の制約を追加
             for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
                 if veh_id == 1
                     continue;
+
                 elseif veh_id == LaneFirstVehsMap(1)
                     continue;
+
                 elseif veh_id == LaneFirstVehsMap(2)
                     continue;
+
                 elseif veh_id == LaneFirstVehsMap(3)
                     continue;
+
                 else
+                    % 車線が同じでかつルートが異なる一番近い車両のIDを取得
                     diff_route_veh_id = obj.getDifferentRouteVehicle(veh_id, road_id, link_id);
 
+                    % δ4の制約における先行車のδ1の変数に関する部分の作成
                     D3(VehicleDelta4ConstraintMap(veh_id), delta1_list(diff_route_veh_id)) = -1;
                     D3(VehicleDelta4ConstraintMap(veh_id) + 4, delta1_list(diff_route_veh_id)) = 1;
+                    
                 end
             end
 
