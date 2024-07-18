@@ -43,7 +43,7 @@ function makeD1(obj)
 
                 else
                     % それ以外の場合
-                    d1 = zeros(46, obj.signal_num);
+                    d1 = zeros(47, obj.signal_num);
                     d1(1:2, signal_ids(route_vehs(veh_id))) = [-1; 1];
 
                 end

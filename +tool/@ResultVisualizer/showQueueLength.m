@@ -174,4 +174,7 @@ function showQueueLength(obj)
             end
         end
     end
+
+    % 系の平均のキューの長さを表示
+    
 end
