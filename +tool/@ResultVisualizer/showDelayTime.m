@@ -5,11 +5,11 @@ function showDelayTime(obj)
     % 時間データを取得
     time = obj.VissimMeasurements.get('time');
 
+    % IntersectionRoadDelayMapの取得
+    IntersectionRoadDelayMap = obj.VissimMeasurements.get('IntersectionRoadDelayMap');
+
     % 他の結果と比較するか、系全体と交差点ごとのどちらで表示するか場合分け
     if strcmp(obj.Config.result.contents.delay_time.scale, 'system')
-        % IntersectionRoadDelayMapの取得
-        IntersectionRoadDelayMap = obj.VissimMeasurements.get('IntersectionRoadDelayMap');
-
         % 全ての交差点でのキューの長さを平均
         delay_avg = IntersectionRoadDelayMap.average('all');
 
@@ -24,6 +24,9 @@ function showDelayTime(obj)
         title('Delay Time (all intersection)', 'FontSize', obj.font_sizes.title);
         xlabel('Time [s]', 'FontSize', obj.font_sizes.label);
         ylabel('Delay Time [s]', 'FontSize', obj.font_sizes.label);
+
+        % グラフのx軸の範囲を設定
+        xlim([0, time(end)]);
 
         % 座標軸のFontSizeの設定
         ax = gca;
@@ -71,10 +74,7 @@ function showDelayTime(obj)
             % 座標の固定を解除
             hold off;
         end
-    elseif strcmp(obj.Config.result.contents.delay_time.scale, 'intersection');
-        % IntersectionRoadDelayMapの取得
-        IntersectionRoadDelayMap = obj.VissimMeasurements.get('IntersectionRoadDelayMap');
-
+    elseif strcmp(obj.Config.result.contents.delay_time.scale, 'intersection')
         % IntersectionDelayMapを作成
         IntersectionDelayMap = IntersectionRoadDelayMap.average('outer');
 
@@ -103,6 +103,9 @@ function showDelayTime(obj)
             title(strcat('Delay Time (intersection : ', num2str(intersection_id), ')'), 'FontSize', obj.font_sizes.title);
             xlabel('Time [s]', 'FontSize', obj.font_sizes.label);
             ylabel('Delay Time [m]', 'FontSize', obj.font_sizes.label);
+
+            % グラフのx軸の範囲を設定
+            xlim([0, time(end)]);
 
             % 座標軸のFontSizeの設定
             ax = gca;
@@ -173,4 +176,14 @@ function showDelayTime(obj)
             end
         end
     end
+
+    % 交差点ごとの場合はシステム全体での時系列データを作っていないので作成
+    if strcmp(obj.Config.result.contents.delay_time.scale, 'intersection')
+        % 全ての交差点でのキューの長さを平均
+        delay_avg = IntersectionRoadDelayMap.average('all');
+    end
+
+    % 評価指標の出力
+    fprintf('Average Delay Time: %f\n', mean(delay_avg));
+
 end

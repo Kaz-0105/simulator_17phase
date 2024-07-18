@@ -97,6 +97,7 @@ function showCalcTime(obj)
             xlabel('Calculation Time [s]', 'FontSize', obj.font_sizes.label);
             ylabel('Frequency', 'FontSize', obj.font_sizes.label);
 
+
             % 座標軸のFontSizeの設定
             ax = gca;
             ax.FontSize = obj.font_sizes.axis;
@@ -159,6 +160,5 @@ function showCalcTime(obj)
                 end
             end
         end
-
     end
 end

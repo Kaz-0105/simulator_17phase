@@ -25,8 +25,11 @@ model :
     fix_num : 2          # 初期値の固定する数
 
 simulation :
-  time : 900 # シミュレーション時間
+  time : 100 # シミュレーション時間
   count : 1  # シミュレーション回数
+
+intersection :
+  yellow_time : 'on'
 
 result :
   save :

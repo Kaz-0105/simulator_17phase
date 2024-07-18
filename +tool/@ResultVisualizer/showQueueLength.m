@@ -5,11 +5,11 @@ function showQueueLength(obj)
     % 時間データを取得
     time = obj.VissimMeasurements.get('time');
 
+    % IntersectionRoadQueueMapの取得
+    IntersectionRoadQueueMap = obj.VissimMeasurements.get('IntersectionRoadQueueMap');
+
     % 他の結果と比較するか、系全体と交差点ごとのどちらで表示するか場合分け
     if strcmp(obj.Config.result.contents.queue_length.scale, 'system')
-        % IntersectionRoadQueueMapの取得
-        IntersectionRoadQueueMap = obj.VissimMeasurements.get('IntersectionRoadQueueMap');
-
         % 全ての交差点でのキューの長さを平均
         queue_avg = IntersectionRoadQueueMap.average('all');
 
@@ -24,6 +24,9 @@ function showQueueLength(obj)
         title('Queue Length (all intersection)', 'FontSize', obj.font_sizes.title);
         xlabel('Time [s]', 'FontSize', obj.font_sizes.label);
         ylabel('Queue Length [m]', 'FontSize', obj.font_sizes.label);
+
+        % グラフのx軸の範囲を設定
+        xlim([0, time(end)]);
 
         % 座標軸のFontSizeの設定
         ax = gca;
@@ -71,10 +74,7 @@ function showQueueLength(obj)
             % 座標の固定を解除
             hold off;
         end
-    elseif strcmp(obj.Config.result.contents.queue_length.scale, 'intersection');
-        % IntersectionRoadQueueMapの取得
-        IntersectionRoadQueueMap = obj.VissimMeasurements.get('IntersectionRoadQueueMap');
-
+    elseif strcmp(obj.Config.result.contents.queue_length.scale, 'intersection')
         % IntersectionQueueMapを作成
         IntersectionQueueMap = IntersectionRoadQueueMap.average('outer');
 
@@ -103,6 +103,9 @@ function showQueueLength(obj)
             title(strcat('Queue Length (intersection : ', num2str(intersection_id), ')'), 'FontSize', obj.font_sizes.title);
             xlabel('Time [s]', 'FontSize', obj.font_sizes.label);
             ylabel('Queue Length [m]', 'FontSize', obj.font_sizes.label);
+
+            % グラフのx軸の範囲を設定
+            xlim([0, time(end)]);
 
             % 座標軸のFontSizeの設定
             ax = gca;
@@ -175,6 +178,13 @@ function showQueueLength(obj)
         end
     end
 
-    % 系の平均のキューの長さを表示
+    % 交差点ごとの場合はシステム全体での時系列データを作っていないので作成
+    if strcmp(obj.Config.result.contents.delay_time.scale, 'intersection')
+        % 全ての交差点でのキューの長さを平均
+        queue_avg = IntersectionRoadQueueMap.average('all');
+    end
+
+    % 評価指標の出力
+    fprintf('Average Queue Length: %f\n', mean(queue_avg));
     
 end
