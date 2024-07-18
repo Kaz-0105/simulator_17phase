@@ -289,8 +289,6 @@ function makeD3(obj)
 
                     % variables_counterを更新
                     constraints_counter = constraints_counter + 46;
-                    
-
                 end
 
                 % 道路ごとのD3行列に追加

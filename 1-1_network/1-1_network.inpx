@@ -1197,7 +1197,7 @@
 		<areaMeasRawData fromTime="0" toTime="99999" writeFile="false"/>
 		<areaMeasResults collectData="false" fromTime="0" interval="99999" toTime="99999"/>
 		<areaResults collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<dataColl collectData="true" fromTime="0" interval="10" toTime="99999"/>
+		<dataColl collectData="true" fromTime="0" interval="4" toTime="900"/>
 		<dataCollRawData fromTime="0" toTime="99999" writeFile="false"/>
 		<delays collectData="true" fromTime="0" interval="4" toTime="900"/>
 		<dischRec fromTime="0" toTime="99999" writeFile="false"/>
