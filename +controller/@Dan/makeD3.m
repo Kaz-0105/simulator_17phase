@@ -239,55 +239,56 @@ function makeD3(obj)
                     d3(11, [4, 5, 6, 8]) = [0, 1, 0, 1];
                     d3(12, [4, 5, 6, 8]) = [-1, 0, 0, 1];
 
-                    d3(13, [8, 9]) = [0, 1];
-                    d3(14, [8, 9]) = [-1, 1];
-                    d3(15, [8, 9]) = [1, -1];
+                    d3(13, [1, 2, 9]) = [0, 0, 1];
+                    d3(14, [1, 2, 9]) = [1, 0, 1];
+                    d3(15, [1, 2, 9]) = [0, 1, 1];
+                    d3(16, [1, 2, 9]) = [-1, -1, -1];
 
-                    d3(16, 1) = -h1_min;
-                    d3(17, 1) = -h1_max-obj.eps;
+                    d3(17, 1) = -h1_min;
+                    d3(18, 1) = -h1_max-obj.eps;
 
-                    d3(18, 2) = -h2_min;
-                    d3(19, 2) = -h2_max-obj.eps;
+                    d3(19, 2) = -h2_min;
+                    d3(20, 2) = -h2_max-obj.eps;
 
-                    d3(20, 3) = -h3_min;
-                    d3(21, 3) = -h3_max-obj.eps;
+                    d3(21, 3) = -h3_min;
+                    d3(22, 3) = -h3_max-obj.eps;
 
-                    d3(22, 4) = -h4_min;
-                    d3(23, 4) = -h4_max-obj.eps;
+                    d3(23, 4) = -h4_min;
+                    d3(24, 4) = -h4_max-obj.eps;
 
-                    d3(24, 5) = -h5_min;
-                    d3(25, 5) = -h5_max-obj.eps;
+                    d3(25, 5) = -h5_min;
+                    d3(26, 5) = -h5_max-obj.eps;
 
-                    d3(26, 6) = p_min;
-                    d3(27, 6) = -p_max;
-                    d3(28, 6) = p_max;
-                    d3(29, 6) = -p_min;
+                    d3(27, 6) = p_min;
+                    d3(28, 6) = -p_max;
+                    d3(29, 6) = p_max;
+                    d3(30, 6) = -p_min;
 
-                    d3(30, 7) = p_min;
-                    d3(31, 7) = -p_max;
-                    d3(32, 7) = p_max;
-                    d3(33, 7) = -p_min;
+                    d3(31, 7) = p_min;
+                    d3(32, 7) = -p_max;
+                    d3(33, 7) = p_max;
+                    d3(34, 7) = -p_min;
 
-                    d3(34, 7) = p_min;
-                    d3(35, 7) = -p_max;
-                    d3(36, 7) = p_max;
-                    d3(37, 7) = -p_min;
+                    d3(35, 7) = p_min;
+                    d3(36, 7) = -p_max;
+                    d3(37, 7) = p_max;
+                    d3(38, 7) = -p_min;
 
-                    d3(38, 8) = p_min;
-                    d3(39, 8) = -p_max;
-                    d3(40, 8) = p_max;
-                    d3(41, 8) = -p_min;
+                    d3(39, 8) = p_min;
+                    d3(40, 8) = -p_max;
+                    d3(41, 8) = p_max;
+                    d3(42, 8) = -p_min;
 
-                    d3(42, 8) = p_min;
-                    d3(43, 8) = -p_max;
-                    d3(44, 8) = p_max;
-                    d3(45, 8) = -p_min;
+                    d3(43, 8) = p_min;
+                    d3(44, 8) = -p_max;
+                    d3(45, 8) = p_max;
+                    d3(46, 8) = -p_min;
 
                     % VehicleDelta4ConstraintMapに追加
                     VehicleDelta4ConstraintMap(veh_id) = constraints_counter + 13;
 
                     % variables_counterを更新
-                    constraints_counter = constraints_counter + 45;
+                    constraints_counter = constraints_counter + 46;
                     
 
                 end
@@ -313,7 +314,7 @@ function makeD3(obj)
                     diff_route_veh_id = obj.getDifferentRouteVehicle(veh_id, road_id, link_id);
 
                     D3(VehicleDelta4ConstraintMap(veh_id), delta1_list(diff_route_veh_id)) = -1;
-                    D3(VehicleDelta4ConstraintMap(veh_id) + 2, delta1_list(diff_route_veh_id)) = 1;
+                    D3(VehicleDelta4ConstraintMap(veh_id) + 3, delta1_list(diff_route_veh_id)) = 1;
                 end
             end
 

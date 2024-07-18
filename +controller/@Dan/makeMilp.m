@@ -20,7 +20,7 @@ function makeMilp(obj)
     obj.makeConstraints();
 
     % 目的関数の作成
-    obj.makeObjectiveFunction(2);
+    obj.makeObjectiveFunction(3);
 
     % 整数制約の作成
     obj.makeIntcon();

@@ -63,7 +63,6 @@ classdef Dan < handle
         RoadPrmsMap;           % 道路に関するパラメータを格納するMap
         VariableListMap;       % 決定変数のリストを格納するMap
         RoadLinkDelta1ListMap; % リンクごとのdelta1のリストを格納するMap
-        RoadLinkDelta4ListMap; % リンクごとのdelta4のリストを格納するMap
         PhaseSignalGroupMap;   % フェーズを構成するSignalGroupを収納するMap
         
         RoadLinkPosVehsMap;
