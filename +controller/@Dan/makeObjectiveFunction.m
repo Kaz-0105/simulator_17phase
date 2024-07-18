@@ -15,11 +15,11 @@ function makeObjectiveFunction(obj, templete_id)
         for i = 1: length(delta1_list)
             delta1_num = delta1_list(i);
             for step = 1: obj.N_p
-                f(delta1_num + obj.v_length*(step-1)) = obj.milp_matrices.w(i);
+                f(delta1_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta1(i);
             end
         end
     elseif templete_id == 3
-        % delta_1とdelta_4を使用
+        % delta_1とdelta_4を使用、重みはなし
         for delta1_num = delta1_list
             for step = 1: obj.N_p
                 f(delta1_num + obj.v_length*(step-1)) = 1;
@@ -31,6 +31,22 @@ function makeObjectiveFunction(obj, templete_id)
             end
         end
 
+    elseif templete_id == 4
+        % delta_1とdelta_4を使用、重みをつける
+        obj.makeWeight();
+        for i = 1: length(delta1_list)
+            delta1_num = delta1_list(i);
+            for step = 1: obj.N_p
+                f(delta1_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta1(i);
+            end
+        end
+
+        for i = 1: length(delta4_list)
+            delta4_num = delta4_list(i);
+            for step = 1: obj.N_p
+                f(delta4_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta4(i);
+            end
+        end
     end
 
     obj.milp_matrices.f = f;

@@ -1,6 +1,7 @@
 function makeWeight(obj)
     % 空の重み行列を作成
-    weight_matrix = [];
+    weight_matrix.delta1 = [];
+    weight_matrix.delta4 = [];
 
     % SignalGroupごとの重みのテンプレートを作成
     templete = obj.phase_num*ones(1, 3);
@@ -26,16 +27,17 @@ function makeWeight(obj)
 
             for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
                 if veh_id == LaneFirstVehsMap(1)
-                    weight_matrix = [weight_matrix, templete(route_vehs(veh_id))*first_veh_scale];
+                    weight_matrix.delta1 = [weight_matrix.delta1, templete(route_vehs(veh_id))*first_veh_scale];
 
                 elseif veh_id == LaneFirstVehsMap(2)
-                    weight_matrix = [weight_matrix, templete(route_vehs(veh_id))*first_veh_scale];
+                    weight_matrix.delta1 = [weight_matrix.delta1, templete(route_vehs(veh_id))*first_veh_scale];
 
                 elseif veh_id == LaneFirstVehsMap(3)
-                    weight_matrix = [weight_matrix, templete(route_vehs(veh_id))*first_veh_scale];
+                    weight_matrix.delta1 = [weight_matrix.delta1, templete(route_vehs(veh_id))*first_veh_scale];
 
                 else
-                    weight_matrix = [weight_matrix, templete(route_vehs(veh_id))];
+                    weight_matrix.delta1 = [weight_matrix.delta1, templete(route_vehs(veh_id))];
+                    weight_matrix.delta4 = [weight_matrix.delta4, templete(route_vehs(veh_id))];
 
                 end
             end
