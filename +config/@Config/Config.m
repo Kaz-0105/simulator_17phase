@@ -8,6 +8,7 @@ classdef Config<handle
         model;
         result;
         graph;
+        intersection;
     end
 
     properties
@@ -45,11 +46,15 @@ classdef Config<handle
 
             % graph構造体の設定
             obj.makeGraphStruct(data);
+
+            % intersection構造体の設定
+            obj.makeIntersectionStruct(data);
         end
     end
 
     methods
         displayControlMethod(obj);
+        
     end
 
     methods

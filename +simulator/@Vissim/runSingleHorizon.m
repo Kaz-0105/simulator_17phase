@@ -36,12 +36,28 @@ function runSingleHorizon(obj)
                     u_opt = obj.IntersectionOptStateMap(intersection_id);
 
                     % 信号現示を設定
-                    for signal_group_id = 1: SignalController.SGs.Count
-                        if u_opt(signal_group_id, step) == 0
-                            SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',1);
-                        else
-                            SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',3);
-                        end 
+                    if obj.Config.intersection.yellow_time
+                        for signal_group_id = 1: SignalController.SGs.Count
+                            if u_opt(signal_group_id, step) == 0
+                                SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',1);
+                            
+                            elseif u_opt(signal_group_id, step) == 1
+                                if u_opt(signal_group_id, step + 1) == 0
+                                    SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',2);
+                                else
+                                    SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',3);
+                                end
+                            end 
+                        end
+                    else
+                        for signal_group_id = 1: SignalController.SGs.Count
+                            if u_opt(signal_group_id, step) == 0
+                                SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',1);
+                            
+                            elseif u_opt(signal_group_id, step) == 1
+                                SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',2);
+                            end 
+                        end
                     end
                 end
 
