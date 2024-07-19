@@ -49,10 +49,10 @@ function makeConstraints(obj)
 
     % 信号機の変数が増えた分の変数を追加
     [row_num, ~] = size(obj.milp_matrices.P);
-    obj.milp_matrices.P = [obj.milp_matrices.P, zeros(row_num, obj.phase_num*obj.N_p + (obj.phase_num + 1)*(obj.N_p-1))];
+    obj.milp_matrices.P = [obj.milp_matrices.P, zeros(row_num, obj.tmp_phase_num*obj.N_p + (obj.tmp_phase_num + 1)*(obj.N_p-1))];
     [~, obj.variables_size] = size(obj.milp_matrices.P);
     
-    for phase_id = 1: obj.phase_num
+    for phase_id = 1: obj.tmp_phase_num
         phase_group = obj.PhaseSignalGroupMap(phase_id);
 
         for step = 1:obj.N_p
@@ -63,14 +63,14 @@ function makeConstraints(obj)
                 P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 0; 1];
                 P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 0; 1];
                 P_tmp(:, phase_group(4) + obj.v_length*(step-1)) = [0; 0; 0; -1; 1];
-                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.phase_num*(step-1)) = [1; 1; 1; 1; -1];
+                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*(step-1)) = [1; 1; 1; 1; -1];
 
                 q_tmp = [0; 0; 0; 0; 3];
             elseif obj.road_num == 3
                 P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 1];
                 P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 1];
                 P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 1];
-                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.phase_num*(step-1)) = [1; 1; 1; -1];
+                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*(step-1)) = [1; 1; 1; -1];
 
                 q_tmp = [0; 0; 0; 2];
             end
@@ -83,19 +83,19 @@ function makeConstraints(obj)
 
     % 信号現示の変化のバイナリ変数を定義 
     for step = 1:(obj.N_p-1)
-        P_tmp = zeros(4*obj.phase_num, obj.variables_size);
+        P_tmp = zeros(4*obj.tmp_phase_num, obj.variables_size);
 
-        for phase_id = 1: obj.phase_num
-            P_tmp((1 + 4*(phase_id -1): 4*phase_id), obj.v_length*obj.N_p + phase_id + obj.phase_num*(step -1)) = [1;-1;-1;1];
-            P_tmp((1 + 4*(phase_id -1): 4*phase_id), obj.v_length*obj.N_p + phase_id + obj.phase_num*step) = [1;-1;1;-1];
-            P_tmp((1 + 4*(phase_id -1): 4*phase_id), obj.v_length*obj.N_p + obj.phase_num*obj.N_p + phase_id + (obj.phase_num + 1)*(step - 1)) = [1;1;-1;-1];
+        for phase_id = 1: obj.tmp_phase_num
+            P_tmp((1 + 4*(phase_id -1): 4*phase_id), obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*(step -1)) = [1;-1;-1;1];
+            P_tmp((1 + 4*(phase_id -1): 4*phase_id), obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*step) = [1;-1;1;-1];
+            P_tmp((1 + 4*(phase_id -1): 4*phase_id), obj.v_length*obj.N_p + obj.tmp_phase_num*obj.N_p + phase_id + (obj.tmp_phase_num + 1)*(step - 1)) = [1;1;-1;-1];
         end
 
         obj.milp_matrices.P = [obj.milp_matrices.P; P_tmp];
 
-        q_tmp = zeros(4*obj.phase_num, 1);
+        q_tmp = zeros(4*obj.tmp_phase_num, 1);
 
-        for phase_id = 1: obj.phase_num
+        for phase_id = 1: obj.tmp_phase_num
             q_tmp(1 + 4*(phase_id -1),1) = 2;    
         end
 
@@ -116,7 +116,7 @@ function makeConstraints(obj)
     P_tmp = zeros(1, obj.variables_size);
 
     for step = 1:(obj.N_p-1)
-        P_tmp(1, obj.v_length*obj.N_p + obj.phase_num*obj.N_p + (obj.phase_num + 1)*step) = 1;
+        P_tmp(1, obj.v_length*obj.N_p + obj.tmp_phase_num*obj.N_p + (obj.tmp_phase_num + 1)*step) = 1;
     end
 
     obj.milp_matrices.P = [obj.milp_matrices.P; P_tmp];
@@ -141,7 +141,7 @@ function makeConstraints(obj)
     % 増えた変数の定義その２ 
     for step = 1:(obj.N_p-1)
         P_tmp = zeros(1, obj.variables_size);
-        P_tmp(obj.v_length*obj.N_p + obj.phase_num*obj.N_p + (obj.phase_num + 1)*(step -1) + 1 : obj.v_length*obj.N_p + obj.phase_num*obj.N_p+ (obj.phase_num + 1)*step) = [-ones(1, obj.phase_num), 2];
+        P_tmp(obj.v_length*obj.N_p + obj.tmp_phase_num*obj.N_p + (obj.tmp_phase_num + 1)*(step -1) + 1 : obj.v_length*obj.N_p + obj.tmp_phase_num*obj.N_p+ (obj.tmp_phase_num + 1)*step) = [-ones(1, obj.tmp_phase_num), 2];
         obj.milp_matrices.Peq = [obj.milp_matrices.Peq; P_tmp];
         obj.milp_matrices.qeq = [obj.milp_matrices.qeq; 0];
     end
@@ -166,7 +166,7 @@ function makeConstraints(obj)
         q_tmp = 1;
 
         for i = 1: step
-            P_tmp(1, obj.v_length*obj.N_p + obj.phase_num*obj.N_p + (obj.phase_num + 1)*i) = 1;
+            P_tmp(1, obj.v_length*obj.N_p + obj.tmp_phase_num*obj.N_p + (obj.tmp_phase_num + 1)*i) = 1;
         end
 
         phi_past_data = obj.PhiResults.get('past_data');

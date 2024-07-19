@@ -11,10 +11,11 @@ classdef Dan < handle
 
     properties
         % 普通のプロパティ
-        id;         % 交差点のID
-        signal_num; % 信号機の数
-        phase_num;  % 信号機のフェーズの数
-        road_num;   % 道路の数
+        id;            % 交差点のID
+        signal_num;    % 信号機の数
+        phase_num;     % フェーズの数   
+        tmp_phase_num; % フェーズの数
+        road_num;      % 道路の数
         
         dt;       % サンプリング時間
         N_p;      % 予測ホライゾン
@@ -92,10 +93,12 @@ classdef Dan < handle
             % フェーズの数を設定
             if obj.road_num == 3
                 obj.phase_num = 4;
+                obj.tmp_phase_num = 4;
 
             elseif obj.road_num == 4
                 obj.phase_num = 17;
-
+                obj.tmp_phase_num = 17;
+                
             end
 
             % サンプリング時間

@@ -19,7 +19,7 @@ function emergencyTreatment(obj)
     % フェーズごとの車両数を格納するマップ
     PhaseNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
-    for phase_id = 1: obj.phase_num
+    for phase_id = 1: obj.tmp_phase_num
         for signal_group_id = obj.PhaseSignalGroupMap(phase_id)
             if ~isKey(PhaseNumVehsMap, phase_id)
                 PhaseNumVehsMap(phase_id) = SignalGroupNumVehsMap(signal_group_id);
@@ -33,7 +33,7 @@ function emergencyTreatment(obj)
     max_key = 1;
     max_value = PhaseNumVehsMap(1);
 
-    for phase_id = 2:obj.phase_num
+    for phase_id = 2:obj.tmp_phase_num
         tmp_value = PhaseNumVehsMap(phase_id);
         if tmp_value > max_value
             max_key = phase_id;

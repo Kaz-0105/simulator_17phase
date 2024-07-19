@@ -51,14 +51,14 @@ function optimize(obj)
 
             % 4差路の場合はフェーズを17に再設定
             if obj.road_num == 4
-                obj.phase_num = 17;
+                obj.tmp_phase_num = 17;
             end
 
             % obj.makePosVehsResult();
         else
             % 4差路の場合はフェーズを8に再設定
             if obj.road_num == 4
-                obj.phase_num = 8;
+                obj.tmp_phase_num = 8;
             end
             
             % 例外処理によってu_optとphi_optを作成
