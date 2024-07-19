@@ -177,12 +177,12 @@ function showQueueLength(obj)
             end
         end
     end
+    
+    % IntersectionRoadQueueMapの取得
+    IntersectionRoadQueueMap = obj.VissimMeasurements.get('IntersectionRoadQueueMap');
 
-    % 交差点ごとの場合はシステム全体での時系列データを作っていないので作成
-    if strcmp(obj.Config.result.contents.delay_time.scale, 'intersection')
-        % 全ての交差点でのキューの長さを平均
-        queue_avg = IntersectionRoadQueueMap.average('all');
-    end
+    % 全ての交差点でのキューの長さを平均
+    queue_avg = IntersectionRoadQueueMap.average('all');
 
     % 評価指標の出力
     fprintf('Average Queue Length: %f\n', mean(queue_avg));

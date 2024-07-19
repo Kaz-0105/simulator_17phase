@@ -51,7 +51,7 @@ function optimize(obj)
 
             % 4差路の場合はフェーズを17に再設定
             if obj.road_num == 4
-                obj.tmp_phase_num = 17;
+                obj.tmp_phase_num = obj.phase_num;
             end
 
             % obj.makePosVehsResult();

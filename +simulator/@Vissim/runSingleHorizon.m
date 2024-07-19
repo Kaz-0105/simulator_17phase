@@ -23,51 +23,56 @@ function runSingleHorizon(obj)
         obj.optimize();
 
         for step = 1:obj.Config.mpc.control_horizon
-            try
-                % 1ステップ先までbreak_timeを設定
-                obj.break_time = obj.break_time + obj.Config.mpc.time_step;
-                obj.Com.Simulation.set('AttValue','SimBreakAt',obj.break_time);
+            for intersection_id = cell2mat(keys(obj.IntersectionSignalControllerMap))
+                % SignalControllerのCOMオブジェクトを取得
+                SignalController = obj.IntersectionSignalControllerMap(intersection_id);
 
-                for intersection_id = cell2mat(keys(obj.IntersectionSignalControllerMap))
-                    % SignalControllerのCOMオブジェクトを取得
-                    SignalController = obj.IntersectionSignalControllerMap(intersection_id);
+                % 最適な信号現示を取得
+                u_opt = obj.IntersectionOptStateMap(intersection_id);
 
-                    % 最適な信号現示を取得
-                    u_opt = obj.IntersectionOptStateMap(intersection_id);
-
-                    % 信号現示を設定
-                    if obj.Config.intersection.yellow_time
-                        for signal_group_id = 1: SignalController.SGs.Count
-                            if u_opt(signal_group_id, step) == 0
-                                SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',1);
-                            
-                            elseif u_opt(signal_group_id, step) == 1
-                                if u_opt(signal_group_id, step + 1) == 0
-                                    SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',2);
-                                else
-                                    SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',3);
-                                end
-                            end 
-                        end
-                    else
-                        for signal_group_id = 1: SignalController.SGs.Count
-                            if u_opt(signal_group_id, step) == 0
-                                SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',1);
-                            
-                            elseif u_opt(signal_group_id, step) == 1
+                % 信号現示を設定
+                if obj.Config.intersection.yellow_time
+                    for signal_group_id = 1: SignalController.SGs.Count
+                        if u_opt(signal_group_id, step) == 0
+                            SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',1);
+                        
+                        elseif u_opt(signal_group_id, step) == 1
+                            if u_opt(signal_group_id, step + 1) == 0
                                 SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',2);
-                            end 
-                        end
+                            else
+                                SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',3);
+                            end
+                        end 
+                    end
+                else
+                    for signal_group_id = 1: SignalController.SGs.Count
+                        if u_opt(signal_group_id, step) == 0
+                            SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',1);
+                        
+                        elseif u_opt(signal_group_id, step) == 1
+                            SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',2);
+                        end 
                     end
                 end
+            end
+
+            % 1ステップ先までbreak_timeを設定
+            obj.break_time = obj.break_time + obj.Config.mpc.time_step;
+
+            if obj.break_time >= obj.Config.simulation.time
+                obj.break_time = obj.Config.simulation.time;
+
+                obj.Com.Simulation.set('AttValue','SimBreakAt',obj.break_time);
 
                 % 1ステップ進める
                 obj.Com.Simulation.RunContinuous();
-            catch
-                disp('Error. Change to fixed-time control.');
-                obj.break_time = obj.Config.simulation.time;
-                obj.Com.Simulation.RunContinuous();
+
                 break;
+            else
+                obj.Com.Simulation.set('AttValue','SimBreakAt',obj.break_time);
+
+                % 1ステップ進める
+                obj.Com.Simulation.RunContinuous();
             end
         end
     end

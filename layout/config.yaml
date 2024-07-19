@@ -14,7 +14,7 @@ vissim :
 mpc :
   predictive_horizon : 4 # 予測ホライゾン
   control_horizon : 2    # 制御ホライゾン
-  time_step : 2          # タイムステップ
+  time_step : 1.5        # タイムステップ
   max_time : 15          # 最適化の計算時間の上限
 
 model :
@@ -25,8 +25,8 @@ model :
     fix_num : 2          # 初期値の固定する数
 
 simulation :
-  time : 100 # シミュレーション時間
-  count : 1  # シミュレーション回数
+  time : 100  # シミュレーション時間
+  count : 1   # シミュレーション回数
 
 intersection :
   yellow_time : 'on'
@@ -37,9 +37,9 @@ result :
     path : '\results\1-1_network'
     name : 'data'
   compare : 
-    active : 'off'
+    active : 'on'
     path : 
-      - '\results\1-1_network\data.mat'
+      - '\results\1-1_network\17phase.mat'
   contents :
     calc_time :
       active : 'on'

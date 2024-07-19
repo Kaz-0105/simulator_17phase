@@ -98,7 +98,7 @@ classdef Dan < handle
             elseif obj.road_num == 4
                 obj.phase_num = 17;
                 obj.tmp_phase_num = 17;
-                
+
             end
 
             % サンプリング時間

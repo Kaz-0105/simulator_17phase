@@ -176,12 +176,13 @@ function showDelayTime(obj)
             end
         end
     end
+    
+    % IntersectionRoadDelayMapの取得
+    IntersectionRoadDelayMap = obj.VissimMeasurements.get('IntersectionRoadDelayMap');
 
-    % 交差点ごとの場合はシステム全体での時系列データを作っていないので作成
-    if strcmp(obj.Config.result.contents.delay_time.scale, 'intersection')
-        % 全ての交差点でのキューの長さを平均
-        delay_avg = IntersectionRoadDelayMap.average('all');
-    end
+    % 全ての交差点でのキューの長さを平均
+    delay_avg = IntersectionRoadDelayMap.average('all');
+    
 
     % 評価指標の出力
     fprintf('Average Delay Time: %f\n', mean(delay_avg));
