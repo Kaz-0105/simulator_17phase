@@ -38,7 +38,7 @@ function runSingleHorizon(obj)
                         
                         elseif u_opt(signal_group_id, step) == 1
                             if u_opt(signal_group_id, step + 1) == 0
-                                SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',2);
+                                SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',1);
                             else
                                 SignalController.SGs.ItemByKey(signal_group_id).set('AttValue','State',3);
                             end

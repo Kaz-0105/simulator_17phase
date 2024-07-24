@@ -4,10 +4,10 @@ function makeWeight(obj)
     weight_matrix.delta4 = [];
 
     % SignalGroupごとの重みのテンプレートを作成
-    templete = obj.tmp_phase_num*ones(1, 3);
+    templete = obj.tmp_phase_num*ones(1, obj.road_num-1);
     for phase_id = 1: obj.tmp_phase_num
         for signal_group_id = obj.PhaseSignalGroupMap(phase_id)
-            if signal_group_id  <= 3
+            if signal_group_id  <= obj.road_num-1
                 templete(signal_group_id) = templete(signal_group_id) - 1;
             end
         end

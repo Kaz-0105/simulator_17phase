@@ -17,6 +17,7 @@ function optimize(obj)
     if ~isempty(P)
         % intlinprogのオプションを設定
         options = optimoptions('intlinprog');
+        options.IntegerTolerance = 1e-3;
         options.MaxTime = obj.max_time;
         options.Display = 'final';
 
