@@ -50,7 +50,9 @@ classdef Vissim < handle
         current_time = 0;       % 現在のシミュレーションの時間
         prediction_count = 0;   % 予測回数
 
-        is_save;                % シミュレーション結果を保存するかどうかのフラグ
+        clearing_time_flag;     % クリアリングタイムの形式を示すフラグ
+
+        save_flag;                % シミュレーション結果を保存するかどうかのフラグ
         save_path;              % シミュレーション結果を保存する
     end
 
@@ -61,8 +63,11 @@ classdef Vissim < handle
             % yamlクラスの変数の設定
             obj.Config = Config;
 
+            % クリアリング時間の形式の設定
+            obj.makeClearingTimeFlag();
+
             % 結果の保存に関する設定
-            obj.is_save = Config.result.save.active;
+            obj.save_flag = Config.result.save.active;
             obj.save_path = Config.result.save.path;
 
             % COMのオブジェクトの設定

@@ -34,7 +34,7 @@ function run(obj)
         end
 
         % 結果の保存
-        if obj.is_save
+        if obj.save_flag
             obj.VissimMeasurements.save();
         end
     
