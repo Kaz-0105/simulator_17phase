@@ -10,8 +10,11 @@ function emergencyTreatment(obj)
     for road_id = 1: obj.road_num
         for link_id = 1: obj.RoadNumLinksMap(road_id)
             for route = transpose(obj.RoadLinkRouteVehsMap.get(road_id, link_id))
+                % routeに対応するSignalGroupのIDを取得
+                signal_group_id = obj.RoadRouteSignalGroupMap.get(road_id, route);
+
                 % 数のインクリメント
-                SignalGroupNumVehsMap(route + (road_id-1)*(obj.road_num-1)) = SignalGroupNumVehsMap(route + (road_id-1)*(obj.road_num-1)) + 1;
+                SignalGroupNumVehsMap(signal_group_id + (road_id-1)*(obj.road_num-1)) = SignalGroupNumVehsMap(signal_group_id + (road_id-1)*(obj.road_num-1)) + 1;
             end
         end
     end

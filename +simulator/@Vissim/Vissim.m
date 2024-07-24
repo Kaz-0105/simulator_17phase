@@ -38,6 +38,8 @@ classdef Vissim < handle
 
         RoadNumLanesMap;                     % キー：道路のID、バリュー：その道路の車線数
 
+        RoadRouteSignalGroupMap;             % キー1：道路のID、キー2：進路のID、バリュー：SignalGroupのID
+
         IntersectionControllerMap;           % キー：交差点のID、バリュー：制御器のクラスのオブジェクト
         IntersectionSignalControllerMap;     % キー：交差点のID、バリュー：SignalControllerのCOMオブジェクト
 
@@ -98,8 +100,7 @@ classdef Vissim < handle
             % LinkQueueCounterMapの作成
             obj.makeLinkQueueCounterMap();
 
-            % IntersectionControllerMapの作成
-            obj.makeIntersectionControllerMap();
+            
 
             % IntersectionSignalControllerMapの作成
             obj.makeIntersectionSignalControllerMap();
@@ -118,6 +119,12 @@ classdef Vissim < handle
 
             % RoadNumLanesMapの作成
             obj.makeRoadNumLanesMap();
+
+            % RoadRouteSignalGroupMapの作成
+            obj.makeRoadRouteSignalGroupMap();
+
+            % IntersectionControllerMapの作成
+            obj.makeIntersectionControllerMap();
 
             % Vissim上の設定を行う
             obj.applyToVissim();

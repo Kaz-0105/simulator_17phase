@@ -26,18 +26,21 @@ function makeWeight(obj)
             route_vehs = obj.RoadLinkRouteVehsMap.get(road_id, link_id);
 
             for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
+                % signal_group_idを取得
+                signal_group_id = obj.RoadRouteSignalGroupMap.get(road_id, route_vehs(veh_id));
+
                 if veh_id == LaneFirstVehsMap(1)
-                    weight_matrix.delta1 = [weight_matrix.delta1, templete(route_vehs(veh_id))*first_veh_scale];
+                    weight_matrix.delta1 = [weight_matrix.delta1, templete(signal_group_id)*first_veh_scale];
 
                 elseif veh_id == LaneFirstVehsMap(2)
-                    weight_matrix.delta1 = [weight_matrix.delta1, templete(route_vehs(veh_id))*first_veh_scale];
+                    weight_matrix.delta1 = [weight_matrix.delta1, templete(signal_group_id)*first_veh_scale];
 
                 elseif veh_id == LaneFirstVehsMap(3)
-                    weight_matrix.delta1 = [weight_matrix.delta1, templete(route_vehs(veh_id))*first_veh_scale];
+                    weight_matrix.delta1 = [weight_matrix.delta1, templete(signal_group_id)*first_veh_scale];
 
                 else
-                    weight_matrix.delta1 = [weight_matrix.delta1, templete(route_vehs(veh_id))];
-                    weight_matrix.delta4 = [weight_matrix.delta4, templete(route_vehs(veh_id))];
+                    weight_matrix.delta1 = [weight_matrix.delta1, templete(signal_group_id)];
+                    weight_matrix.delta4 = [weight_matrix.delta4, templete(signal_group_id)];
 
                 end
             end

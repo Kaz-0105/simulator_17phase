@@ -65,6 +65,8 @@ classdef Dan < handle
         VariableListMap;       % 決定変数のリストを格納するMap
         RoadLinkDelta1ListMap; % リンクごとのdelta1のリストを格納するMap
         PhaseSignalGroupMap;   % フェーズを構成するSignalGroupを収納するMap
+
+        RoadRouteSignalGroupMap;
         
         RoadLinkPosVehsMap;
         RoadLinkRouteVehsMap;
@@ -96,8 +98,8 @@ classdef Dan < handle
                 obj.tmp_phase_num = 4;
 
             elseif obj.road_num == 4
-                obj.phase_num = 17;
-                obj.tmp_phase_num = 17;
+                obj.phase_num = 8;
+                obj.tmp_phase_num = 8;
 
             end
 
@@ -127,6 +129,9 @@ classdef Dan < handle
 
             % PhaseとSignalGroupのMapを作成
             obj.makePhaseSignalGroupMap();
+
+            % RoadRouteSignalGroupMapの作成
+            obj.makeRoadRouteSignalGroupMap();
 
             % phiとuの結果を格納するクラスの初期化
             obj.PhiResults = tool.PhiResults(obj.N_p, obj.N_c, obj.N_s);

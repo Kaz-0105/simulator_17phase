@@ -38,7 +38,7 @@ function makeLinkLaneOrderMap(obj)
             % メインリンクの車線数を取得
             num_lanes = MainLink.Lanes.Count;
 
-            for lane_id = 1:num_lanes
+            for lane_id = num_lanes:-1:1
                 % 車線IDを更新
                 count = count + 1;
 

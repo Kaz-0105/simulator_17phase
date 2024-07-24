@@ -12,11 +12,14 @@ function makeC(obj)
             % LankFirstVehsMapの取得
             LaneFirstVehsMap = obj.RoadLinkLaneFirstVehsMap.get(road_id, link_id);
 
+            % リンク内の自動車数を取得
+            num_vehs = obj.RoadLinkNumVehsMap.get(road_id, link_id);
+
             % 自動車ごとに計算
-            for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
+            for veh_id = 1: num_vehs
                 if veh_id == 1
                     % 先頭車
-                    c = zeros(12, obj.RoadNumVehsMap(road_id));
+                    c = zeros(12, num_vehs);
 
                     % 係数が0ではない要素に値を代入
                     c(5:6, veh_id) = [1; -1];
@@ -25,7 +28,7 @@ function makeC(obj)
 
                 elseif veh_id == LaneFirstVehsMap(1)
                     % 分岐車線（左）の先頭車
-                    c = zeros(28, obj.RoadNumVehsMap(road_id));
+                    c = zeros(28, num_vehs);
 
                     % 係数が0ではない要素に値を代入
                     c(9:10,veh_id) = [1;-1];                     
@@ -38,7 +41,7 @@ function makeC(obj)
 
                 elseif veh_id == LaneFirstVehsMap(2)
                     % メインの車線の先頭車
-                    c = zeros(28, obj.RoadNumVehsMap(road_id));
+                    c = zeros(28, num_vehs);
 
                     % 係数が0ではない要素に値を代入
                     c(9:10,veh_id) = [1;-1];                     
@@ -51,7 +54,7 @@ function makeC(obj)
 
                 elseif veh_id == LaneFirstVehsMap(3)
                     % 分岐車線（右）の先頭車
-                    c = zeros(28, obj.RoadNumVehsMap(road_id));
+                    c = zeros(28, num_vehs);
 
                     % 係数が0ではない要素に値を代入
                     c(9:10,veh_id) = [1;-1];                     
@@ -64,7 +67,7 @@ function makeC(obj)
 
                 else
                     % それ以外の場合
-                    c = zeros(47, obj.RoadNumVehsMap(road_id));
+                    c = zeros(47, num_vehs);
 
                     % 車線分岐後の先行車のIDを取得
                     front_veh_id = obj.getFrontVehicle(veh_id, road_id, link_id);

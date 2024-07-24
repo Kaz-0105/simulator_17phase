@@ -21,30 +21,33 @@ function makeD1(obj)
 
             % 自動車ごとに計算
             for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
+                % SignalGroupのIDを取得
+                signal_group_id = obj.RoadRouteSignalGroupMap.get(road_id, route_vehs(veh_id));
+
                 if veh_id == 1
                     % 先頭車
                     d1 = zeros(12, obj.signal_num);
-                    d1(1:2, signal_ids(route_vehs(veh_id))) = [-1; 1];
+                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
 
                 elseif veh_id == LaneFirstVehsMap(1)
                     % 分岐車線（左）の先頭車
                     d1 = zeros(28, obj.signal_num);
-                    d1(1:2, signal_ids(route_vehs(veh_id))) = [-1; 1];
+                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
 
                 elseif veh_id == LaneFirstVehsMap(2)
                     % メインの車線の先頭車
                     d1 = zeros(28, obj.signal_num);
-                    d1(1:2, signal_ids(route_vehs(veh_id))) = [-1; 1];
+                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
 
                 elseif veh_id == LaneFirstVehsMap(3)
                     % 分岐車線（右）の先頭車
                     d1 = zeros(28, obj.signal_num);
-                    d1(1:2, signal_ids(route_vehs(veh_id))) = [-1; 1];
+                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
 
                 else
                     % それ以外の場合
                     d1 = zeros(47, obj.signal_num);
-                    d1(1:2, signal_ids(route_vehs(veh_id))) = [-1; 1];
+                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
 
                 end
 

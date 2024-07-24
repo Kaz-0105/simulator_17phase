@@ -336,6 +336,108 @@
 		<dataCollectionPoint lane="8 1" name="" no="15" pos="0.30095605716791535"/>
 		<dataCollectionPoint lane="8 2" name="" no="16" pos="0.3011476839284713"/>
 	</dataCollectionPoints>
+	<delayMeasurements>
+		<delayMeasurement name="" no="1">
+			<vehTravTmMeas>
+				<intObjectRef key="1"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="2">
+			<vehTravTmMeas>
+				<intObjectRef key="2"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="3">
+			<vehTravTmMeas>
+				<intObjectRef key="3"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="4">
+			<vehTravTmMeas>
+				<intObjectRef key="4"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="5">
+			<vehTravTmMeas>
+				<intObjectRef key="5"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="6">
+			<vehTravTmMeas>
+				<intObjectRef key="6"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="7">
+			<vehTravTmMeas>
+				<intObjectRef key="7"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="8">
+			<vehTravTmMeas>
+				<intObjectRef key="8"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="9">
+			<vehTravTmMeas>
+				<intObjectRef key="9"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="10">
+			<vehTravTmMeas>
+				<intObjectRef key="10"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="11">
+			<vehTravTmMeas>
+				<intObjectRef key="11"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="12">
+			<vehTravTmMeas>
+				<intObjectRef key="12"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="13">
+			<vehTravTmMeas>
+				<intObjectRef key="13"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="14">
+			<vehTravTmMeas>
+				<intObjectRef key="14"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="15">
+			<vehTravTmMeas>
+				<intObjectRef key="15"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="16">
+			<vehTravTmMeas>
+				<intObjectRef key="16"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="17">
+			<vehTravTmMeas>
+				<intObjectRef key="17"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="18">
+			<vehTravTmMeas>
+				<intObjectRef key="18"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="19">
+			<vehTravTmMeas>
+				<intObjectRef key="19"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+		<delayMeasurement name="" no="20">
+			<vehTravTmMeas>
+				<intObjectRef key="20"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
+	</delayMeasurements>
 	<desAccelerationFunctions>
 		<desAccelerationFunction name="Car" no="1">
 			<accelFuncDataPts>
@@ -1279,9 +1381,9 @@
 		<areaMeasRawData fromTime="0" toTime="99999" writeFile="false"/>
 		<areaMeasResults collectData="false" fromTime="0" interval="99999" toTime="99999"/>
 		<areaResults collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<dataColl collectData="true" fromTime="0" interval="99999" toTime="99999"/>
+		<dataColl collectData="true" fromTime="0" interval="4" toTime="1000"/>
 		<dataCollRawData fromTime="0" toTime="99999" writeFile="false"/>
-		<delays collectData="true" fromTime="0" interval="99999" toTime="99999"/>
+		<delays collectData="true" fromTime="0" interval="4" toTime="1000"/>
 		<dischRec fromTime="0" toTime="99999" writeFile="false"/>
 		<greenTimeDistribution fromTime="0" toTime="99999" writeFile="false"/>
 		<linkResults collectData="false" fromTime="0" interval="99999" perLane="false" toTime="99999"/>
@@ -1307,13 +1409,13 @@
 		<pedTravTmODData fromTime="0" interval="99999" toTime="99999" writeFile="false"/>
 		<pedTravTmRawData fromTime="0" toTime="99999" writeFile="false"/>
 		<pedTravTms collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<queues collectData="true" fromTime="0" interval="99999" toTime="99999"/>
+		<queues collectData="true" fromTime="0" interval="4" toTime="1000"/>
 		<scDetRec writeFile="false"/>
 		<ssam fromTime="0" toTime="99999" writeFile="false"/>
 		<sigChgs writeDatabase="false" writeFile="false"/>
 		<vehInpData writeFile="false"/>
 		<vehInps collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<vehNetPerf collectData="false" fromTime="0" interval="99999" toTime="99999"/>
+		<vehNetPerf collectData="true" fromTime="0" interval="4" toTime="1000"/>
 		<vehRec filterType="ALL" fromTime="0" inclParkVehs="false" resolution="1" toTime="99999" writeDatabase="false" writeFile="false">
 			<attributes>
 				<attributeSelection attributeID="SIMSEC" decimals="2" format="SECONDS" showUnits="false"/>
@@ -2859,6 +2961,16 @@
 			</distrDataPts>
 		</powerDistribution>
 	</powerDistributions>
+	<queueCounters>
+		<queueCounter link="5" name="" no="1" pos="199.73555935706744"/>
+		<queueCounter link="11" name="" no="2" pos="49.742221847843531"/>
+		<queueCounter link="4" name="" no="3" pos="199.6338132693563"/>
+		<queueCounter link="10" name="" no="4" pos="49.704684019133936"/>
+		<queueCounter link="8" name="" no="5" pos="199.85116625851941"/>
+		<queueCounter link="12" name="" no="6" pos="49.896972762037294"/>
+		<queueCounter link="1" name="" no="7" pos="199.75455482811179"/>
+		<queueCounter link="9" name="" no="8" pos="49.820941719150177"/>
+	</queueCounters>
 	<reducedSpeedAreas>
 		<reducedSpeedArea anmFlag="false" lane="10004 1" length="15.102564173152189" name="" no="1" pos="0.17884326869303446" timeFrom="0" timeTo="99999">
 			<vehClassSpeedRed>
@@ -3035,7 +3147,7 @@
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10022 1" localNo="0" name="" no="23" pos="0.10810043146328212" sg="1 12" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10023 1" localNo="0" name="" no="24" pos="0.10810043146328212" sg="1 12" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 	</signalHeads>
-	<simulation comment="" numCores="1" numRuns="1" randSeed="42" randSeedIncr="1" retroSync="false" simMode="MICRO" simPeriod="3600" simRes="10" simSpeed="10" startTm="0" useAllCores="true" useMaxSimSpeed="true" volumeIncrDynAssign="0"/>
+	<simulation comment="" numCores="1" numRuns="1" randSeed="22" randSeedIncr="1" retroSync="false" simMode="MICRO" simPeriod="1000" simRes="10" simSpeed="10" startTm="0" useAllCores="true" useMaxSimSpeed="false" volumeIncrDynAssign="0"/>
 	<timeDistributions>
 		<timeDistribution mean="0.5" name="0.5 s" no="1" stdDev="0" type="NORMAL"/>
 		<timeDistribution mean="0.9" name="0.9 s" no="2" stdDev="0" type="NORMAL"/>
@@ -3143,22 +3255,22 @@
 	<vehicleInputs>
 		<vehicleInput anmFlag="false" link="1" name="" no="1">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1500"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1200"/>
 			</timeIntVehVols>
 		</vehicleInput>
 		<vehicleInput anmFlag="false" link="4" name="" no="2">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1500"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1200"/>
 			</timeIntVehVols>
 		</vehicleInput>
 		<vehicleInput anmFlag="false" link="5" name="" no="3">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1500"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1200"/>
 			</timeIntVehVols>
 		</vehicleInput>
 		<vehicleInput anmFlag="false" link="8" name="" no="4">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1500"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1200"/>
 			</timeIntVehVols>
 		</vehicleInput>
 	</vehicleInputs>
