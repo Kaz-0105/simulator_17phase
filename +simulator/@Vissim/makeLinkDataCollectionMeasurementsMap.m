@@ -1,6 +1,6 @@
-function makeLinkDataCollectionMeasurementMap(obj)
+function makeLinkDataCollectionMeasurementsMap(obj)
     % Mapの初期化
-    obj.LinkDataCollectionMeasurementMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+    obj.LinkDataCollectionMeasurementsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
     
     % キー：DataCollectionPointのID、バリュー：リンクIDのマップを作成
     DataCollectionPointLinkMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
@@ -29,6 +29,12 @@ function makeLinkDataCollectionMeasurementMap(obj)
         DataCollectionPoint = DataCollectionPoints{1};
         data_collection_point_id = DataCollectionPoint.get('AttValue', 'No');
 
-        obj.LinkDataCollectionMeasurementMap(DataCollectionPointLinkMap(data_collection_point_id)) = data_collection_measurement_id;
+        link_id = DataCollectionPointLinkMap(data_collection_point_id);
+
+        if isKey(obj.LinkDataCollectionMeasurementsMap, link_id)
+            obj.LinkDataCollectionMeasurementsMap(link_id) = [obj.LinkDataCollectionMeasurementsMap(link_id), data_collection_measurement_id];
+        else
+            obj.LinkDataCollectionMeasurementsMap(link_id) = data_collection_measurement_id;
+        end
     end
 end

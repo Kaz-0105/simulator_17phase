@@ -1,7 +1,7 @@
 function updateRoadInputMap(obj)
     % LinkInputOutputMapとLinkDataCollectionMeasurementMapを取得
     LinkInputOutputMap = obj.Vissim.get('LinkInputOutputMap');
-    LinkDataCollectionMeasurementMap = obj.Vissim.get('LinkDataCollectionMeasurementMap');
+    LinkDataCollectionMeasurementsMap = obj.Vissim.get('LinkDataCollectionMeasurementsMap');
 
     % LinkRoadMapを取得
     LinkRoadMap = obj.Vissim.get('LinkRoadMap');
@@ -10,12 +10,18 @@ function updateRoadInputMap(obj)
         if strcmp(LinkInputOutputMap(link_id),'input')
             road_id = LinkRoadMap(link_id);
 
-            % DataCollectionMeasurementのCOMオブジェクトを取得
-            data_collection_measurement_id = LinkDataCollectionMeasurementMap(link_id);
-            DataCollectionMeasurement = obj.Com.Net.DataCollectionMeasurement.ItemByKey(data_collection_measurement_id);
+            % tmp_input_dataの初期化
+            tmp_input_data = 0;
+            
+            for data_collection_measurement_id = LinkDataCollectionMeasurementsMap(link_id)
+                % DataCollectionMeasurementのCOMオブジェクトを取得
+                DataCollectionMeasurement = obj.Com.Net.DataCollectionMeasurement.ItemByKey(data_collection_measurement_id);
 
-            % データを追加
-            tmp_input_data = DataCollectionMeasurement.get('AttValue', 'Vehs(Current, Last, All)');
+                % tmp_input_dataにデータを追加
+                tmp_input_data = tmp_input_data + DataCollectionMeasurement.get('AttValue', 'Vehs(Current, Last, All)');
+            end
+            
+            % RoadInputMapにプッシュ
             obj.RoadInputMap(road_id) = [obj.RoadInputMap(road_id), tmp_input_data];
             
         end

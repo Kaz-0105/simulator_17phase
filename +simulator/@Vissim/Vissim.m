@@ -29,7 +29,7 @@ classdef Vissim < handle
         IntersectionNumRoadsMap;             % キー：交差点ID、バリュー：その交差点に流入する道路の数
 
         LinkQueueCounterMap;                 % キー：リンクのID、バリュー：そのリンクのキューカウンターのID
-        LinkDataCollectionMeasurementMap;    % キー：リンクのID、バリュー：DataCollectionMeasurementのID
+        LinkDataCollectionMeasurementsMap;   % キー：リンクのID、バリュー：DataCollectionMeasurementのID
         RoadDelayMeasurementMap;             % キー：道路のID、バリュー：DelayMeasurementのID
 
         RoadBranchMap;                       % キー：道路のID、バリュー：その道路の分岐情報
@@ -108,7 +108,7 @@ classdef Vissim < handle
             obj.makeRoadDelayMeasurementMap();
 
             % LinkDataCollectionMeasurementMapの作成
-            obj.makeLinkDataCollectionMeasurementMap();
+            obj.makeLinkDataCollectionMeasurementsMap();
 
             % RoadBranchMapの作成
             obj.makeRoadBranchMap();
