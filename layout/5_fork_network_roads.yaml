@@ -1,12 +1,81 @@
 id : 1
 roads : 
   - id : 1
+    link_ids : [1, 11, 10000]
+    signal_controller_id : 1
+    speed : 60
+    signal_head_ids : [1, 2, 3, 4]
+    branch :
+      left : 0
+      right : 11
+
   - id : 2
+    link_ids : [2]
+    speed : 60
+    branch :
+      left : 0
+      right : 0
+
   - id : 3
+    link_ids : [3, 12, 10001]
+    signal_controller_id : 1
+    speed : 60
+    signal_head_ids : [5, 6, 7, 8]
+    branch :
+      left : 0
+      right : 12
+
   - id : 4
+    link_ids : [4]
+    speed : 60
+    branch : 
+      left : 0
+      right : 0
+
   - id : 5
+    link_ids : [5, 13, 10002]
+    signal_controller_id : 1
+    speed : 60
+    signal_head_ids : [9, 10, 11, 12]
+    branch :
+      left : 0
+      right : 13
+
   - id : 6
+    link_ids : [6]
+    speed : 60
+    branch : 
+      left : 0
+      right : 0
+
   - id : 7
+    link_ids : [7, 14, 10003]
+    signal_controller_id : 1
+    speed : 60
+    signal_head_ids : [13, 14, 15, 16]
+    branch :
+      left : 0
+      right : 14
+
   - id : 8
+    link_ids : [8]
+    speed : 60
+    branch : 
+      left : 0
+      right : 0
+
   - id : 9
+    link_ids : [9, 15, 10004]
+    signal_controller_id : 1
+    speed : 60
+    signal_head_ids : [17, 18, 19, 20]
+    branch :
+      left : 0
+      right : 15
+
   - id : 10
+    link_ids : [10]
+    speed : 60
+    branch : 
+      left : 0
+      right : 0

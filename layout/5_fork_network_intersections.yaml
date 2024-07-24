@@ -1,0 +1,29 @@
+id : 1
+intersections :
+  - id : 1
+    input_roads :
+      - id : 1
+        order : 1
+      - id : 3
+        order : 2
+      - id : 5
+        order : 3
+      - id : 7
+        order : 4
+      - id : 9
+        order : 5
+
+    output_roads :
+      - id : 2
+        order : 1
+      - id : 4
+        order : 2
+      - id : 6
+        order : 3
+      - id : 8
+        order : 4
+      - id : 10
+        order : 5
+    
+    signal_controller_id : 1
+    control_method : 'Dan'
