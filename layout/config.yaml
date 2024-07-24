@@ -1,10 +1,10 @@
 network :
-  inpx_file : '3_lane_network\3_lane_network.inpx'   # vissimのinpxファイル
-  layx_file : '3_lane_network\3_lane_network.layx'   # vissimのlayxファイル
+  inpx_file : '2-3_lane_network\2-3_lane_network.inpx'   # vissimのinpxファイル
+  layx_file : '2-3_lane_network\2-3_lane_network.layx'   # vissimのlayxファイル
   groups :
     - id : 1                                           # グループのID
-      roads : '3_lane_network_roads.yaml'                 # 道路の情報がまとまったyamlファイル
-      intersections : '3_lane_network_intersections.yaml' # 交差点の情報がまとまったyamlファイル
+      roads : '2-3_lane_network_roads.yaml'                 # 道路の情報がまとまったyamlファイル
+      intersections : '2-3_lane_network_intersections.yaml' # 交差点の情報がまとまったyamlファイル
 
 vissim :
   graphic_mode : 0 # 描画モードON=0
@@ -35,12 +35,12 @@ intersection :
 result :
   save :
     active : 'on'
-    path : '\results\3_lane_network'
+    path : '\results\2-3_lane_network'
     name : 'data'
   compare : 
     active : 'off'
     path : 
-      - '\results\3_lane_network\111_4_2_8_4.mat'
+      - '\results\2-3_lane_network\111_4_2_8_4.mat'
   contents :
     calc_time :
       active : 'on'
