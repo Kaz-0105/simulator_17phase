@@ -3,8 +3,8 @@ function emergencyTreatment(obj)
     SignalGroupNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
     % 初期化
-    for i = 1:12
-        SignalGroupNumVehsMap(i) = 0;
+    for signal_group_id = 1:obj.road_num * (obj.road_num - 1)
+        SignalGroupNumVehsMap(signal_group_id) = 0;
     end
 
     for road_id = 1: obj.road_num
@@ -53,7 +53,7 @@ function emergencyTreatment(obj)
     end
 
     tmp_u = zeros(obj.signal_num, 1);
-    tmp_u(obj.PhaseSignalGroupMap(max_key)) = ones(4, 1);
+    tmp_u(obj.PhaseSignalGroupMap(max_key)) = ones(obj.road_num, 1);
 
     for step = obj.fix_num + 1: obj.N_p
         obj.u_opt = [obj.u_opt, tmp_u];

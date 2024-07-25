@@ -73,6 +73,16 @@ function makeConstraints(obj)
                 P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*(step-1)) = [1; 1; 1; -1];
 
                 q_tmp = [0; 0; 0; 2];
+
+            elseif obj.road_num == 5
+                P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 0; 0; 1];
+                P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 0; 0; 1];
+                P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 0; 0; 1];
+                P_tmp(:, phase_group(4) + obj.v_length*(step-1)) = [0; 0; 0; -1; 0; 1];
+                P_tmp(:, phase_group(5) + obj.v_length*(step-1)) = [0; 0; 0; 0; -1; 1];
+                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*(step-1)) = [1; 1; 1; 1; 1; -1];
+
+                q_tmp = [0; 0; 0; 0; 0; 4];
             end
 
             % P、qにプッシュ

@@ -38,6 +38,21 @@ function makePhaseSignalGroupMap(obj)
 
         % 全左折型
         obj.PhaseSignalGroupMap(4) = [1, 3, 5];
+
+    elseif obj.road_num == 5
+        % 各方向全出し型
+        obj.PhaseSignalGroupMap(1) = [1, 2, 3, 4, 17];
+        obj.PhaseSignalGroupMap(2) = [5, 6, 7, 8, 1];
+        obj.PhaseSignalGroupMap(3) = [9, 10, 11, 12, 5];
+        obj.PhaseSignalGroupMap(4) = [13, 14, 15, 16, 9];
+        obj.PhaseSignalGroupMap(5) = [17, 18, 19, 20, 13];
+
+        % 3-2型
+        obj.PhaseSignalGroupMap(6) = [1, 2, 3, 13, 14];
+        obj.PhaseSignalGroupMap(7) = [5, 6, 7, 17, 18];
+        obj.PhaseSignalGroupMap(8) = [9, 10, 11, 1, 2];
+        obj.PhaseSignalGroupMap(9) = [13, 14, 15, 5, 6];
+        obj.PhaseSignalGroupMap(10) = [17, 18, 19, 9, 10];
     end
 end
             
