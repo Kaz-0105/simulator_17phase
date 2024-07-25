@@ -39,7 +39,7 @@ function makeRoadStructMap(obj)
                 road_struct.D_f = road.speed - 15;
                 road_struct.D_s = road.speed;
                 road_struct.d_s = 0;
-                road_struct.d_f = 7;
+                road_struct.d_f = 5;
                 road_struct.p_s = obj.Com.Net.SignalHeads.ItemByKey(road.signal_head_ids(1)).get('AttValue', 'Pos') + road_struct.main;
                 road_struct.v = road.speed;
             end

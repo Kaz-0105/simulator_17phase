@@ -95,17 +95,17 @@ classdef Dan < handle
             % フェーズの数を設定
             if obj.road_num == 3
                 obj.phase_num = 4;
-                obj.tmp_phase_num = 4;
 
             elseif obj.road_num == 4
                 obj.phase_num = 8;
-                obj.tmp_phase_num = 8;
 
             elseif obj.road_num == 5
                 obj.phase_num = 10;
-                obj.tmp_phase_num = 10;
 
             end
+
+            % tmp_phase_numの初期化
+            obj.tmp_phase_num = obj.phase_num;
 
             % サンプリング時間
             obj.dt = obj.Config.mpc.time_step;
