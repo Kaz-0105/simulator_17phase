@@ -19,4 +19,16 @@ function makeVissimStruct(obj, data)
     catch
         obj.vissim.resolution = 10;
     end
+
+    % シミュレーションの最高速度の設定
+    try 
+        if strcmp(data.vissim.max_sim_speed, 'on')
+            obj.vissim.max_sim_speed = true;
+        else
+            obj.vissim.max_sim_speed = false;
+        end
+    catch
+        obj.vissim.max_sim_speed = false;
+    end
+    
 end

@@ -165,6 +165,9 @@ classdef Vissim < handle
         makeRoadNumLanesMap(obj);
 
         applyToVissim(obj);
+
+        setVehicleInputs(obj);
+        setVehicleRoutes(obj);
         
         updateStates(obj);
         optimize(obj);

@@ -14,15 +14,15 @@ vehicle_routes :
     - id : 1
       roads :
         - id : 1
-          templete_id : 1
+          template_id : 1
         - id : 3
-          templete_id : 1
+          template_id : 1
         - id : 5
-          templete_id : 1
+          template_id : 1
         - id : 7
-          templete_id : 1
+          template_id : 1
         - id : 9
-          templete_id : 1
+          template_id : 1
 
   templates :
     - id : 1 # 経路1 : 経路2 : 経路3 : 経路4 = 1 : 1 : 1 : 1

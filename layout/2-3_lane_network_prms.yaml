@@ -14,13 +14,13 @@ vehicle_routes :
     - id : 1
       roads :
         - id : 1
-          templete_id : 1
+          template_id : 1
         - id : 4
-          templete_id : 2
+          template_id : 2
         - id : 5
-          templete_id : 3
+          template_id : 3
         - id : 8
-          templete_id : 4
+          template_id : 4
 
   templates :
     - id : 1 # 左折：直進：右折 = 1 : 1 : 1

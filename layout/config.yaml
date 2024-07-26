@@ -2,15 +2,17 @@ network :
   inpx_file : '2-3_lane_network\2-3_lane_network.inpx'   # vissimのinpxファイル
   layx_file : '2-3_lane_network\2-3_lane_network.layx'   # vissimのlayxファイル
   groups :
-    - id : 1                                           # グループのID
+    - id : 1                                                # グループのID
       roads : '2-3_lane_network_roads.yaml'                 # 道路の情報がまとまったyamlファイル
       intersections : '2-3_lane_network_intersections.yaml' # 交差点の情報がまとまったyamlファイル
+      prms : '2-3_lane_network_prms.yaml'                   # パラメータの情報がまとまったyamlファイル
 
 vissim :
   graphic_mode : 0 # 描画モードON=0
   seed : 22        # 乱数のシード値
   resolution : 10  # シミュレーション時間で1sあたりに何回自動車の位置を更新するか(解像度)
-
+  max_sim_speed : 'on' # シミュレーションの速度を最大にするかどうか
+  
 mpc :
   predictive_horizon : 4 # 予測ホライゾン
   control_horizon : 2    # 制御ホライゾン
@@ -19,11 +21,11 @@ mpc :
 
 model :
   dan :
-    N_s : 4              # 最低の連続ステップ数
-    m : 1                # 最大変化回数
-    eps : 0.0000001      # 微小量
-    num_fix_steps : 2    # 初期値の固定する数
-    phase :              # 道路の数とフェーズの数の対応
+    N_s : 4           # 最低の連続ステップ数
+    m : 1             # 最大変化回数
+    eps : 0.0000001   # 微小量
+    num_fix_steps : 2 # 初期値の固定する数
+    phase :           # 道路の数とフェーズの数の対応
       - roads : 3
         num : 4
       - roads : 4
@@ -32,8 +34,8 @@ model :
         num : 10
 
 simulation :
-  time : 1000  # シミュレーション時間
-  count : 1    # シミュレーション回数
+  time : 1000 # シミュレーション時間
+  count : 1   # シミュレーション回数
 
 intersection :
   yellow_time : 'on'

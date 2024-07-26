@@ -12,11 +12,11 @@ vehicle_routes :
     - id : 1
       roads :
         - id : 1
-          templete_id : 1
+          template_id : 1
         - id : 4
-          templete_id : 2
+          template_id : 2
         - id : 6
-          templete_id : 3
+          template_id : 3
 
   templates :
     - id : 1 # 左折：右折 = 1 : 1
