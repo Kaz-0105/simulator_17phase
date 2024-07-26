@@ -15,18 +15,25 @@ mpc :
   predictive_horizon : 4 # 予測ホライゾン
   control_horizon : 2    # 制御ホライゾン
   time_step : 2          # タイムステップ
-  max_time : 15          # 最適化の計算時間の上限
+  max_time : 5           # 最適化の計算時間の上限
 
 model :
   dan :
     N_s : 4              # 最低の連続ステップ数
     m : 1                # 最大変化回数
     eps : 0.0000001      # 微小量
-    fix_num : 2          # 初期値の固定する数
+    num_fix_steps : 2    # 初期値の固定する数
+    phase :              # 道路の数とフェーズの数の対応
+      - roads : 3
+        num : 4
+      - roads : 4
+        num : 8
+      - roads : 5
+        num : 10
 
 simulation :
   time : 1000  # シミュレーション時間
-  count : 1   # シミュレーション回数
+  count : 1    # シミュレーション回数
 
 intersection :
   yellow_time : 'on'
