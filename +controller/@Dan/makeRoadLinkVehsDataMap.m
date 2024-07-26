@@ -9,7 +9,6 @@ function makeRoadLinkVehsDataMap(obj)
 
     % Vissimクラスからデータを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
-    RoadMainLinkMap = obj.Vissim.get('RoadMainLinkMap');
     RoadNumLanesMap = obj.Vissim.get('RoadNumLanesMap');
     RoadBranchMap = obj.Vissim.get('RoadBranchMap');
 
@@ -24,17 +23,8 @@ function makeRoadLinkVehsDataMap(obj)
         % 道路の順番を取得
         order_id = intersection.InputRoadOrderMap(road_id);
 
-        % メインリンクのIDを取得
-        main_link_id = RoadMainLinkMap(road_id);
-
-        % メインリンクのCOMオブジェクトを取得
-        MainLink = obj.Com.Net.Links.ItemByKey(main_link_id);
-
-        % メインリンクのレーン数を取得
-        num_links = MainLink.Lanes.Count;
-
-        % RoadNumLinksMapに追加
-        obj.RoadNumLinksMap(order_id) = num_links;
+        % リンクの数を取得
+        num_links = obj.RoadNumLinksMap(order_id);
 
         if num_links == 1
             % 自動車情報の数値行列を初期化

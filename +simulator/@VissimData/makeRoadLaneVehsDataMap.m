@@ -2,12 +2,12 @@ function makeRoadLaneVehsDataMap(obj)
     % RoadLaneVehsDataMapの初期化
     obj.RoadLaneVehsDataMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
 
-    % RoadLinkMapの取得
+    % Vissimクラスからデータを取得
     RoadLinkMap = obj.Vissim.get('RoadLinkMap');
     LinkTypeMap = obj.Vissim.get('LinkTypeMap');
     LinkLaneOrderMap = obj.Vissim.get('LinkLaneOrderMap');
     RoadNumLanesMap = obj.Vissim.get('RoadNumLanesMap');
-    RoadStructMap = obj.Vissim.get('RoadStructMap');
+    RoadLinkStructMap = obj.Vissim.get('RoadLinkStructMap');
 
     % RoadLaneVehsDataMapの初期化
     for road_id = cell2mat(RoadLinkMap.keys)
@@ -20,12 +20,9 @@ function makeRoadLaneVehsDataMap(obj)
         % その道路を構成するリンクのIDを取得
         link_ids = RoadLinkMap(road_id);
 
-        % road構造体を取得
-        road_struct = RoadStructMap(road_id);
-
         for link_id = link_ids
-            % リンクの種類を取得
-            link_type = LinkTypeMap(link_id);
+            % link構造体を取得
+            link = RoadLinkStructMap.get(road_id, link_id);
 
             if strcmp(link_type, 'main')
                 % メインリンクのCOMオブジェクトを取得
@@ -77,7 +74,7 @@ function makeRoadLaneVehsDataMap(obj)
                     Vehicle = Vehicle{1};
 
                     % 位置を取得
-                    pos_veh = Vehicle.get('AttValue', 'Pos') + road_struct.from_pos;
+                    pos_veh = Vehicle.get('AttValue', 'Pos') + link.from_pos;
 
                     % 進路を取得
                     route_veh = double(Vehicle.get('AttValue', 'RouteNo'));
@@ -98,7 +95,7 @@ function makeRoadLaneVehsDataMap(obj)
                     Vehicle = Vehicle{1};
 
                     % 位置を取得
-                    pos_veh = Vehicle.get('AttValue', 'Pos') + road_struct.from_pos + road_struct.con - road_struct.to_pos;
+                    pos_veh = Vehicle.get('AttValue', 'Pos') + link.from_pos + link.length - link.to_pos;
 
                     % 進路を取得
                     route_veh = double(Vehicle.get('AttValue', 'RouteNo'));

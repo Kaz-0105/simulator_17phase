@@ -23,7 +23,7 @@ classdef Vissim < handle
         SubLinkConnectorMap;                 % キー：サブリンクのID、バリュー：そのサブリンクに接続するコネクタのID
         MainLinkConnectorMap;                % キー：メインリンクのID、バリュー：そのメインリンクに接続するコネクタのID
 
-        RoadStructMap;                       % キー：道路のID、バリュー：道路の長さに関する構造体
+        RoadLinkStructMap;                       % キー：道路のID、バリュー：道路の長さに関する構造体
         
         IntersectionStructMap;               % キー：交差点のID、バリュー：交差点の流入出道路に関する構造体
         IntersectionNumRoadsMap;             % キー：交差点ID、バリュー：その交差点に流入する道路の数
@@ -91,8 +91,8 @@ classdef Vissim < handle
             % ConnectorMainLinkMapとMainLinkConnectorMapの作成
             obj.makeConnectorMainLinkMap();
 
-            % RoadStructMapの作成
-            obj.makeRoadStructMap();
+            % RoadLinkStructMapの作成
+            obj.makeRoadLinkStructMap();
 
             % IntersectionStructMapの作成
             obj.makeIntersectionStructMap();
@@ -153,7 +153,7 @@ classdef Vissim < handle
         makeConnectorSubLinkMap(obj);
         makeConnectorMainLinkMap(obj);
         
-        makeRoadStructMap(obj);
+        makeRoadLinkStructMap(obj);
         makeLinkInputOutputMap(obj);
         makeLinkQueueCounterMap(obj);
         makeIntersectionStructMap(obj);
