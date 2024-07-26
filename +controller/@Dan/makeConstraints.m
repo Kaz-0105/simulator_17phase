@@ -158,7 +158,7 @@ function makeConstraints(obj)
     
 
     % 初期値の固定
-    for step = 1:obj.fix_num
+    for step = 1:obj.num_fix_steps
         P_tmp = zeros(obj.signal_num, obj.variables_size);
         for signal_id = 1:obj.signal_num
             P_tmp(signal_id, signal_id + obj.v_length*(step -1)) = 1;

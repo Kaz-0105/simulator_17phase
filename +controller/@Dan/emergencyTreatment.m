@@ -48,14 +48,14 @@ function emergencyTreatment(obj)
 
     u_future_data = obj.UResults.get('future_data');
 
-    for step = 1: obj.fix_num
+    for step = 1: obj.num_fix_steps
         obj.u_opt = [obj.u_opt, u_future_data(:,step)];
     end
 
     tmp_u = zeros(obj.signal_num, 1);
     tmp_u(obj.PhaseSignalGroupMap(max_key)) = ones(obj.road_num, 1);
 
-    for step = obj.fix_num + 1: obj.N_p
+    for step = obj.num_fix_steps + 1: obj.N_p
         obj.u_opt = [obj.u_opt, tmp_u];
     end
 
@@ -64,7 +64,7 @@ function emergencyTreatment(obj)
     % 計算時間を設定
     if obj.exitflag == 0
         % 計算が間に合っていないとき
-        obj.calc_time = obj.max_time * 2;
+        obj.calc_time = obj.max_time+1;
     elseif obj.exitflag == -2
         % 実行可能解が見つからなかったとき
         obj.calc_time = -1;

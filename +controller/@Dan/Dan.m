@@ -24,7 +24,7 @@ classdef Dan < handle
 
         N_s;     % 最低の連続回数
         m;       % ホライゾン内の最大変化回数
-        fix_num; % 固定するステップ数
+        num_fix_steps; % 固定するステップ数
 
         eps; % 微小量
 
@@ -93,16 +93,7 @@ classdef Dan < handle
             obj.signal_num = obj.road_num * (obj.road_num -1);
 
             % フェーズの数を設定
-            if obj.road_num == 3
-                obj.phase_num = 4;
-
-            elseif obj.road_num == 4
-                obj.phase_num = 8;
-
-            elseif obj.road_num == 5
-                obj.phase_num = 10;
-
-            end
+            obj.phase_num = double(obj.Config.model.dan.NumRoadsNumPhasesMap(obj.road_num));
 
             % tmp_phase_numの初期化
             obj.tmp_phase_num = obj.phase_num;
@@ -120,7 +111,7 @@ classdef Dan < handle
             % 最低の連続回数、ホライゾン内の最大変化回数、固定するステップ数
             obj.N_s = obj.Config.model.dan.N_s;
             obj.m = obj.Config.model.dan.m;
-            obj.fix_num = obj.Config.model.dan.fix_num;
+            obj.num_fix_steps = obj.Config.model.dan.num_fix_steps;
 
             % 微小量
             obj.eps = obj.Config.model.dan.eps; 
