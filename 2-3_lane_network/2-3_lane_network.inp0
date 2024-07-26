@@ -3147,7 +3147,7 @@
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10022 1" localNo="0" name="" no="23" pos="0.10810043146328212" sg="1 12" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10023 1" localNo="0" name="" no="24" pos="0.10810043146328212" sg="1 12" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 	</signalHeads>
-	<simulation comment="" numCores="1" numRuns="1" randSeed="22" randSeedIncr="1" retroSync="false" simMode="MICRO" simPeriod="1000" simRes="10" simSpeed="10" startTm="0" useAllCores="true" useMaxSimSpeed="false" volumeIncrDynAssign="0"/>
+	<simulation comment="" numCores="1" numRuns="1" randSeed="22" randSeedIncr="1" retroSync="false" simMode="MICRO" simPeriod="1000" simRes="10" simSpeed="10" startTm="0" useAllCores="true" useMaxSimSpeed="true" volumeIncrDynAssign="0"/>
 	<timeDistributions>
 		<timeDistribution mean="0.5" name="0.5 s" no="1" stdDev="0" type="NORMAL"/>
 		<timeDistribution mean="0.9" name="0.9 s" no="2" stdDev="0" type="NORMAL"/>
@@ -3197,6 +3197,7 @@
 		<timeIntervalSet no="AREABEHAVIORTYPE">
 			<timeInts>
 				<timeInterval start="0"/>
+				<timeInterval start="900"/>
 			</timeInts>
 		</timeIntervalSet>
 		<timeIntervalSet no="MANAGEDLANESFACILITY">
@@ -3255,7 +3256,7 @@
 	<vehicleInputs>
 		<vehicleInput anmFlag="false" link="1" name="" no="1">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="1200"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="700"/>
 			</timeIntVehVols>
 		</vehicleInput>
 		<vehicleInput anmFlag="false" link="4" name="" no="2">
