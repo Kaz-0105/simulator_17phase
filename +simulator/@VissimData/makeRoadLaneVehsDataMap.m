@@ -4,10 +4,10 @@ function makeRoadLaneVehsDataMap(obj)
 
     % Vissimクラスからデータを取得
     RoadLinkMap = obj.Vissim.get('RoadLinkMap');
-    LinkTypeMap = obj.Vissim.get('LinkTypeMap');
     LinkLaneOrderMap = obj.Vissim.get('LinkLaneOrderMap');
     RoadNumLanesMap = obj.Vissim.get('RoadNumLanesMap');
     RoadLinkStructMap = obj.Vissim.get('RoadLinkStructMap');
+    RoadMainLinkMap = obj.Vissim.get('RoadMainLinkMap');
 
     % RoadLaneVehsDataMapの初期化
     for road_id = cell2mat(RoadLinkMap.keys)
@@ -20,11 +20,15 @@ function makeRoadLaneVehsDataMap(obj)
         % その道路を構成するリンクのIDを取得
         link_ids = RoadLinkMap(road_id);
 
+        % メインリンクのlink構造体を取得
+        main_link_id = RoadMainLinkMap(road_id);
+        main_link = RoadLinkStructMap.get(road_id, main_link_id);
+
         for link_id = link_ids
             % link構造体を取得
             link = RoadLinkStructMap.get(road_id, link_id);
 
-            if strcmp(link_type, 'main')
+            if strcmp(link.type, 'main')
                 % メインリンクのCOMオブジェクトを取得
                 MainLink = obj.Com.Net.Links.ItemByKey(link_id);
 
@@ -65,7 +69,7 @@ function makeRoadLaneVehsDataMap(obj)
                         obj.RoadLaneVehsDataMap.set(road_id, lane_id, [obj.RoadLaneVehsDataMap.get(road_id, lane_id); pos_veh, route_veh]);
                     end
                 end
-            elseif strcmp(link_type, 'connector')
+            elseif strcmp(link.type, 'connector')
                 % ConnectorのCOMオブジェクトを取得
                 Connector = obj.Com.Net.Links.ItemByKey(link_id);
 
@@ -86,16 +90,19 @@ function makeRoadLaneVehsDataMap(obj)
                     obj.RoadLaneVehsDataMap.set(road_id, lane_id, [obj.RoadLaneVehsDataMap.get(road_id, lane_id); pos_veh, route_veh]);
                 end
 
-            elseif strcmp(link_type, 'sub')
+            elseif strcmp(link.type, 'sub')
                 % SubLinkのCOMオブジェクトを取得
                 SubLink = obj.Com.Net.Links.ItemByKey(link_id);
+
+                % コネクタのlink構造体を取得
+                connector = RoadLinkStructMap.get(road_id, link.from_link_id);
 
                 for Vehicle = SubLink.Vehs.GetAll()'
                     % セル配列から取り出し
                     Vehicle = Vehicle{1};
 
                     % 位置を取得
-                    pos_veh = Vehicle.get('AttValue', 'Pos') + link.from_pos + link.length - link.to_pos;
+                    pos_veh = Vehicle.get('AttValue', 'Pos') + connector.from_pos + connector.length - connector.to_pos;
 
                     % 進路を取得
                     route_veh = double(Vehicle.get('AttValue', 'RouteNo'));

@@ -4,17 +4,6 @@ function makeE(obj)
 
     % 道路ごとに計算
     for road_id = 1: obj.road_num
-        % パラメータの構造体を取得
-        road_prms = obj.RoadPrmsMap(road_id);
-
-        % 各パラメータを取得
-        D_s = road_prms.D_s; % 信号の影響圏に入る距離
-        d_s = road_prms.d_s; % 信号と信号の停止線の間の距離
-        D_f = road_prms.D_f; % 先行車の影響圏に入る距離
-        D_b = road_prms.D_b; % 車線の分岐点と信号の間の距離
-        p_s  = road_prms.p_s; % 信号の位置
-        v = road_prms.v; % 速度[m/s]
-
         % 各リンクごとに計算
         for link_id = 1: obj.RoadNumLinksMap(road_id)
             % 各リンクのE行列を初期化
@@ -30,6 +19,17 @@ function makeE(obj)
             if isempty(pos_vehs)
                 continue;
             end
+
+            % パラメータの構造体を取得
+            link_prms = obj.RoadLinkPrmsMap.get(road_id, link_id);
+
+            % 各パラメータを取得
+            D_s = link_prms.D_s; % 信号の影響圏に入る距離
+            d_s = link_prms.d_s; % 信号と信号の停止線の間の距離
+            D_f = link_prms.D_f; % 先行車の影響圏に入る距離
+            D_b = link_prms.D_b; % 車線の分岐点と信号の間の距離
+            p_s  = link_prms.p_s; % 信号の位置
+            v = link_prms.v; % 速度[m/s]
 
             % 自動車の位置を評価
             p_min = pos_vehs(end);

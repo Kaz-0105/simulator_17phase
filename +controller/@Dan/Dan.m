@@ -120,7 +120,7 @@ classdef Dan < handle
             obj.u_length = obj.signal_num;
 
             % 道路に関するパラメータを格納する構造体を作成
-            obj.makeRoadPrmsMap();
+            obj.makeRoadLinkPrmsMap();
 
             % PhaseとSignalGroupのMapを作成
             obj.makePhaseSignalGroupMap();
@@ -161,7 +161,7 @@ classdef Dan < handle
     end
 
     methods(Access = private)
-        makeRoadPrmsMap(obj);
+        makeRoadLinkPrmsMap(obj);
         makeVehiclesData(obj, intersection_struct_map, VissimData);
 
         % PhaseとSignalGroupのマップを作成する関数

@@ -4,9 +4,6 @@ function makeRoadLinkVehsDataMap(obj)
     obj.RoadLinkRouteVehsMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
     obj.RoadLinkLaneVehsMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
     
-    % RoadNumLinksMapを初期化（後々使う）
-    obj.RoadNumLinksMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
-
     % Vissimクラスからデータを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
     RoadNumLanesMap = obj.Vissim.get('RoadNumLanesMap');

@@ -25,9 +25,9 @@ function makeRoadLinkStructMap(obj)
                 % メインリンクのコネクタは追加の情報がある
                 if strcmp(link.type, 'main') || strcmp(link.type, 'output')
                     % 速度を取得
-                    link.v = road.v;
+                    link.v = road.speed;
 
-                if strcmp(link.type, 'connector')
+                elseif strcmp(link.type, 'connector')
                     % ToLinkとFromLinkのIDを取得
                     link.to_link_id = Link.ToLink.get('AttValue', 'No');
                     link.from_link_id = Link.FromLink.get('AttValue', 'No');
@@ -39,6 +39,29 @@ function makeRoadLinkStructMap(obj)
 
                 % RoadLinkStructMapに追加
                 obj.RoadLinkStructMap.add(road_id, link_id, link);
+            end
+
+            % LinkStructMapの取得
+            LinkStructMap = obj.RoadLinkStructMap.getInnerMap(road_id);
+
+            % メインリンクとサブリンクにも接続に関する情報を追加
+            for link_id = cell2mat(LinkStructMap.keys)
+                % link構造体を取得
+                link = LinkStructMap(link_id);
+
+                if strcmp(link.type, 'connector')
+                    % 接続しているリンクの構造体を取得
+                    to_link = LinkStructMap(link.to_link_id);
+                    from_link = LinkStructMap(link.from_link_id);
+
+                    % 接続情報を追加
+                    to_link.from_link_id = link_id;
+                    from_link.to_link_id = link_id;
+
+                    % LinkStructMapにプッシュ
+                    LinkStructMap(link.to_link_id) = to_link;
+                    LinkStructMap(link.from_link_id) = from_link;
+                end
             end
         end    
     end
