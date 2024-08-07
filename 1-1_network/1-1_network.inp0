@@ -309,6 +309,22 @@
 				<intObjectRef key="12"/>
 			</vehTravTmMeas>
 		</delayMeasurement>
+		<delayMeasurement name="" no="13">
+			<vehTravTmMeas>
+				<intObjectRef key="1"/>
+				<intObjectRef key="2"/>
+				<intObjectRef key="3"/>
+				<intObjectRef key="4"/>
+				<intObjectRef key="5"/>
+				<intObjectRef key="6"/>
+				<intObjectRef key="7"/>
+				<intObjectRef key="8"/>
+				<intObjectRef key="9"/>
+				<intObjectRef key="10"/>
+				<intObjectRef key="11"/>
+				<intObjectRef key="12"/>
+			</vehTravTmMeas>
+		</delayMeasurement>
 	</delayMeasurements>
 	<desAccelerationFunctions>
 		<desAccelerationFunction name="Car" no="1">
@@ -1197,9 +1213,9 @@
 		<areaMeasRawData fromTime="0" toTime="99999" writeFile="false"/>
 		<areaMeasResults collectData="false" fromTime="0" interval="99999" toTime="99999"/>
 		<areaResults collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<dataColl collectData="true" fromTime="0" interval="4" toTime="1000"/>
+		<dataColl collectData="true" fromTime="0" interval="500" toTime="500"/>
 		<dataCollRawData fromTime="0" toTime="99999" writeFile="false"/>
-		<delays collectData="true" fromTime="0" interval="4" toTime="1000"/>
+		<delays collectData="true" fromTime="0" interval="500" toTime="500"/>
 		<dischRec fromTime="0" toTime="99999" writeFile="false"/>
 		<greenTimeDistribution fromTime="0" toTime="99999" writeFile="false"/>
 		<linkResults collectData="false" fromTime="0" interval="99999" perLane="false" toTime="99999"/>
@@ -1225,13 +1241,13 @@
 		<pedTravTmODData fromTime="0" interval="99999" toTime="99999" writeFile="false"/>
 		<pedTravTmRawData fromTime="0" toTime="99999" writeFile="false"/>
 		<pedTravTms collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<queues collectData="true" fromTime="0" interval="4" toTime="1000"/>
+		<queues collectData="true" fromTime="0" interval="500" toTime="500"/>
 		<scDetRec writeFile="false"/>
 		<ssam fromTime="0" toTime="99999" writeFile="false"/>
 		<sigChgs writeDatabase="false" writeFile="false"/>
 		<vehInpData writeFile="false"/>
 		<vehInps collectData="true" fromTime="0" interval="10" toTime="99999"/>
-		<vehNetPerf collectData="true" fromTime="0" interval="4" toTime="1000"/>
+		<vehNetPerf collectData="true" fromTime="0" interval="500" toTime="500"/>
 		<vehRec filterType="ALL" fromTime="0" inclParkVehs="false" resolution="1" toTime="99999" writeDatabase="false" writeFile="false">
 			<attributes>
 				<attributeSelection attributeID="SIMSEC" decimals="2" format="SECONDS" showUnits="false"/>
@@ -2653,7 +2669,7 @@
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10013 1" localNo="0" name="" no="11" pos="0" sg="1 11" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10015 1" localNo="0" name="" no="12" pos="0" sg="1 12" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 	</signalHeads>
-	<simulation comment="" numCores="1" numRuns="1" randSeed="22" randSeedIncr="1" retroSync="false" simMode="MICRO" simPeriod="1000" simRes="10" simSpeed="10" startTm="0" useAllCores="true" useMaxSimSpeed="true" volumeIncrDynAssign="0"/>
+	<simulation comment="" numCores="1" numRuns="1" randSeed="22" randSeedIncr="1" retroSync="false" simMode="MICRO" simPeriod="500" simRes="10" simSpeed="10" startTm="0" useAllCores="true" useMaxSimSpeed="true" volumeIncrDynAssign="0"/>
 	<storyboards>
 		<storyboard filename="" framerate="10" name="" netLayout="" no="1" prevZoomFact="1" recAVI="true" recScope="EVERYRUN" resX="1920" resY="1080" resolution="1920X1080" showPrev="true">
 			<keyframes>
@@ -2773,29 +2789,29 @@
 	<vehicleInputs>
 		<vehicleInput anmFlag="false" link="1" name="" no="1">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="700"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="500"/>
 			</timeIntVehVols>
 		</vehicleInput>
 		<vehicleInput anmFlag="false" link="4" name="" no="2">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="700"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="500"/>
 			</timeIntVehVols>
 		</vehicleInput>
 		<vehicleInput anmFlag="false" link="5" name="" no="3">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="700"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="900"/>
 			</timeIntVehVols>
 		</vehicleInput>
 		<vehicleInput anmFlag="false" link="8" name="" no="4">
 			<timeIntVehVols>
-				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="700"/>
+				<timeIntervalVehVolume cont="false" timeInt="1 0" vehComp="1" volType="STOCHASTIC" volume="900"/>
 			</timeIntVehVols>
 		</vehicleInput>
 	</vehicleInputs>
 	<vehicleRoutingDecisionsStatic>
 		<vehicleRoutingDecisionStatic allVehTypes="true" anmFlag="false" combineStaRoutDec="false" link="5" name="" no="1" pos="0.01" routeChoiceMeth="STATIC">
 			<vehRoutSta>
-				<vehicleRouteStatic destLink="10005" destPos="0.63662587057797482" formula="" name="" no="1" relFlow="2 0:3"/>
+				<vehicleRouteStatic destLink="10005" destPos="0.63662587057797482" formula="" name="" no="1" relFlow=""/>
 				<vehicleRouteStatic destLink="10004" destPos="0.51714244872581205" formula="" name="" no="2" relFlow=""/>
 				<vehicleRouteStatic destLink="10006" destPos="0.51742086166105905" formula="" name="" no="3" relFlow="">
 					<linkSeq>
@@ -2807,7 +2823,7 @@
 		</vehicleRoutingDecisionStatic>
 		<vehicleRoutingDecisionStatic allVehTypes="true" anmFlag="false" combineStaRoutDec="false" link="4" name="" no="2" pos="0.01" routeChoiceMeth="STATIC">
 			<vehRoutSta>
-				<vehicleRouteStatic destLink="10008" destPos="0.61546231125571516" formula="" name="" no="1" relFlow="2 0:3"/>
+				<vehicleRouteStatic destLink="10008" destPos="0.61546231125571516" formula="" name="" no="1" relFlow=""/>
 				<vehicleRouteStatic destLink="10007" destPos="0.51154562725063446" formula="" name="" no="2" relFlow=""/>
 				<vehicleRouteStatic destLink="10009" destPos="0.35395892847190263" formula="" name="" no="3" relFlow="">
 					<linkSeq>
@@ -2819,7 +2835,7 @@
 		</vehicleRoutingDecisionStatic>
 		<vehicleRoutingDecisionStatic allVehTypes="true" anmFlag="false" combineStaRoutDec="false" link="8" name="" no="3" pos="0.01" routeChoiceMeth="STATIC">
 			<vehRoutSta>
-				<vehicleRouteStatic destLink="10011" destPos="0.82161628042964097" formula="" name="" no="1" relFlow="2 0:3"/>
+				<vehicleRouteStatic destLink="10011" destPos="0.82161628042964097" formula="" name="" no="1" relFlow=""/>
 				<vehicleRouteStatic destLink="10010" destPos="0.63744666153408802" formula="" name="" no="2" relFlow=""/>
 				<vehicleRouteStatic destLink="10012" destPos="0.58156408193968878" formula="" name="" no="3" relFlow="">
 					<linkSeq>
@@ -2831,7 +2847,7 @@
 		</vehicleRoutingDecisionStatic>
 		<vehicleRoutingDecisionStatic allVehTypes="true" anmFlag="false" combineStaRoutDec="false" link="1" name="" no="4" pos="0.01" routeChoiceMeth="STATIC">
 			<vehRoutSta>
-				<vehicleRouteStatic destLink="10014" destPos="0.2827352210530033" formula="" name="" no="1" relFlow="2 0:3"/>
+				<vehicleRouteStatic destLink="10014" destPos="0.2827352210530033" formula="" name="" no="1" relFlow=""/>
 				<vehicleRouteStatic destLink="10013" destPos="0.29465034597216394" formula="" name="" no="2" relFlow=""/>
 				<vehicleRouteStatic destLink="10015" destPos="0.42188762144913572" formula="" name="" no="3" relFlow="">
 					<linkSeq>

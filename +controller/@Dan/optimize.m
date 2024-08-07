@@ -61,7 +61,11 @@ function optimize(obj)
         else
             % フェーズ数の再設定
             if obj.road_num == 4
-                obj.tmp_phase_num = 8;
+                if obj.phase_num == 4
+                    obj.tmp_phase_num = 4;
+                else
+                    obj.tmp_phase_num = 8;
+                end
             elseif obj.road_num == 5
                 obj.tmp_phase_num = 10;
             end
