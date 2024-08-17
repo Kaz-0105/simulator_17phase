@@ -11,6 +11,7 @@ classdef VissimData<handle
         RoadLanePosVehsMap;     % キー１：道路ID、キー２：車線のID、値：その車線上の自動車の位置
         RoadLaneRouteVehsMap;   % キー１：道路ID、キー２：車線のID、値：その車線上の自動車の進路
         RoadIntersectionMap;    % キー：道路ID、値：その道路が流入道路となる交差点のID
+        RoadNumVehsMap;         % キー：道路ID、値：その道路上の自動車の数
     end
 
     methods(Access = public)

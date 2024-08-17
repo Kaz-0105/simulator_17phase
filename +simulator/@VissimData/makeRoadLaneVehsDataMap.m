@@ -1,6 +1,9 @@
 function makeRoadLaneVehsDataMap(obj)
     % RoadLaneVehsDataMapの初期化
     obj.RoadLaneVehsDataMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
+    
+    % RoadNumVehsMapの初期化
+    obj.RoadNumVehsMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
 
     % RoadLinkMapの取得
     RoadLinkMap = obj.Vissim.get('RoadLinkMap');
@@ -31,7 +34,17 @@ function makeRoadLaneVehsDataMap(obj)
                 % メインリンクのCOMオブジェクトを取得
                 MainLink = obj.Com.Net.Links.ItemByKey(link_id);
 
-                for Vehicle = MainLink.Vehs.GetAll()'
+                % 自動車のコンテナのCOMオブジェクトを取得
+                Vehicles = MainLink.Vehs;
+
+                % VehicleNumVehsMapにプッシュ
+                if isKey(obj.RoadNumVehsMap, road_id)
+                    obj.RoadNumVehsMap(road_id) = obj.RoadNumVehsMap(road_id) + Vehicles.Count;
+                else
+                    obj.RoadNumVehsMap(road_id) = Vehicles.Count;
+                end
+
+                for Vehicle = Vehicles.GetAll()'
                     % セル配列から取り出し
                     Vehicle = Vehicle{1};
 
@@ -72,7 +85,17 @@ function makeRoadLaneVehsDataMap(obj)
                 % ConnectorのCOMオブジェクトを取得
                 Connector = obj.Com.Net.Links.ItemByKey(link_id);
 
-                for Vehicle = Connector.Vehs.GetAll()'
+                % 自動車のコンテナのCOMオブジェクトを取得
+                Vehicles = Connector.Vehs;
+
+                % VehicleNumVehsMapにプッシュ
+                if isKey(obj.RoadNumVehsMap, road_id)
+                    obj.RoadNumVehsMap(road_id) = obj.RoadNumVehsMap(road_id) + Vehicles.Count;
+                else
+                    obj.RoadNumVehsMap(road_id) = Vehicles.Count;
+                end
+
+                for Vehicle = Vehicles.GetAll()'
                     % セル配列から取り出し
                     Vehicle = Vehicle{1};
 
@@ -93,7 +116,17 @@ function makeRoadLaneVehsDataMap(obj)
                 % SubLinkのCOMオブジェクトを取得
                 SubLink = obj.Com.Net.Links.ItemByKey(link_id);
 
-                for Vehicle = SubLink.Vehs.GetAll()'
+                % 自動車のコンテナのCOMオブジェクトを取得
+                Vehicles = SubLink.Vehs;
+
+                % VehicleNumVehsMapにプッシュ
+                if isKey(obj.RoadNumVehsMap, road_id)
+                    obj.RoadNumVehsMap(road_id) = obj.RoadNumVehsMap(road_id) + Vehicles.Count;
+                else
+                    obj.RoadNumVehsMap(road_id) = Vehicles.Count;
+                end
+
+                for Vehicle = Vehicles.GetAll()'
                     % セル配列から取り出し
                     Vehicle = Vehicle{1};
 
@@ -109,7 +142,6 @@ function makeRoadLaneVehsDataMap(obj)
                     % RoadLaneVehsDataMapにプッシュ
                     obj.RoadLaneVehsDataMap.set(road_id, lane_id, [obj.RoadLaneVehsDataMap.get(road_id, lane_id); pos_veh, route_veh]);
                 end
-
             end
         end
     end

@@ -1,13 +1,19 @@
 function optimize(obj)
     obj.IntersectionOptStateMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-    
-    % IntersectionControllerMapのkeyを取得
-    keys_intersection_controller_map = keys(obj.IntersectionControllerMap);
-    keys_intersection_controller_map = [keys_intersection_controller_map{:}];
 
-    for intersection_id = keys_intersection_controller_map
+    for intersection_id = cell2mat(obj.IntersectionControllerMap.keys)
+        % 制御方法を取得
+        intersection_struct = obj.IntersectionStructMap(intersection_id);
+        control_method = intersection_struct.control_method;
+
         % コントローラのオブジェクトを取得
         Controller = obj.IntersectionControllerMap(intersection_id);
+
+        % 制御方法で処理を分ける（固定式の場合は予測回数だけ設定）
+        if strcmp(control_method, 'Fixed')
+            Controller.set('prediction_count', obj.prediction_count);
+            continue;
+        end
 
         % 最適化計算を行う
         Controller.optimize();

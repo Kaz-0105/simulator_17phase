@@ -85,4 +85,13 @@ vehicle_routes :
           volume : 3
         - id : 3
           volume : 1
+
+    - id : 8 # 左折：直進：右折 = 1 : 0 : 0
+      rel_flows :
+        - id : 1
+          volume : 1
+        - id : 2
+          volume : 0
+        - id : 3
+          volume : 0
     

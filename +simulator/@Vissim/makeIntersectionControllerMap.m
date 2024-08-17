@@ -14,7 +14,12 @@ function makeIntersectionControllerMap(obj)
 
             % Danクラスのオブジェクトを作成
             obj.IntersectionControllerMap(intersection_struct.id) = controller.Dan(intersection_id, obj, road_num);
-        elseif strcmp(control_method, 'Fix')
+        elseif strcmp(control_method, 'Fixed')
+            % 道路の数を取得
+            road_num = length(intersection_struct.input_road_ids);
+
+            % Fixedクラスのオブジェクトを作成
+            obj.IntersectionControllerMap(intersection_struct.id) = controller.Fixed(intersection_id, obj, road_num);
         end   
     end
 end
