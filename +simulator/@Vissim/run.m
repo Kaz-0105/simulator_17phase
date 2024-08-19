@@ -24,9 +24,9 @@ function run(obj)
         end
     
         % 結果表示のクラスを初期化
-        ResultVisualizer = tool.ResultVisualizer(obj, obj.Config);
+        obj.ResultVisualizer = tool.ResultVisualizer(obj, obj.Config);
 
         % 結果表示
-        ResultVisualizer.run();
+        obj.ResultVisualizer.run();
     end
 end

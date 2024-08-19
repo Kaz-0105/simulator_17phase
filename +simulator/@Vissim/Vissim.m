@@ -6,6 +6,7 @@ classdef Vissim < handle
         Com;                              % VissimのCOMオブジェクト
         VissimMeasurements;               % VissimMeasurementsクラスの変数
         VissimData;                       % VissimDataクラスの変数 
+        ResultVisualizer;                 % ResultVisualizerクラスの変数
     end
 
     properties

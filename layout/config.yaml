@@ -64,7 +64,10 @@ result :
     delay_time : 
       active : 'on'
       scale : 'intersection'
-
+  database :
+    active : 'on'
+    path : '\results\1-1_network\database1.csv'
+      
 graph :
   line_graph : 
     line_width : 2
