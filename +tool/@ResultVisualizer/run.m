@@ -20,4 +20,9 @@ function run(obj)
     if obj.flags.calc_time
         obj.showCalcTime();
     end
+
+    % Databaseについて
+    if obj.flags.database
+        obj.updateDatabase();
+    end
 end

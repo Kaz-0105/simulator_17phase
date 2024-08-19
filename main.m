@@ -12,8 +12,5 @@ Config.displayControlMethod();
 % Vissimクラスの作成
 Vissim = simulator.Vissim(Config);
 
-% VissimクラスのCOMオブジェクトを取得
-Com = Vissim.get('Com');
-
 % シミュレーションを行う
 Vissim.run();

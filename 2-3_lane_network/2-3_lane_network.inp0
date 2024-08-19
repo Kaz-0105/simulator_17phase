@@ -1386,9 +1386,9 @@
 		<areaMeasRawData fromTime="0" toTime="99999" writeFile="false"/>
 		<areaMeasResults collectData="false" fromTime="0" interval="99999" toTime="99999"/>
 		<areaResults collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<dataColl collectData="true" fromTime="0" interval="3" toTime="1000"/>
+		<dataColl collectData="true" fromTime="0" interval="2" toTime="1000"/>
 		<dataCollRawData fromTime="0" toTime="99999" writeFile="false"/>
-		<delays collectData="true" fromTime="0" interval="3" toTime="1000"/>
+		<delays collectData="true" fromTime="0" interval="2" toTime="1000"/>
 		<dischRec fromTime="0" toTime="99999" writeFile="false"/>
 		<greenTimeDistribution fromTime="0" toTime="99999" writeFile="false"/>
 		<linkResults collectData="false" fromTime="0" interval="99999" perLane="false" toTime="99999"/>
@@ -1414,13 +1414,13 @@
 		<pedTravTmODData fromTime="0" interval="99999" toTime="99999" writeFile="false"/>
 		<pedTravTmRawData fromTime="0" toTime="99999" writeFile="false"/>
 		<pedTravTms collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<queues collectData="true" fromTime="0" interval="3" toTime="1000"/>
+		<queues collectData="true" fromTime="0" interval="2" toTime="1000"/>
 		<scDetRec writeFile="false"/>
 		<ssam fromTime="0" toTime="99999" writeFile="false"/>
 		<sigChgs writeDatabase="false" writeFile="false"/>
 		<vehInpData writeFile="false"/>
 		<vehInps collectData="false" fromTime="0" interval="99999" toTime="99999"/>
-		<vehNetPerf collectData="true" fromTime="0" interval="3" toTime="1000"/>
+		<vehNetPerf collectData="true" fromTime="0" interval="2" toTime="1000"/>
 		<vehRec filterType="ALL" fromTime="0" inclParkVehs="false" resolution="1" toTime="99999" writeDatabase="false" writeFile="false">
 			<attributes>
 				<attributeSelection attributeID="SIMSEC" decimals="2" format="SECONDS" showUnits="false"/>
@@ -3156,7 +3156,7 @@
 	<storyboards>
 		<storyboard filename="" framerate="10" name="" netLayout="" no="1" prevZoomFact="1" recAVI="true" recScope="EVERYRUN" resX="1920" resY="1080" resolution="1920X1080" showPrev="true">
 			<keyframes>
-				<keyframe camPos="1" dwellTime="200" name="Camera position 1" netLayout="" startTime="300" transType="SMOOTH"/>
+				<keyframe camPos="1" dwellTime="200" name="Camera position 1" netLayout="" startTime="400" transType="SMOOTH"/>
 			</keyframes>
 		</storyboard>
 	</storyboards>

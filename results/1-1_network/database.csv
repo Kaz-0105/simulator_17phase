@@ -1,0 +1,2 @@
+simulation_id,intersection_id,control_method,num_phases,seed,input1,input2,input3,input4,relflow1,relflow2,relflow3,relflow4,yellow_time,red_time,N_s,queue,delay
+1,1,Dan,4,22,800,700,700,700,3,3,3,3,1,1,5,20.6264566575423,6.68908929489973

@@ -105,6 +105,9 @@ function group = parseGroup(obj, group_data)
             tmp_intersection.OutputRoadOrderMap(output_road.id) = output_road.order;
         end
 
+        % 道路の数を取得
+        tmp_intersection.num_roads = length(tmp_intersection.input_road_ids);
+
         % 交差点の制御方法を取得
         tmp_intersection.control_method = char(intersection_data.control_method);
 
@@ -161,6 +164,9 @@ function group = parseGroup(obj, group_data)
         % RoadRelFlowsMapの初期化
         RoadRelFlowsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
+        % RoadTemplateMapの初期化
+        RoadRelFlowTemplateMap = containers.Map('KeyType', 'int32', 'ValueType', 'int32');
+
         % RoadRelFlowsMapの作成
         for road = intersection.roads
             % セル配列から取り出し
@@ -186,13 +192,20 @@ function group = parseGroup(obj, group_data)
 
             % RoadRelFlowsMapにプッシュ
             RoadRelFlowsMap(road.id) = rel_flows;
+
+            % RoadTemplateMapにプッシュ
+            RoadRelFlowTemplateMap(road.id) = road.template_id;
         end
 
         % tmp_intersectionにRoadRelFlowsMapをプッシュ
         tmp_intersection.RoadRelFlowsMap = RoadRelFlowsMap;
 
+        % tmp_intersectionにRoadTemplateMapをプッシュ
+        tmp_intersection.RoadRelFlowTemplateMap = RoadRelFlowTemplateMap;
+
         % VehicleRoutesMapにtmp_intersectionをプッシュ
         VehicleRoutesMap(intersection.id) = tmp_intersection;
+
     end
 
     % PrmsMapにVehicleRoutesMapをプッシュ

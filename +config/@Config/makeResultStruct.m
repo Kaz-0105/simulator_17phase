@@ -82,4 +82,16 @@ function makeResultStruct(obj, data)
     end
     
     obj.result.contents.delay_time.scale = char(obj.result.contents.delay_time.scale);
+
+    % データベースへの保存の有無について
+    if strcmp(char(data.result.database.active), 'on')
+        obj.result.database.active = true;
+    elseif strcmp(char(data.result.database.active), 'off')
+        obj.result.database.active = false;
+    else
+        error('The value of database is invalid in yaml file.');
+    end
+
+    % データベースのパス
+    obj.result.database.path = char(data.result.database.path);
 end

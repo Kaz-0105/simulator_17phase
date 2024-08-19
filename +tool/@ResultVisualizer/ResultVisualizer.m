@@ -41,6 +41,7 @@ classdef ResultVisualizer < handle
             obj.flags.delay_time = Config.result.contents.delay_time.active;
             obj.flags.calc_time = Config.result.contents.calc_time.active;
             obj.flags.compare = Config.result.compare.active;
+            obj.flags.database = Config.result.database.active;
 
             % ComparePathMapの設定
             obj.ComparePathMap = Config.result.compare.PathMap;
