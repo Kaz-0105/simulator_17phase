@@ -21,7 +21,7 @@ mpc :
 
 model :
   dan :
-    N_s : 4           # 最低の連続ステップ数
+    N_s : 5           # 最低の連続ステップ数
     m : 1             # 最大変化回数
     eps : 0.0000001   # 微小量
     num_fix_steps : 2 # 初期値の固定する数
@@ -29,7 +29,7 @@ model :
       - roads : 3
         num : 4
       - roads : 4
-        num : 17
+        num : 4
       - roads : 5
         num : 10
 

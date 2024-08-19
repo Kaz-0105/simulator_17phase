@@ -20,4 +20,4 @@ intersections :
       - id : 7
         order : 1
     signal_controller_id : 1
-    control_method : 'Fixed'
+    control_method : 'Dan'
