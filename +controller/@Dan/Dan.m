@@ -211,7 +211,7 @@ classdef Dan < handle
         makeConstraints(obj);
         makeBoundary(obj);
         makeIntcon(obj);
-        makeWeight(obj);
+        makeWeight(obj, type);
 
         % 最適解と次の最適化に必要な決定変数を抽出する関数群
         makeUOpt(obj, x_opt);

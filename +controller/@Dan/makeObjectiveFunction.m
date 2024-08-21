@@ -11,7 +11,7 @@ function makeObjectiveFunction(obj, template_id)
         end
     elseif template_id == 2
         % delta_1を使用、重みをつける
-        obj.makeWeight();
+        obj.makeWeight(1);
         for i = 1: length(delta1_list)
             delta1_num = delta1_list(i);
             for step = 1: obj.N_p
@@ -33,7 +33,7 @@ function makeObjectiveFunction(obj, template_id)
 
     elseif template_id == 4
         % delta_1とdelta_4を使用、重みをつける
-        obj.makeWeight();
+        obj.makeWeight(1);
         for i = 1: length(delta1_list)
             delta1_num = delta1_list(i);
             for step = 1: obj.N_p
