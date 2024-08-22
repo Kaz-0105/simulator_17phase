@@ -2,6 +2,9 @@
 close all;
 clear;
 
+% csvからデータを読み込む
+data_table = readtable('results/1-1_network/database.csv');
+
 % PhaseNumPerformanceMapの初期化
 PhaseNumPerformanceMap = containers.Map('KeyType', 'char', 'ValueType', 'any');
 
