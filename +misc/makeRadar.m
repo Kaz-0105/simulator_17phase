@@ -138,10 +138,10 @@ f = figure(1);
 % 角度とラベルを生成
 theta = linspace(0, 2*pi, 10);
 label = {'same', 'left: high', 'straight: high', 'right: high', 'left: low', 'straight: low', 'right: low', 'main-sub', 'strange'};
-legend_label = {'fix', '4-phase', '8-phase', '17-phase'};
+legend_label = {'4-phase', '8-phase', '17-phase'};
 
-% 固定式について
-tmp_queue_array = PhaseNumPerformanceMap('fix').queue;
+% 4フェーズについて
+tmp_queue_array = PhaseNumPerformanceMap('4').queue;
 tmp_queue_array(end + 1) = tmp_queue_array(1);
 polarplot(theta, tmp_queue_array, 'LineWidth', 2);
 
@@ -153,11 +153,7 @@ title('Queue Length [m]');
 
 hold on;
 
-% 4, 8, 17フェーズについて
-tmp_queue_array = PhaseNumPerformanceMap('4').queue;
-tmp_queue_array(end + 1) = tmp_queue_array(1);
-polarplot(theta, tmp_queue_array, 'LineWidth', 2);
-
+% 8, 17フェーズについて
 tmp_queue_array = PhaseNumPerformanceMap('8').queue;
 tmp_queue_array(end + 1) = tmp_queue_array(1);
 polarplot(theta, tmp_queue_array, 'LineWidth', 2);
@@ -172,8 +168,8 @@ legend(legend_label);
 % QueueLengthのレーダーチャートを作成
 f = figure(2);
 
-% 固定式について
-tmp_delay_array = PhaseNumPerformanceMap('fix').delay;
+% 4フェーズについて
+tmp_delay_array = PhaseNumPerformanceMap('4').delay;
 tmp_delay_array(end + 1) = tmp_delay_array(1);
 polarplot(theta, tmp_delay_array, 'LineWidth', 2);
 
@@ -185,11 +181,7 @@ title('Delay Time [s]');
 
 hold on;
 
-% 4, 8, 17フェーズについて
-tmp_delay_array = PhaseNumPerformanceMap('4').delay;
-tmp_delay_array(end + 1) = tmp_delay_array(1);
-polarplot(theta, tmp_delay_array, 'LineWidth', 2);
-
+% 8, 17フェーズについて
 tmp_delay_array = PhaseNumPerformanceMap('8').delay;
 tmp_delay_array(end + 1) = tmp_delay_array(1);
 polarplot(theta, tmp_delay_array, 'LineWidth', 2);
