@@ -8,7 +8,7 @@ network :
       prms : '1-1_network_prms.yaml'                   # パラメータの情報がまとまったyamlファイル
 
 vissim :
-  graphic_mode : 0 # 描画モードON=0
+  graphic_mode : 1 # 描画モードON=0
   seed : 22        # 乱数のシード値
   resolution : 10  # シミュレーション時間で1sあたりに何回自動車の位置を更新するか(解像度)
   max_sim_speed : 'on' # シミュレーションの速度を最大にするかどうか
@@ -29,12 +29,12 @@ model :
       - roads : 3
         num : 4
       - roads : 4
-        num : 4
+        num : 17
       - roads : 5
         num : 10
 
 simulation :
-  time : 300  # シミュレーション時間
+  time : 500  # シミュレーション時間
   count : 1   # シミュレーション回数
 
 intersection :
@@ -65,8 +65,8 @@ result :
       active : 'off'
       scale : 'intersection'
   database :
-    active : 'on'
-    path : 'results\1-1_network\database.csv'
+    active : 'off'
+    path : 'results\1-1_network\database500.csv'
       
 graph :
   line_graph : 

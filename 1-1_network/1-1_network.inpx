@@ -2655,14 +2655,14 @@
 	</signalHeads>
 	<simulation comment="" numCores="1" numRuns="1" randSeed="22" randSeedIncr="1" retroSync="false" simMode="MICRO" simPeriod="500" simRes="10" simSpeed="10" startTm="0" useAllCores="true" useMaxSimSpeed="true" volumeIncrDynAssign="0"/>
 	<storyboards>
-		<storyboard filename="" framerate="10" name="" netLayout="" no="1" prevZoomFact="1" recAVI="true" recScope="EVERYRUN" resX="1920" resY="1080" resolution="1920X1080" showPrev="true">
+		<storyboard filename="" framerate="10" name="" netLayout="" no="1" prevZoomFact="1" recAVI="false" recScope="EVERYRUN" resX="1920" resY="1080" resolution="1920X1080" showPrev="true">
 			<keyframes>
-				<keyframe camPos="1" dwellTime="200" name="Camera position 2D" netLayout="" startTime="300" transType="SMOOTH"/>
+				<keyframe camPos="1" dwellTime="200" name="Camera position 2D" netLayout="" startTime="200" transType="SMOOTH"/>
 			</keyframes>
 		</storyboard>
 		<storyboard filename="" framerate="10" name="" netLayout="" no="2" prevZoomFact="1" recAVI="true" recScope="EVERYRUN" resX="1920" resY="1080" resolution="1920X1080" showPrev="true">
 			<keyframes>
-				<keyframe camPos="2" dwellTime="200" name="Camera position 3D" netLayout="" startTime="300" transType="SMOOTH"/>
+				<keyframe camPos="2" dwellTime="200" name="Camera position 3D" netLayout="" startTime="200" transType="SMOOTH"/>
 			</keyframes>
 		</storyboard>
 	</storyboards>
