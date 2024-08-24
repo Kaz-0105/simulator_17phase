@@ -137,7 +137,7 @@ f = figure(1);
 
 % 角度とラベルを生成
 theta = linspace(0, 2*pi, 10);
-label = {'same', 'left: high', 'straight: high', 'right: high', 'left: low', 'straight: low', 'right: low', 'main-sub', 'strange'};
+label = {'same', 'left: high', 'straight: high', 'right: high', 'left: low', 'straight: low', 'right: low', 'main-sub', 'irregular'};
 legend_label = {'4-phase', '8-phase', '17-phase'};
 
 % 4フェーズについて
