@@ -29,7 +29,7 @@ model :
       - roads : 3
         num : 4
       - roads : 4
-        num : 17
+        num : 4
       - roads : 5
         num : 10
 
