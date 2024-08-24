@@ -104,7 +104,7 @@ theta = linspace(0, 2*pi, length(labels) + 1);
 legend_labels = {};
 
 % 制御方式ごとに処理
-for control_method = ["fix", "4", "8", "17"]
+for control_method = ["4", "8", "17"]
     control_method = char(control_method);
 
     tmp_performance_table = NumPhasesPerformanceMap(control_method);
@@ -141,7 +141,7 @@ hold off;
 f = figure(2);
 
 % 制御方式ごとに処理
-for control_method = ["fix", "4", "8", "17"]
+for control_method = ["4", "8", "17"]
     control_method = char(control_method);
 
     tmp_performance_table = NumPhasesPerformanceMap(control_method);
