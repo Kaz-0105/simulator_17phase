@@ -14,22 +14,22 @@ vissim :
   max_sim_speed : 'on' # シミュレーションの速度を最大にするかどうか
   
 mpc :
-  predictive_horizon : 4 # 予測ホライゾン
+  predictive_horizon : 5 # 予測ホライゾン
   control_horizon : 2    # 制御ホライゾン
   time_step : 2          # タイムステップ
-  max_time : 10           # 最適化の計算時間の上限
+  max_time : 20           # 最適化の計算時間の上限
 
 model :
   dan :
     N_s : 5           # 最低の連続ステップ数
     m : 1             # 最大変化回数
-    eps : 0.0000001   # 微小量
+    eps : 0           # 微小量
     num_fix_steps : 2 # 初期値の固定する数
     phase :           # 道路の数とフェーズの数の対応
       - roads : 3
         num : 4
       - roads : 4
-        num : 17
+        num : 8
       - roads : 5
         num : 10
 
@@ -56,7 +56,7 @@ result :
       active : 'off'
       scale : 'intersection'
     queue_length :
-      active : 'off'
+      active : 'on'
       scale : 'intersection'
     num_vehs : 
       active : 'off'
