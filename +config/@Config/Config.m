@@ -18,13 +18,13 @@ classdef Config<handle
     end
 
     methods
-        function obj = Config(file_name, file_dir)
+        function obj = Config()
             % ファイル名とディレクトリの設定
-            obj.file_name = file_name;
-            obj.file_dir = file_dir;
-
+            obj.file_name = 'config.yaml';
+            obj.file_dir = strcat(pwd, '\layout\');
+            
             % 設定ファイルの読み込み
-            data = yaml.loadFile(append(file_dir, file_name));
+            data = yaml.loadFile(append(obj.file_dir, obj.file_name));
 
             % network構造体の設定
             obj.makeNetworkStruct(data);

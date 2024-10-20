@@ -17,7 +17,7 @@ mpc :
   predictive_horizon : 5 # 予測ホライゾン
   control_horizon : 2    # 制御ホライゾン
   time_step : 2          # タイムステップ
-  max_time : 20           # 最適化の計算時間の上限
+  max_time : 40          # 最適化の計算時間の上限
 
 model :
   dan :
@@ -34,7 +34,7 @@ model :
         num : 10
 
 simulation :
-  time : 500  # シミュレーション時間
+  time : 300  # シミュレーション時間
   count : 1   # シミュレーション回数
 
 intersection :
@@ -53,7 +53,7 @@ result :
       - 'results\1-1_network\17\data.mat'
   contents :
     calc_time :
-      active : 'off'
+      active : 'on'
       scale : 'intersection'
     queue_length :
       active : 'on'
@@ -65,8 +65,8 @@ result :
       active : 'off'
       scale : 'intersection'
   database :
-    active : 'off'
-    path : 'results\1-1_network\database500.csv'
+    active : 'on'
+    path : 'results\1-1_network\database_horizon.csv'
       
 graph :
   line_graph : 

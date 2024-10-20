@@ -203,6 +203,9 @@ function group = parseGroup(obj, group_data)
         % tmp_intersectionにRoadTemplateMapをプッシュ
         tmp_intersection.RoadRelFlowTemplateMap = RoadRelFlowTemplateMap;
 
+        % tmp_intersectionにVehicleRouteTemplatesMapをプッシュ
+        tmp_intersection.VehicleRouteTemplatesMap = VehicleRouteTemplatesMap;
+
         % VehicleRoutesMapにtmp_intersectionをプッシュ
         VehicleRoutesMap(intersection.id) = tmp_intersection;
 

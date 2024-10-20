@@ -2,6 +2,7 @@ function updateDatabase(obj)
     % VissimMeasurementsクラスからデータを取得
     IntersectionRoadQueueMap = obj.VissimMeasurements.get('IntersectionRoadQueueMap');
     IntersectionRoadDelayMap = obj.VissimMeasurements.get('IntersectionRoadDelayMap');
+    IntersectionCalcTimeMap = obj.VissimMeasurements.get('IntersectionCalcTimeMap');
 
     % Vissimクラスからデータを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
@@ -35,10 +36,13 @@ function updateDatabase(obj)
         headers{end + 1} = 'yellow_time';
         headers{end + 1} = 'red_time';
 
+        headers{end + 1} = 'N_p';
+        headers{end + 1} = 'N_c';
         headers{end + 1} = 'N_s';
 
         headers{end + 1} = 'queue';
         headers{end + 1} = 'delay';
+        headers{end + 1} = 'calc_time';
 
         data_table = cell2table(cell(0, numel(headers)), 'VariableNames', headers);
 
@@ -142,12 +146,19 @@ function updateDatabase(obj)
         yellow_time = obj.Config.intersection.yellow_time;
         red_time = obj.Config.intersection.red_time;
 
+        % N_pの値を取得
+        N_p = obj.Config.mpc.predictive_horizon;
+
+        % N_cの値を取得
+        N_c = obj.Config.mpc.control_horizon;
+
         % N_sの値を取得
         N_s = obj.Config.model.dan.N_s;
 
         % QueueとDelayの時間平均を取得
-        queue = mean(IntersectionQueueMap(intersection_id));
-        delay = mean(IntersectionDelayMap(intersection_id));
+        queue = round(mean(IntersectionQueueMap(intersection_id)), 1);
+        delay = round(mean(IntersectionDelayMap(intersection_id)), 1);
+        calc_time = round(mean(IntersectionCalcTimeMap(intersection_id)), 2);
 
         % データベースを更新
         % 同じシミュレーション条件のデータが存在する場合、データを更新
@@ -169,6 +180,8 @@ function updateDatabase(obj)
         row_flags = row_flags & data_table.yellow_time == yellow_time;
         row_flags = row_flags & data_table.red_time == red_time;
 
+        row_flags = row_flags & data_table.N_p == N_p;
+        row_flags = row_flags & data_table.N_c == N_c;
         row_flags = row_flags & data_table.N_s == N_s;
 
         row_index = find(row_flags);
@@ -177,6 +190,7 @@ function updateDatabase(obj)
         if ~isempty(row_index)
             data_table.queue(row_index) = queue;
             data_table.delay(row_index) = delay;
+            data_table.calc_time(row_index) = calc_time;
         else
             % データが存在しない場合、データを追加
             new_data = cell(1, numel(data_table.Properties.VariableNames));
@@ -198,10 +212,13 @@ function updateDatabase(obj)
             new_data{5 + 2 * num_roads + 1} = yellow_time;
             new_data{5 + 2 * num_roads + 2} = red_time;
 
-            new_data{5 + 2 * num_roads + 3} = N_s;
+            new_data{5 + 2 * num_roads + 3} = N_p;
+            new_data{5 + 2 * num_roads + 4} = N_c;
+            new_data{5 + 2 * num_roads + 5} = N_s;
 
-            new_data{5 + 2 * num_roads + 4} = queue;
-            new_data{5 + 2 * num_roads + 5} = delay;
+            new_data{5 + 2 * num_roads + 6} = queue;
+            new_data{5 + 2 * num_roads + 7} = delay;
+            new_data{5 + 2 * num_roads + 8} = calc_time;
 
             new_data = cell2table(new_data, 'VariableNames', data_table.Properties.VariableNames);
 
