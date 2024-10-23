@@ -3,6 +3,7 @@ function updateDatabase(obj)
     IntersectionRoadQueueMap = obj.VissimMeasurements.get('IntersectionRoadQueueMap');
     IntersectionRoadDelayMap = obj.VissimMeasurements.get('IntersectionRoadDelayMap');
     IntersectionCalcTimeMap = obj.VissimMeasurements.get('IntersectionCalcTimeMap');
+    IntersectionControllerMap = obj.Vissim.get('IntersectionControllerMap');
 
     % Vissimクラスからデータを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
@@ -43,6 +44,7 @@ function updateDatabase(obj)
         headers{end + 1} = 'queue';
         headers{end + 1} = 'delay';
         headers{end + 1} = 'calc_time';
+        headers{end + 1} = 'success_rate';
 
         data_table = cell2table(cell(0, numel(headers)), 'VariableNames', headers);
 
@@ -160,6 +162,10 @@ function updateDatabase(obj)
         delay = round(mean(IntersectionDelayMap(intersection_id)), 1);
         calc_time = round(mean(IntersectionCalcTimeMap(intersection_id)), 2);
 
+        % 計算の成功率を計算
+        Controller = IntersectionControllerMap(intersection_id);
+        success_rate = Controller.get('success_rate');
+
         % データベースを更新
         % 同じシミュレーション条件のデータが存在する場合、データを更新
 
@@ -219,6 +225,7 @@ function updateDatabase(obj)
             new_data{5 + 2 * num_roads + 6} = queue;
             new_data{5 + 2 * num_roads + 7} = delay;
             new_data{5 + 2 * num_roads + 8} = calc_time;
+            new_data{5 + 2 * num_roads + 9} = success_rate;
 
             new_data = cell2table(new_data, 'VariableNames', data_table.Properties.VariableNames);
 

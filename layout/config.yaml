@@ -34,7 +34,7 @@ model :
         num : 10
 
 simulation :
-  time : 300  # シミュレーション時間
+  time : 500  # シミュレーション時間
   count : 1   # シミュレーション回数
 
 intersection :
@@ -53,10 +53,10 @@ result :
       - 'results\1-1_network\17\data.mat'
   contents :
     calc_time :
-      active : 'on'
+      active : 'off'
       scale : 'intersection'
     queue_length :
-      active : 'on'
+      active : 'off'
       scale : 'intersection'
     num_vehs : 
       active : 'off'
@@ -66,7 +66,7 @@ result :
       scale : 'intersection'
   database :
     active : 'on'
-    path : 'results\1-1_network\database_horizon.csv'
+    path : 'results\1-1_network\database_unbalanced.csv'
       
 graph :
   line_graph : 

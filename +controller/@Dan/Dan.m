@@ -40,7 +40,7 @@ classdef Dan < handle
 
         prediction_count; % 予測回数
         success_count;    % 最適解が見つかった回数
-        success_rate;         % 最適解が見つかった割合
+        success_rate;     % 最適解が見つかった割合
     end
 
     properties

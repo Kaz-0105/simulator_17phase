@@ -4,21 +4,21 @@ close all;
 % 実験のパラメータを作成
 control_method_list = ["Dan"];
 
-num_phases_list = [17];
+num_phases_list = [8, 17];
 
 seed_list = [1];
 
-input1_list = [700];
-input2_list = [700];
-input3_list = [700];
-input4_list = [700];
+input1_list = [900];
+input2_list = [900];
+input3_list = [500];
+input4_list = [500];
 
 yellow_time_list = [1];
 red_time_list = [1];
 
-N_p_list = [4, 5, 6];
+N_p_list = [4];
 N_c_list = [2];
-N_s_list = [3, 4, 5, 6];
+N_s_list = [5];
 
 for control_method = control_method_list
     for num_phases = num_phases_list
@@ -30,9 +30,6 @@ for control_method = control_method_list
                             for yellow_time = yellow_time_list
                                 for red_time = red_time_list
                                     for N_p = N_p_list
-                                        if N_p == 4 && num_phases == 4
-                                            continue;
-                                        end
                                         for N_c = N_c_list
                                             for N_s = N_s_list
                                                 % Configクラスの変数の作成
