@@ -56,16 +56,23 @@ function makeConstraints(obj)
         phase_group = obj.PhaseSignalGroupMap(phase_id);
 
         for step = 1:obj.N_p
-            P_tmp = zeros(obj.road_num + 1, obj.variables_size);
-
+            % P_tmp = zeros(obj.road_num + 1, obj.variables_size);
+            P_tmp = zeros(2, obj.variables_size);
             if obj.road_num == 4
-                P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 0; 1];
-                P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 0; 1];
-                P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 0; 1];
-                P_tmp(:, phase_group(4) + obj.v_length*(step-1)) = [0; 0; 0; -1; 1];
-                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*(step-1)) = [1; 1; 1; 1; -1];
+                P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 1];
+                P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [-1; 1];
+                P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [-1; 1];
+                P_tmp(:, phase_group(4) + obj.v_length*(step-1)) = [-1; 1];
+                P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*(step-1)) = [4; -1];
 
-                q_tmp = [0; 0; 0; 0; 3];
+                q_tmp = [0; 3];
+                % P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 0; 1];
+                % P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 0; 1];
+                % P_tmp(:, phase_group(3) + obj.v_length*(step-1)) = [0; 0; -1; 0; 1];
+                % P_tmp(:, phase_group(4) + obj.v_length*(step-1)) = [0; 0; 0; -1; 1];
+                % P_tmp(:, obj.v_length*obj.N_p + phase_id + obj.tmp_phase_num*(step-1)) = [1; 1; 1; 1; -1];
+
+                % q_tmp = [0; 0; 0; 0; 3];
             elseif obj.road_num == 3
                 P_tmp(:, phase_group(1) + obj.v_length*(step-1)) = [-1; 0; 0; 1];
                 P_tmp(:, phase_group(2) + obj.v_length*(step-1)) = [0; -1; 0; 1];
