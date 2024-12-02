@@ -2,23 +2,23 @@ clear;
 close all;
 
 % 実験のパラメータを作成
-control_method_list = ["Dan"];
+control_method_list = "Dan";
 
-num_phases_list = [8, 17];
+num_phases_list = [4, 8, 17];
 
-seed_list = [1];
+seed_list = 1;
 
-input1_list = [900];
-input2_list = [900];
-input3_list = [500];
-input4_list = [500];
+input1_list = 900;
+input2_list = 900;
+input3_list = 500;
+input4_list = 500;
 
-yellow_time_list = [1];
-red_time_list = [1];
+yellow_time_list = 1;
+red_time_list = 1;
 
-N_p_list = [4];
-N_c_list = [2];
-N_s_list = [5];
+N_p_list = 4;
+N_c_list = 2;
+N_s_list = 5;
 
 for control_method = control_method_list
     for num_phases = num_phases_list

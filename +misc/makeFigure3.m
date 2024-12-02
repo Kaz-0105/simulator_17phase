@@ -9,7 +9,7 @@ AXIS_FONT_SIZE = 20;
 LEGEND_FONT_SIZE = 20;
 
 % csvからデータを読み込む
-file_name = 'results/1-1_network/database_unbalanced.csv';
+file_name = 'results/1-1_network/unbalanced2.csv';
 data_table = readtable(file_name);
 
 % 必要なデータの取得
@@ -32,8 +32,13 @@ queue_17 = tmp_data_table.queue(tmp_data_table.num_phases == 17);
 delay_17 = tmp_data_table.delay(tmp_data_table.num_phases == 17);
 calc_time_17 = tmp_data_table.calc_time(tmp_data_table.num_phases == 17);
 
-queue_scoot = [39.6, 20.7, 32.3, 35.2, 33.6, 49.6, 34.8]';
-delay_scoot = [32.2, 22.9, 30.7, 36.9, 30.4, 40.1, 34.6]';
+% 900-600のときのデータ
+% queue_scoot = [39.6, 20.7, 32.3, 35.2, 33.6, 49.6, 34.8]';
+% delay_scoot = [32.2, 22.9, 30.7, 36.9, 30.4, 40.1, 34.6]';
+
+% 800-700のときのデータ
+queue_scoot = [21.4, 20.6, 19.8, 24.0, 24.8, 29.1, 22.1]';
+delay_scoot = [23.6, 25.5, 23.5, 24.0, 26.4, 28.6, 24.7]';
 
 % データのバリデーション
 if length(queue_4) ~= EXPERIMENT_CONDITION_NUM

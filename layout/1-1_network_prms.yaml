@@ -1,13 +1,13 @@
 id : 1
 vehicle_inputs : 
   - id : 1
-    volume : 700
+    volume : 800
   - id : 2
-    volume : 700
+    volume : 800
   - id : 3
-    volume : 700
+    volume : 600
   - id : 4
-    volume : 700
+    volume : 600
 
 vehicle_routes :
   intersections :
