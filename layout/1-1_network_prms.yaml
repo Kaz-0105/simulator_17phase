@@ -1,26 +1,26 @@
 id : 1
 vehicle_inputs : 
   - id : 1
-    volume : 800
+    volume : 900
   - id : 2
-    volume : 800
+    volume : 500
   - id : 3
-    volume : 600
+    volume : 900
   - id : 4
-    volume : 600
+    volume : 500
 
 vehicle_routes :
   intersections :
     - id : 1
       roads :
         - id : 1
-          template_id : 3
+          template_id : 5
         - id : 4
-          template_id : 3
+          template_id : 5
         - id : 5
-          template_id : 3
+          template_id : 5
         - id : 8
-          template_id : 3
+          template_id : 5
 
   templates :
     - id : 1 # 左折：直進：右折 = 1 : 1 : 1

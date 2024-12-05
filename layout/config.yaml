@@ -14,8 +14,8 @@ vissim :
   max_sim_speed : 'on' # シミュレーションの速度を最大にするかどうか
   
 mpc :
-  predictive_horizon : 4 # 予測ホライゾン
-  control_horizon : 2    # 制御ホライゾン
+  predictive_horizon : 7 # 予測ホライゾン
+  control_horizon : 4    # 制御ホライゾン
   time_step : 2          # タイムステップ
   max_time : 40          # 最適化の計算時間の上限
 
@@ -66,7 +66,7 @@ result :
       scale : 'intersection'
   database :
     active : 'on'
-    path : 'results\1-1_network\unbalanced.csv'
+    path : 'results\1-1_network\main_sub.csv'
       
 graph :
   line_graph : 
