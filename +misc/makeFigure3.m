@@ -9,7 +9,7 @@ AXIS_FONT_SIZE = 20;
 LEGEND_FONT_SIZE = 20;
 
 % csvからデータを読み込む
-file_name = 'results/1-1_network/balanced.csv';
+file_name = 'results/1-1_network/unbalanced.csv';
 data_table = readtable(file_name);
 
 % 必要なデータの取得
@@ -62,19 +62,19 @@ relflow1_labels = {};
 
 for relflow1 = relflow1_list
     if relflow1 == 1
-        relflow1_labels = [relflow1_labels, 'All-same'];
+        relflow1_labels = [relflow1_labels, '均一'];
     elseif relflow1 == 2
-        relflow1_labels = [relflow1_labels, 'Left-high'];
+        relflow1_labels = [relflow1_labels, '左折多め'];
     elseif relflow1 == 3
-        relflow1_labels = [relflow1_labels, 'Straight-high'];
+        relflow1_labels = [relflow1_labels, '直進多め'];
     elseif relflow1 == 4
-        relflow1_labels = [relflow1_labels, 'Right-high'];
+        relflow1_labels = [relflow1_labels, '右折多め'];
     elseif relflow1 == 5
-        relflow1_labels = [relflow1_labels, 'Left-low'];
+        relflow1_labels = [relflow1_labels, '左折少なめ'];
     elseif relflow1 == 6
-        relflow1_labels = [relflow1_labels, 'Straight-low'];
+        relflow1_labels = [relflow1_labels, '直進少なめ'];
     elseif relflow1 == 7
-        relflow1_labels = [relflow1_labels, 'Right-low'];
+        relflow1_labels = [relflow1_labels, '右折少なめ'];
     else
         error('relflow1 is invalid');
     end
@@ -85,9 +85,9 @@ figure;
 
 bar([queue_scoot, queue_4, queue_8, queue_17]);
 xticklabels(relflow1_labels);
-xlabel('Route selection type', 'FontSize', LABEL_FONT_SIZE);
-ylabel('Queue', 'FontSize', LABEL_FONT_SIZE);
-title('Queue - Route selection type', 'FontSize', TITLE_FONT_SIZE);
+xlabel('旋回率', 'FontSize', LABEL_FONT_SIZE);
+ylabel('Queue[m]', 'FontSize', LABEL_FONT_SIZE);
+title('主要道路型', 'FontSize', TITLE_FONT_SIZE);
 legend({'scoot', '4-phase', '8-phase', '17-phase'}, 'FontSize', LEGEND_FONT_SIZE);
 set(gca, 'FontSize', AXIS_FONT_SIZE);
 
