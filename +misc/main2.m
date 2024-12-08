@@ -8,10 +8,10 @@ num_phases_list = [4, 8, 17];
 
 seed_list = 1;
 
-input1_list = 700;
-input2_list = 700;
-input3_list = 700;
-input4_list = 700;
+input1_list = 900;
+input2_list = 500;
+input3_list = 900;
+input4_list = 500;
 
 yellow_time_list = 1;
 red_time_list = 1;

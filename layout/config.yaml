@@ -29,7 +29,7 @@ model :
       - roads : 3
         num : 4
       - roads : 4
-        num : 8
+        num : 4
       - roads : 5
         num : 10
 
@@ -43,7 +43,7 @@ intersection :
 
 result :
   save :
-    active : 'off'
+    active : 'on'
     path : 'results\1-1_network'
     name : 'data'
   compare : 
