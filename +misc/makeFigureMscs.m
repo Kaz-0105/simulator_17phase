@@ -21,13 +21,14 @@ file_names = [
 
 FileTitleMap = containers.Map( ...
     {'balanced', 'unbalanced', 'main_sub'}, ...
-    {'Balanced Traffic Condition', 'Unbalanced Traffic Condition', 'Main-Sub Traffic Condition'} ...
+    {'Balanced', 'Unbalanced', 'Main-Sub'} ...
 );
 
-TITLE_FONT_SIZE = 20;
-LABEL_FONT_SIZE = 20;
-AXIS_FONT_SIZE = 20;
-LEGEND_FONT_SIZE = 20;
+TITLE_FONT_SIZE = 30;
+LABEL_FONT_SIZE = 30;
+AXIS_FONT_SIZE = 25;
+LEGEND_FONT_SIZE = 25;
+LINEWIDTH = 3;
 
 % scootのデータを読み込む
 scoot_results = readtable("results/1-1_network/scoot.csv");
@@ -106,17 +107,47 @@ for file_name = file_names
     title(FileTitleMap(file_name), 'FontSize', TITLE_FONT_SIZE);
     legend({'4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
     set(gca, 'FontSize', AXIS_FONT_SIZE);
-
-    % 時系列データを作成
-    PhaseTimeSeriesMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-    for num_phases = unique(results.num_phases)'
-        load(pwd + "/results/1-1_network/time_series/time_series" + num_str(num_phases));
-        time_series = struct(...
-            'queue', IntersectionRoadQueueMap.average('all'),...
-            'delay', IntersectionRoadDelayMap.average('all'),...
-            'time', time...
-        );
-        PhaseTimeSeriesMap(num_phases) = time_series;
-    end
-
 end
+
+% 時系列データを作成
+PhaseTimeSeriesMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+for num_phases = unique(results.num_phases)'
+    load(pwd + "/results/1-1_network/time_series/time_series" + num2str(num_phases));
+    time_series = struct(...
+        'queue', IntersectionRoadQueueMap.average('all'),...
+        'delay', IntersectionRoadDelayMap.average('all'),...
+        'time', time...
+    );
+    PhaseTimeSeriesMap(num_phases) = time_series;
+end
+
+time_series_scoot = readtable("results/1-1_network/time_series/time_series_scoot.csv");
+
+% 時系列データをプロット
+figure;
+hold on;
+plot(time_series_scoot.time, time_series_scoot.queue_length, 'LineWidth', LINEWIDTH);
+for num_phases = unique(results.num_phases)'
+    time_series = PhaseTimeSeriesMap(num_phases);
+    plot(time_series.time, time_series.queue, 'LineWidth', LINEWIDTH);
+end
+xlabel('Time [s]', 'FontSize', LABEL_FONT_SIZE);
+ylabel('Average Queue Length [m]', 'FontSize', LABEL_FONT_SIZE);
+title('Time Series of Queue Length', 'FontSize', TITLE_FONT_SIZE);
+legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
+set(gca, 'FontSize', AXIS_FONT_SIZE);
+hold off;
+
+figure;
+hold on;
+plot(time_series_scoot.time, time_series_scoot.delay_time, 'LineWidth', LINEWIDTH);
+for num_phases = unique(results.num_phases)'
+    time_series = PhaseTimeSeriesMap(num_phases);
+    plot(time_series.time, time_series.delay, 'LineWidth', LINEWIDTH);
+end
+xlabel('Time [s]', 'FontSize', LABEL_FONT_SIZE);
+ylabel('Average Delay Time [s]', 'FontSize', LABEL_FONT_SIZE);
+title('Time Series of Delay Time', 'FontSize', TITLE_FONT_SIZE);
+legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
+set(gca, 'FontSize', AXIS_FONT_SIZE);
+hold off;
