@@ -65,7 +65,7 @@ result :
       active : 'off'
       scale : 'intersection'
   database :
-    active : 'on'
+    active : 'off'
     path : 'results\1-1_network\balanced.csv'
       
 graph :

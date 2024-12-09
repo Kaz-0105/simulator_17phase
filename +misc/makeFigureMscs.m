@@ -28,7 +28,7 @@ TITLE_FONT_SIZE = 30;
 LABEL_FONT_SIZE = 30;
 AXIS_FONT_SIZE = 25;
 LEGEND_FONT_SIZE = 25;
-LINEWIDTH = 3;
+LINEWIDTH = 5;
 
 % scootのデータを読み込む
 scoot_results = readtable("results/1-1_network/scoot.csv");
@@ -136,6 +136,7 @@ ylabel('Average Queue Length [m]', 'FontSize', LABEL_FONT_SIZE);
 title('Time Series of Queue Length', 'FontSize', TITLE_FONT_SIZE);
 legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
 set(gca, 'FontSize', AXIS_FONT_SIZE);
+xlim([0, 500]);
 hold off;
 
 figure;
@@ -150,4 +151,5 @@ ylabel('Average Delay Time [s]', 'FontSize', LABEL_FONT_SIZE);
 title('Time Series of Delay Time', 'FontSize', TITLE_FONT_SIZE);
 legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
 set(gca, 'FontSize', AXIS_FONT_SIZE);
+xlim([0, 500]);
 hold off;
