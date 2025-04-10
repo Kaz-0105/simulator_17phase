@@ -40,6 +40,7 @@ classdef ResultVisualizer < handle
             obj.flags.num_vehs = Config.result.contents.num_vehs.active;
             obj.flags.delay_time = Config.result.contents.delay_time.active;
             obj.flags.calc_time = Config.result.contents.calc_time.active;
+            obj.flags.speed = Config.result.contents.speed.active;
             obj.flags.compare = Config.result.compare.active;
             obj.flags.database = Config.result.database.active;
 
@@ -68,5 +69,20 @@ classdef ResultVisualizer < handle
         showNumVehs(obj);
         showDelayTime(obj);
         showCalcTime(obj);
+        updateDatabase(obj)
+    end
+
+    methods(Access = private)
+        % 速度のプロットを行うメソッド
+        function showSpeed(obj)
+            VehicleSpeedsMap = obj.VissimMeasurements.VehicleSpeedsMap;
+
+            vehicle_average_speeds = [];
+            for vehicle_id = cell2mat(VehicleSpeedsMap.keys())
+                vehicle_average_speeds = [vehicle_average_speeds; mean(VehicleSpeedsMap(vehicle_id))];
+            end 
+
+            histogram(vehicle_average_speeds, 'BinWidth', 5);
+        end
     end
 end

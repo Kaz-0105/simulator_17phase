@@ -80,8 +80,19 @@ function makeResultStruct(obj, data)
     else
         error('The value of delay_time is invalid in yaml file.');
     end
-    
+
     obj.result.contents.delay_time.scale = char(obj.result.contents.delay_time.scale);
+
+    % 速度について
+    obj.result.contents.speed = data.result.contents.speed;
+    
+    if strcmp(char(data.result.contents.speed.active), 'on')
+        obj.result.contents.speed.active = true;
+    elseif strcmp(char(data.result.contents.speed.active), 'off')
+        obj.result.contents.speed.active = false;
+    else
+        error('The value of speed is invalid in yaml file.');
+    end
 
     % データベースへの保存の有無について
     if strcmp(char(data.result.database.active), 'on')

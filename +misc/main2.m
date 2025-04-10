@@ -4,7 +4,7 @@ close all;
 % 実験のパラメータを作成
 control_method_list = "Dan";
 
-num_phases_list = [4, 8, 17];
+num_phases_list = [4, 8];
 
 seed_list = 1;
 

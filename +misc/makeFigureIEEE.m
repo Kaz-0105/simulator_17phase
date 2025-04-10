@@ -1,8 +1,10 @@
 clear;
 close all;
 
+
 NUM_EXPERIMENT_CONDITIONS = 7;
 
+% relative flow labels
 relflow_labels = [...
     "Uniform", ...
     "Left Heavy", ...
@@ -13,24 +15,27 @@ relflow_labels = [...
     "Right Light" ...
 ];
 
+% file name for each inflow pattern
 file_names = [
     "balanced", ...
     "unbalanced",... 
     "main_sub" ...
 ];
 
+% file name to title map
 FileTitleMap = containers.Map( ...
     {'balanced', 'unbalanced', 'main_sub'}, ...
     {'Balanced', 'Unbalanced', 'Main-Sub'} ...
 );
 
+% figure settings
 TITLE_FONT_SIZE = 30;
 LABEL_FONT_SIZE = 30;
 AXIS_FONT_SIZE = 25;
 LEGEND_FONT_SIZE = 25;
 LINEWIDTH = 5;
 
-% scootのデータを読み込む
+% get scoot data
 scoot_results = readtable("results/1-1_network/scoot.csv");
 scoot_results = sortrows( ...
     scoot_results, ...
@@ -38,8 +43,9 @@ scoot_results = sortrows( ...
     {'ascend', 'ascend'} ...
 );
 
+% loop for each file name
 for file_name = file_names
-    % csvから実験データを読み込む
+    % read experiment data from csv
     results = readtable("results/1-1_network/" + file_name + ".csv");
     fields = {
         'num_phases', 'relflow1', 'relflow2', 'relflow3', 'relflow4', 'queue', 'delay', 'calc_time'
@@ -51,6 +57,7 @@ for file_name = file_names
         {'ascend', 'ascend', 'ascend', 'ascend', 'ascend'} ...
     );
 
+    % make map which is from number of phases to result data
     PhaseDataMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
     for num_phases = unique(results.num_phases)'
         PhaseDataMap(num_phases) = struct(...
@@ -65,6 +72,7 @@ for file_name = file_names
         end
     end
 
+    % get result data of scoot
     if strcmp(file_name, 'balanced')
         inflows_id = 1;
     elseif strcmp(file_name, 'unbalanced')
@@ -78,37 +86,39 @@ for file_name = file_names
         'delay', scoot_results.delay_time(scoot_results.inflows_id == inflows_id)...
     );
 
-    % 信号待ちの車列の結果のプロット
+    % note: 17-phase version is made by makeFigureMscs.m
+
+    % plot a queue length figure
     figure;
-    bar([scoot_data.queue, PhaseDataMap(4).queue, PhaseDataMap(8).queue, PhaseDataMap(17).queue]);
+    bar([scoot_data.queue, PhaseDataMap(4).queue, PhaseDataMap(8).queue]);
     xticklabels(relflow_labels(PhaseDataMap(4).relflows_id));
     xlabel('Route Selection Type', 'FontSize', LABEL_FONT_SIZE);
     ylabel('Average Queue Length [m]', 'FontSize', LABEL_FONT_SIZE);
     title(FileTitleMap(file_name), 'FontSize', TITLE_FONT_SIZE);
-    legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
+    legend({'SCOOT', '4-Phase MPC', '8-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
     set(gca, 'FontSize', AXIS_FONT_SIZE);
 
-    % 遅れ時間の結果のプロット
+    % plot a delay time figure
     figure;
-    bar([scoot_data.delay, PhaseDataMap(4).delay, PhaseDataMap(8).delay, PhaseDataMap(17).delay]);
+    bar([scoot_data.delay, PhaseDataMap(4).delay, PhaseDataMap(8).delay]);
     xticklabels(relflow_labels(PhaseDataMap(4).relflows_id));
     xlabel('Route Selection Type', 'FontSize', LABEL_FONT_SIZE);
     ylabel('Average Delay Time [s]', 'FontSize', LABEL_FONT_SIZE);
     title(FileTitleMap(file_name), 'FontSize', TITLE_FONT_SIZE);
-    legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
+    legend({'SCOOT', '4-Phase MPC', '8-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
     set(gca, 'FontSize', AXIS_FONT_SIZE);
 
-    % 計算時間の結果のプロット
+    % plot a calculation time figure
     figure;
-    bar([PhaseDataMap(4).calc_time, PhaseDataMap(8).calc_time, PhaseDataMap(17).calc_time]);
+    bar([PhaseDataMap(4).calc_time, PhaseDataMap(8).calc_time]);
     xticklabels(relflow_labels(PhaseDataMap(4).relflows_id));
     xlabel('Route Selection Type', 'FontSize', LABEL_FONT_SIZE);
     ylabel('Average Calculation Time [s]', 'FontSize', LABEL_FONT_SIZE);
     title(FileTitleMap(file_name), 'FontSize', TITLE_FONT_SIZE);
-    legend({'4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
+    legend({'4-Phase MPC', '8-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
     set(gca, 'FontSize', AXIS_FONT_SIZE);
 
-    % 平均のキューの長さ，遅れ時間，計算時間を表示
+    % print average queue length, delay time, and calculation time
     fprintf('Route Selection Type: %s\n', FileTitleMap(file_name));
     fprintf('SCOOT\n');
     fprintf('Average Queue Length: %.2f\n', mean(scoot_data.queue));
@@ -132,7 +142,7 @@ for file_name = file_names
     fprintf('Improvement Rate: %.2f\n', (mean(scoot_data.queue) - mean(PhaseDataMap(17).queue)) / mean(scoot_data.queue) * 100);
 end
 
-% 時系列データを作成
+% load time series data
 PhaseTimeSeriesMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 for num_phases = unique(results.num_phases)'
     load(pwd + "/results/1-1_network/time_series/time_series" + num2str(num_phases));
@@ -146,11 +156,16 @@ end
 
 time_series_scoot = readtable("results/1-1_network/time_series/time_series_scoot.csv");
 
-% 時系列データをプロット
+% plot time series data
 figure;
 hold on;
 plot(time_series_scoot.time, time_series_scoot.queue_length, 'LineWidth', LINEWIDTH);
 for num_phases = unique(results.num_phases)'
+    % skip 17-phase result
+    if num_phases == 17
+        continue;
+    end
+
     time_series = PhaseTimeSeriesMap(num_phases);
     plot(time_series.time, time_series.queue, 'LineWidth', LINEWIDTH);
 end
@@ -166,6 +181,11 @@ figure;
 hold on;
 plot(time_series_scoot.time, time_series_scoot.delay_time, 'LineWidth', LINEWIDTH);
 for num_phases = unique(results.num_phases)'
+    % skip 17-phase result
+    if num_phases == 17
+        continue;
+    end
+    
     time_series = PhaseTimeSeriesMap(num_phases);
     plot(time_series.time, time_series.delay, 'LineWidth', LINEWIDTH);
 end

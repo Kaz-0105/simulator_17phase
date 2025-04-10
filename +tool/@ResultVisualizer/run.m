@@ -21,6 +21,11 @@ function run(obj)
         obj.showCalcTime();
     end
 
+    % Speedについて
+    if obj.flags.speed
+        obj.showSpeed()
+    end
+
     % Databaseについて
     if obj.flags.database
         obj.updateDatabase();

@@ -15,6 +15,7 @@ classdef VissimMeasurements < handle
         IntersectionCalcTimeMap;           % 計算時間のマップ
         IntersectionRoadNumVehsMap;        % 車両数のマップ
         IntersectionRoadDelayMap;          % 遅れ時間のマップ
+        VehicleSpeedsMap;                  
     end
 
     properties
@@ -63,6 +64,34 @@ classdef VissimMeasurements < handle
         updateIntersectionRoadQueueMap(obj)
         updateIntersectionCalcTimeMap(obj)
         updateIntersectionRoadNumVehsMap(obj)
-
+        updateIntersectionRoadDelayMap(obj)
     end
+
+    methods(Access = private)
+        % 車両の速度データを保存するメソッド
+        function updateVehicleSpeedsMap(obj)
+            vehiclesCom = obj.Com.Net.Vehicles;
+            vehicleIds = vehiclesCom.GetMultiAttValues('No');
+            vehicleSpeeds = vehiclesCom.GetMultiAttValues('Speed');
+
+            vehicleIds(:, 1) = [];
+            vehicleSpeeds(:, 1) = [];
+
+            vehicleIds = cell2mat(vehicleIds);
+            vehicleSpeeds = cell2mat(vehicleSpeeds);
+
+            for index = 1: length(vehicleIds)
+                vehicleId = vehicleIds(index);
+                vehicleSpeed = vehicleSpeeds(index);
+
+                if isKey(obj.VehicleSpeedsMap, vehicleId)
+                    obj.VehicleSpeedsMap(vehicleId) = [obj.VehicleSpeedsMap(vehicleId), vehicleSpeed];
+                else
+                    obj.VehicleSpeedsMap(vehicleId) = vehicleSpeed;
+                end
+            end
+        end
+    end
+        
+        
 end

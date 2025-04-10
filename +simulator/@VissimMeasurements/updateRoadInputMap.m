@@ -23,7 +23,6 @@ function updateRoadInputMap(obj)
             
             % RoadInputMapにプッシュ
             obj.RoadInputMap(road_id) = [obj.RoadInputMap(road_id), tmp_input_data];
-            
         end
     end
 end

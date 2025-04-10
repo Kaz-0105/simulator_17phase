@@ -2653,6 +2653,148 @@
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10013 1" localNo="0" name="" no="11" pos="0" sg="1 11" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 		<signalHead allPedTypes="true" allVehTypes="true" anmFlag="false" complRate="1" dischRecAct="false" isBlockSig="false" lane="10015 1" localNo="0" name="" no="12" pos="0" sg="1 12" slowDownDist="3" type="CIRCULAR" vAmberBlock="0"/>
 	</signalHeads>
+	<signals3D>
+		<trafficSignal3D level="1" name="" no="1" rotation="0" scale="1">
+			<coord x="219.34243534616286" y="8.4239813644228025" zOffset="0"/>
+			<mast color="ffb2b2b2" diam="0.14" height="4.5" regAsObst="true" scale="1" style="ROUND" visible="true">
+				<posRel xOffset="0" yOffset="0" zOffset="0"/>
+			</mast>
+			<sigArms>
+				<signalArm3D color="ffb2b2b2" flipped="true" length="3.6711075096271837" no="1" rotHoriz="0" rotVert="-0.3734531780158919" scale="1" style="SINGLEFRAMED" visible="true">
+					<posRel xOffset="0" yOffset="0" zOffset="4.4"/>
+				</signalArm3D>
+			</sigArms>
+			<sigHeads>
+				<signalHead3D assocSGThr="1 2" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="1 1" visible="true">
+					<posRel xOffset="2.644825720199353" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+				<signalHead3D assocSGThr="1 1" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="1 1" visible="true">
+					<posRel xOffset="1.0254605249680175" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+			</sigHeads>
+		</trafficSignal3D>
+		<trafficSignal3D level="1" name="" no="2" rotation="0" scale="1">
+			<coord x="228.57020052540258" y="-10.660895285325854" zOffset="0"/>
+			<mast color="ffb2b2b2" diam="0.14" height="4.5" regAsObst="true" scale="1" style="ROUND" visible="true">
+				<posRel xOffset="0" yOffset="0" zOffset="0"/>
+			</mast>
+			<sigArms>
+				<signalArm3D color="ffb2b2b2" flipped="true" length="3.4385969699677479" no="1" rotHoriz="0" rotVert="-90.801251824115738" scale="1" style="SINGLEFRAMED" visible="true">
+					<posRel xOffset="0" yOffset="0" zOffset="4.4"/>
+				</signalArm3D>
+			</sigArms>
+			<sigHeads>
+				<signalHead3D assocSGThr="1 5" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="2 1" visible="true">
+					<posRel xOffset="2.644825720199353" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+				<signalHead3D assocSGThr="1 4" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="2 1" visible="true">
+					<posRel xOffset="1.0254605249680175" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+			</sigHeads>
+		</trafficSignal3D>
+		<trafficSignal3D level="1" name="" no="3" rotation="0" scale="1">
+			<coord x="208.22062933854016" y="-20.33932654682437" zOffset="0"/>
+			<mast color="ffb2b2b2" diam="0.14" height="4.5" regAsObst="true" scale="1" style="ROUND" visible="true">
+				<posRel xOffset="0" yOffset="0" zOffset="0"/>
+			</mast>
+			<sigArms>
+				<signalArm3D color="ffb2b2b2" flipped="true" length="3.6718837838638274" no="1" rotHoriz="0" rotVert="-179.01353253942409" scale="1" style="SINGLEFRAMED" visible="true">
+					<posRel xOffset="0" yOffset="0" zOffset="4.4"/>
+				</signalArm3D>
+			</sigArms>
+			<sigHeads>
+				<signalHead3D assocSGThr="1 8" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="3 1" visible="true">
+					<posRel xOffset="2.644825720199353" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+				<signalHead3D assocSGThr="1 7" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="3 1" visible="true">
+					<posRel xOffset="1.0254605249680175" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+			</sigHeads>
+		</trafficSignal3D>
+		<trafficSignal3D level="1" name="" no="4" rotation="0" scale="1">
+			<coord x="200.38854378946513" y="0.2583635854072277" zOffset="0"/>
+			<mast color="ffb2b2b2" diam="0.14" height="4.5" regAsObst="true" scale="1" style="ROUND" visible="true">
+				<posRel xOffset="0" yOffset="0" zOffset="0"/>
+			</mast>
+			<sigArms>
+				<signalArm3D color="ffb2b2b2" flipped="true" length="3.4813031124022977" no="1" rotHoriz="0" rotVert="-271.1684073240263" scale="1" style="SINGLEFRAMED" visible="true">
+					<posRel xOffset="0" yOffset="0" zOffset="4.4"/>
+				</signalArm3D>
+			</sigArms>
+			<sigHeads>
+				<signalHead3D assocSGThr="1 11" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="4 1" visible="true">
+					<posRel xOffset="2.644825720199353" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+				<signalHead3D assocSGThr="1 10" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="4 1" visible="true">
+					<posRel xOffset="1.0254605249680175" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+			</sigHeads>
+		</trafficSignal3D>
+		<trafficSignal3D level="1" name="" no="5" rotation="0" scale="1">
+			<coord x="212.20170067825191" y="8.4830447327522069" zOffset="0"/>
+			<mast color="ffb2b2b2" diam="0.14" height="4.5" regAsObst="true" scale="1" style="ROUND" visible="true">
+				<posRel xOffset="0" yOffset="0" zOffset="0"/>
+			</mast>
+			<sigArms>
+				<signalArm3D color="ffb2b2b2" flipped="false" length="3.4186392848512299" no="1" rotHoriz="0" rotVert="-1.015149291544317" scale="1" style="SINGLEFRAMED" visible="true">
+					<posRel xOffset="0" yOffset="0" zOffset="4.4"/>
+				</signalArm3D>
+			</sigArms>
+			<sigHeads>
+				<signalHead3D assocSGThr="1 3" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="5 1" visible="true">
+					<posRel xOffset="1.7294996326415655" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+			</sigHeads>
+		</trafficSignal3D>
+		<trafficSignal3D level="1" name="" no="6" rotation="0" scale="1">
+			<coord x="228.66877966435408" y="-3.679419776941983" zOffset="0"/>
+			<mast color="ffb2b2b2" diam="0.14" height="4.5" regAsObst="true" scale="1" style="ROUND" visible="true">
+				<posRel xOffset="0" yOffset="0" zOffset="0"/>
+			</mast>
+			<sigArms>
+				<signalArm3D color="ffb2b2b2" flipped="false" length="3.5294879365981271" no="1" rotHoriz="0" rotVert="-90.200012401065223" scale="1" style="SINGLEFRAMED" visible="true">
+					<posRel xOffset="0" yOffset="0" zOffset="4.4"/>
+				</signalArm3D>
+			</sigArms>
+			<sigHeads>
+				<signalHead3D assocSGThr="1 6" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="6 1" visible="true">
+					<posRel xOffset="1.7294996326415655" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+			</sigHeads>
+		</trafficSignal3D>
+		<trafficSignal3D level="1" name="" no="7" rotation="0" scale="1">
+			<coord x="215.31754081686771" y="-20.256837877178434" zOffset="0"/>
+			<mast color="ffb2b2b2" diam="0.14" height="4.5" regAsObst="true" scale="1" style="ROUND" visible="true">
+				<posRel xOffset="0" yOffset="0" zOffset="0"/>
+			</mast>
+			<sigArms>
+				<signalArm3D color="ffb2b2b2" flipped="false" length="3.4139903531294968" no="1" rotHoriz="0" rotVert="-179.46880411745451" scale="1" style="SINGLEFRAMED" visible="true">
+					<posRel xOffset="0" yOffset="0" zOffset="4.4"/>
+				</signalArm3D>
+			</sigArms>
+			<sigHeads>
+				<signalHead3D assocSGThr="1 9" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="7 1" visible="true">
+					<posRel xOffset="1.7294996326415655" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+			</sigHeads>
+		</trafficSignal3D>
+		<trafficSignal3D level="1" name="" no="8" rotation="0" scale="1">
+			<coord x="200.30415746091964" y="-6.7537069415185442" zOffset="0"/>
+			<mast color="ffb2b2b2" diam="0.14" height="4.5" regAsObst="true" scale="1" style="ROUND" visible="true">
+				<posRel xOffset="0" yOffset="0" zOffset="0"/>
+			</mast>
+			<sigArms>
+				<signalArm3D color="ffb2b2b2" flipped="false" length="3.4627985175013247" no="1" rotHoriz="0" rotVert="90.998132091974483" scale="1" style="SINGLEFRAMED" visible="true">
+					<posRel xOffset="0" yOffset="0" zOffset="4.4"/>
+				</signalArm3D>
+			</sigArms>
+			<sigHeads>
+				<signalHead3D assocSGThr="1 12" flipped="false" layout="THREELENSCIRCULARHORIZONTAL" rotHoriz="0" rotVert="0" scale="1" signalArm="8 1" visible="true">
+					<posRel xOffset="1.7294996326415655" yOffset="0.14" zOffset="0"/>
+				</signalHead3D>
+			</sigHeads>
+		</trafficSignal3D>
+	</signals3D>
 	<simulation comment="" numCores="1" numRuns="1" randSeed="22" randSeedIncr="1" retroSync="false" simMode="MICRO" simPeriod="500" simRes="10" simSpeed="10" startTm="0" useAllCores="true" useMaxSimSpeed="true" volumeIncrDynAssign="0"/>
 	<storyboards>
 		<storyboard filename="" framerate="10" name="" netLayout="" no="1" prevZoomFact="1" recAVI="false" recScope="EVERYRUN" resX="1920" resY="1080" resolution="1920X1080" showPrev="true">

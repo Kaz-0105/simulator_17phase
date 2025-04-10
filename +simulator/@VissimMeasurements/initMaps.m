@@ -6,6 +6,7 @@ function initMaps(obj)
     obj.IntersectionCalcTimeMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
     obj.IntersectionRoadNumVehsMap = tool.HierarchicalMap('KeyType1', 'int32','KeyType2', 'int32', 'ValueType', 'any');
     obj.IntersectionRoadDelayMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
+    obj.VehicleSpeedsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
     % シミュレーション時間0秒のときのデータを設定
 

@@ -4,6 +4,7 @@ function updateDatabase(obj)
     IntersectionRoadDelayMap = obj.VissimMeasurements.get('IntersectionRoadDelayMap');
     IntersectionCalcTimeMap = obj.VissimMeasurements.get('IntersectionCalcTimeMap');
     IntersectionControllerMap = obj.Vissim.get('IntersectionControllerMap');
+    VehicleSpeedsMap = obj.VissimMeasurements.get('VehicleSpeedsMap');
 
     % Vissimクラスからデータを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
@@ -43,6 +44,7 @@ function updateDatabase(obj)
 
         headers{end + 1} = 'queue';
         headers{end + 1} = 'delay';
+        headers{end + 1} = 'speed';
         headers{end + 1} = 'calc_time';
         headers{end + 1} = 'success_rate';
 
@@ -162,6 +164,13 @@ function updateDatabase(obj)
         delay = round(mean(IntersectionDelayMap(intersection_id)), 1);
         calc_time = round(mean(IntersectionCalcTimeMap(intersection_id)), 2);
 
+        % speedの時間平均を取得（TODO: 全体でまとめちゃってるので直したかったら直す）
+        vehicle_average_speeds = [];
+        for vehicle_id = cell2mat(VehicleSpeedsMap.keys())
+            vehicle_average_speeds = [vehicle_average_speeds; mean(VehicleSpeedsMap(vehicle_id))];
+        end
+        speed = round(mean(vehicle_average_speeds), 1);
+
         % 計算の成功率を計算
         Controller = IntersectionControllerMap(intersection_id);
         success_rate = Controller.get('success_rate');
@@ -196,7 +205,9 @@ function updateDatabase(obj)
         if ~isempty(row_index)
             data_table.queue(row_index) = queue;
             data_table.delay(row_index) = delay;
+            data_table.speed(row_index) = speed;
             data_table.calc_time(row_index) = calc_time;
+            data_table.success_rate(row_index) = success_rate;
         else
             % データが存在しない場合、データを追加
             new_data = cell(1, numel(data_table.Properties.VariableNames));
@@ -224,8 +235,9 @@ function updateDatabase(obj)
 
             new_data{5 + 2 * num_roads + 6} = queue;
             new_data{5 + 2 * num_roads + 7} = delay;
-            new_data{5 + 2 * num_roads + 8} = calc_time;
-            new_data{5 + 2 * num_roads + 9} = success_rate;
+            new_data{5 + 2 * num_roads + 8} = speed;
+            new_data{5 + 2 * num_roads + 9} = calc_time;
+            new_data{5 + 2 * num_roads + 10} = success_rate;
 
             new_data = cell2table(new_data, 'VariableNames', data_table.Properties.VariableNames);
 
