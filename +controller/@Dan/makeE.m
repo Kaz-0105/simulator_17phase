@@ -187,72 +187,64 @@ function makeE(obj)
                     e(26) = 0;
                     e(27) = p_max;
                     e(28) = -p_min;
+                    
                 else
                     % それ以外の場合
                     % eを初期化
-                    e = zeros(47, 1);
+                    e = zeros(38, 1);
 
                     % 非０要素を代入
-                    e(1) = -1;
-                    e(2) = 1;
+                    e(1) = 3;
+                    e(2) = -1;
+
                     e(3) = 1;
                     e(4) = 1;
 
-                    e(5) = 1;
-                    e(6) = 1;
-                    e(7) = 0;
+                    e(5) = 2;
+                    e(6) = 0;
+
+                    e(7) = 3;
                     e(8) = 0;
 
-                    e(9) = 0;
-                    e(10) = 1;
-                    e(11) = 1;
-                    e(12) = 0;
+                    e(9) = p_s - h1_min - D_s;
+                    e(10) = -p_s + D_s;
 
-                    e(13) = 0;
-                    e(14) = 1;
-                    e(15) = 1;
-                    e(16) = 1;
-                    e(17) = 0;
+                    e(11) = -p_s + d_s - h2_min;
+                    e(12) = p_s - d_s;
 
-                    e(18) = p_s - h1_min - D_s;
-                    e(19) = -p_s + D_s - obj.eps;
+                    e(13) = D_f - h3_min;
+                    e(14) = -D_f;
 
-                    e(20) = -p_s + d_s - h2_min;
-                    e(21) = p_s - d_s - obj.eps;
+                    e(15) = D_f - h4_min;
+                    e(16) = -D_f;
 
-                    e(22) = D_f - h3_min;
-                    e(23) = -D_f - obj.eps;
+                    e(17) = p_s - D_b - h5_min;
+                    e(18) = -p_s + D_b;
 
-                    e(24) = D_f - h4_min;
-                    e(25) = -D_f - obj.eps;
+                    e(19) = 0;
+                    e(20) = 0;
+                    e(21) = p_max;
+                    e(22) = -p_min;
 
-                    e(26) = p_s - D_b - h5_min;
-                    e(27) = -p_s + D_b - obj.eps;
+                    e(23) = 0;
+                    e(24) = 0;
+                    e(25) = p_max;
+                    e(26) = -p_min;
 
+                    e(27) = 0;
                     e(28) = 0;
-                    e(29) = 0;
-                    e(30) = p_max;
-                    e(31) = -p_min;
+                    e(29) = p_max;
+                    e(30) = -p_min;
 
+                    e(31) = 0;
                     e(32) = 0;
-                    e(33) = 0;
-                    e(34) = p_max;
-                    e(35) = -p_min;
+                    e(33) = p_max;
+                    e(34) = -p_min;
 
+                    e(35) = 0;
                     e(36) = 0;
-                    e(37) = 0;
-                    e(38) = p_max;
-                    e(39) = -p_min;
-
-                    e(40) = 0;
-                    e(41) = 0;
-                    e(42) = p_max;
-                    e(43) = -p_min;
-
-                    e(44) = 0;
-                    e(45) = 0;
-                    e(46) = p_max;
-                    e(47) = -p_min;
+                    e(37) = p_max;
+                    e(38) = -p_min;
                 end
 
                 % 道路ごとのE行列に追加

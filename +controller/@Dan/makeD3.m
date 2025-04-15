@@ -119,79 +119,70 @@ function makeD3(obj)
 
                     % variables_counterを更新
                     constraints_counter = constraints_counter + 24;
-                    
+
                 else
                     % それ以外の場合
                     % d3を初期化
-                    d3 = zeros(47, 10);
+                    d3 = zeros(38, 10);
 
                     % 非０要素を代入
-                    d3(1, [1, 2, 6]) = [-1, -1, -1];
-                    d3(2, [1, 2, 6]) = [0, 0, 1];
-                    d3(3, [1, 2, 6]) = [1, 0, 1];
-                    d3(4, [1, 2, 6]) = [0, 1, 1];
+                    d3(1, [1, 2, 6]) = [1, 1, 3];
+                    d3(2, [1, 2, 6]) = [-1, -1, -1];
 
-                    d3(5, [3, 5, 6, 7]) = [1, 1, -1, -1];
-                    d3(6, [3, 5, 6, 7]) = [0, 0, 1, 1];
-                    d3(7, [3, 5, 6, 7]) = [-1, 0, 0, 1];
-                    d3(8, [3, 5, 6, 7]) = [0, -1, 0, 1];
+                    d3(3, [3, 5, 6, 7]) = [-1, -1, 1, 3];
+                    d3(4, [3, 5, 6, 7]) = [1, 1, -1, -1];
 
-                    d3(9, [4, 5, 6, 8]) = [1, -1, -1, -1];
-                    d3(10, [4, 5, 6, 8]) = [0, 0, 1, 1];
-                    d3(11, [4, 5, 6, 8]) = [0, 1, 0, 1];
-                    d3(12, [4, 5, 6, 8]) = [-1, 0, 0, 1];
+                    d3(5, [4, 5, 6, 8]) = [-1, 1, 1, 3];
+                    d3(6, [4, 5, 6, 8]) = [1, -1, -1, -1];
 
-                    d3(13, [1, 2, 6, 9]) = [0, 0, 0, 1];
-                    d3(14, [1, 2, 6, 9]) = [0, 0, 1, 1];
-                    d3(15, [1, 2, 6, 9]) = [1, 0, 0, 1];
-                    d3(16, [1, 2, 6, 9]) = [0, 1, 0, 1];
-                    d3(17, [1, 2, 6, 9]) = [-1, -1, -1, -1];
+                    d3(7, [1, 2, 6, 9]) = [1, 1, 1, 4];
+                    d3(8, [1, 2, 6, 9]) = [-1, -1, -1, -1];
 
-                    d3(18, 1) = -h1_min;
-                    d3(19, 1) = -h1_max-obj.eps;
+                    d3(9, 1) = -h1_min;
+                    d3(10, 1) = -h1_max;
 
-                    d3(20, 2) = -h2_min;
-                    d3(21, 2) = -h2_max-obj.eps;
+                    d3(11, 2) = -h2_min;
+                    d3(12, 2) = -h2_max;
 
-                    d3(22, 3) = -h3_min;
-                    d3(23, 3) = -h3_max-obj.eps;
+                    d3(13, 3) = -h3_min;
+                    d3(14, 3) = -h3_max;
 
-                    d3(24, 4) = -h4_min;
-                    d3(25, 4) = -h4_max-obj.eps;
+                    d3(15, 4) = -h4_min;
+                    d3(16, 4) = -h4_max;
 
-                    d3(26, 5) = -h5_min;
-                    d3(27, 5) = -h5_max-obj.eps;
+                    d3(17, 5) = -h5_min;
+                    d3(18, 5) = -h5_max;
 
-                    d3(28, 6) = p_min;
-                    d3(29, 6) = -p_max;
-                    d3(30, 6) = p_max;
-                    d3(31, 6) = -p_min;
+                    d3(19, 6) = p_min;
+                    d3(20, 6) = -p_max;
+                    d3(21, 6) = p_max;
+                    d3(22, 6) = -p_min;
 
-                    d3(32, 7) = p_min;
-                    d3(33, 7) = -p_max;
-                    d3(34, 7) = p_max;
-                    d3(35, 7) = -p_min;
+                    d3(23, 7) = p_min;
+                    d3(24, 7) = -p_max;
+                    d3(25, 7) = p_max;
+                    d3(26, 7) = -p_min;
 
-                    d3(36, 7) = p_min;
-                    d3(37, 7) = -p_max;
-                    d3(38, 7) = p_max;
-                    d3(39, 7) = -p_min;
+                    d3(27, 7) = p_min;
+                    d3(28, 7) = -p_max;
+                    d3(29, 7) = p_max;
+                    d3(30, 7) = -p_min;
 
-                    d3(40, 8) = p_min;
-                    d3(41, 8) = -p_max;
-                    d3(42, 8) = p_max;
-                    d3(43, 8) = -p_min;
+                    d3(31, 8) = p_min;
+                    d3(32, 8) = -p_max;
+                    d3(33, 8) = p_max;
+                    d3(34, 8) = -p_min;
 
-                    d3(44, 8) = p_min;
-                    d3(45, 8) = -p_max;
-                    d3(46, 8) = p_max;
-                    d3(47, 8) = -p_min;
+                    d3(35, 8) = p_min;
+                    d3(36, 8) = -p_max;
+                    d3(37, 8) = p_max;
+                    d3(38, 8) = -p_min;
 
                     % VehicleDelta4ConstraintMapに追加
-                    VehicleDelta4ConstraintMap(veh_id) = constraints_counter + 13;
+                    VehicleDelta4ConstraintMap(veh_id) = constraints_counter + 7;
 
                     % variables_counterを更新
-                    constraints_counter = constraints_counter + 47;
+                    constraints_counter = constraints_counter + 38;
                 end
 
                 % 道路ごとのD3行列に追加
@@ -221,7 +212,7 @@ function makeD3(obj)
 
                     % δ4の制約における先行車のδ1の変数に関する部分の作成
                     D3(VehicleDelta4ConstraintMap(veh_id), delta1_list(diff_route_veh_id)) = -1;
-                    D3(VehicleDelta4ConstraintMap(veh_id) + 4, delta1_list(diff_route_veh_id)) = 1;
+                    D3(VehicleDelta4ConstraintMap(veh_id) + 1, delta1_list(diff_route_veh_id)) = 1;
                     
                 end
             end

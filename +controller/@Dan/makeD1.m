@@ -34,8 +34,8 @@ function makeD1(obj)
                     d1(1:2, signal_ids(signal_group_id)) = [1; -1];
                 else
                     % それ以外の場合
-                    d1 = zeros(47, obj.signal_num);
-                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
+                    d1 = zeros(38, obj.signal_num);
+                    d1(1:2, signal_ids(signal_group_id)) = [1; -1];
 
                 end
 
