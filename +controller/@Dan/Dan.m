@@ -7,6 +7,9 @@ classdef Dan < handle
 
         PhiResults; % phiの結果を格納するクラス
         UResults;   % uの結果を格納するクラス
+
+        % フラグ
+        phase_comparison_flg = false; % 4, 8, 17フェーズの比較をするフラグ
     end
 
     properties
@@ -86,6 +89,9 @@ classdef Dan < handle
             obj.Config = Vissim.get('Config');
             obj.Vissim = Vissim;
             obj.Com = Vissim.get('Com');
+
+            % フェーズ数が異なる制御器を比較するフラグを設定
+            obj.phase_comparison_flg = obj.Config.get('vissim').phase_comparison_flg;
 
             % 交差点のID、SignalGroupの数、道路の数を設定
             obj.id = id;
