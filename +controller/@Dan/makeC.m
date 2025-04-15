@@ -26,44 +26,18 @@ function makeC(obj)
                     c(5:6, veh_id) = [-1; 1];
                     c(9:10, veh_id) = [1; -1];
 
-                elseif veh_id == LaneFirstVehsMap(1)
-                    % 分岐車線（左）の先頭車
-                    c = zeros(28, num_vehs);
+                elseif veh_id == LaneFirstVehsMap(1) || veh_id == LaneFirstVehsMap(2) || veh_id == LaneFirstVehsMap(3)
+                    % 分岐車線（左），メインの車線，分岐車線（右）の先頭車
+                    c = zeros(24, num_vehs);
 
                     % 係数が0ではない要素に値を代入
-                    c(9:10,veh_id) = [1;-1];                     
-                    c(11:12,veh_id) = [-1;1];
-                    c(13:14,(veh_id-1):veh_id) = [1,-1;-1,1];
-                    c(15:16,veh_id) = [1;-1];
-                    c(19:20,veh_id) = [1;-1];                    
-                    c(23:24,veh_id-1) = [1;-1]; 
-                    c(27:28,veh_id) = [1;-1];
-
-                elseif veh_id == LaneFirstVehsMap(2)
-                    % メインの車線の先頭車
-                    c = zeros(28, num_vehs);
-
-                    % 係数が0ではない要素に値を代入
-                    c(9:10,veh_id) = [1;-1];                     
-                    c(11:12,veh_id) = [-1;1];
-                    c(13:14,(veh_id-1):veh_id) = [1,-1;-1,1];
-                    c(15:16,veh_id) = [1;-1];
-                    c(19:20,veh_id) = [1;-1];                    
-                    c(23:24,veh_id-1) = [1;-1]; 
-                    c(27:28,veh_id) = [1;-1];
-
-                elseif veh_id == LaneFirstVehsMap(3)
-                    % 分岐車線（右）の先頭車
-                    c = zeros(28, num_vehs);
-
-                    % 係数が0ではない要素に値を代入
-                    c(9:10,veh_id) = [1;-1];                     
-                    c(11:12,veh_id) = [-1;1];
-                    c(13:14,(veh_id-1):veh_id) = [1,-1;-1,1];
-                    c(15:16,veh_id) = [1;-1];
-                    c(19:20,veh_id) = [1;-1];                    
-                    c(23:24,veh_id-1) = [1;-1]; 
-                    c(27:28,veh_id) = [1;-1];
+                    c(5:6,veh_id) = [1;-1];                     
+                    c(7:8,veh_id) = [-1;1];
+                    c(9:10,(veh_id-1):veh_id) = [1,-1;-1,1];
+                    c(11:12,veh_id) = [1;-1];
+                    c(15:16,veh_id) = [1;-1];                    
+                    c(19:20,veh_id-1) = [1;-1]; 
+                    c(23:24,veh_id) = [1;-1];
 
                 else
                     % それ以外の場合

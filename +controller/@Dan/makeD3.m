@@ -78,144 +78,48 @@ function makeD3(obj)
                     % constraints_counterを更新
                     constraints_counter = constraints_counter + 10;
 
-                elseif veh_id == LaneFirstVehsMap(1)
-                    % 分岐車線（左）の先頭車
+                elseif veh_id == LaneFirstVehsMap(1) || veh_id == LaneFirstVehsMap(2) || veh_id == LaneFirstVehsMap(3)
+                    % 分岐車線（左），メインの車線，分岐車線（右）の先頭車
                     % d3を初期化
-                    d3 = zeros(28, 7);
+                    d3 = zeros(24, 7);
 
                     % 非０要素を代入
-                    d3(1, [1, 2, 5]) = [-1, -1, -1];
-                    d3(2, [1, 2, 5]) = [0, 0, 1];
-                    d3(3, [1, 2, 5]) = [1, 0, 1];
-                    d3(4, [1, 2, 5]) = [0, 1, 1];
+                    d3(1, [1, 2, 5]) = [1, 1, 3];
+                    d3(2, [1, 2, 5]) = [-1, -1, -1];
 
-                    d3(5, [3, 4, 5, 6]) = [1, 1, -1, -1];
-                    d3(6, [3, 4, 5, 6]) = [0, 0, 1, 1];
-                    d3(7, [3, 4, 5, 6]) = [-1, 0, 0, 1];
-                    d3(8, [3, 4, 5, 6]) = [0, -1, 0, 1];
+                    d3(3, [3, 4, 5, 6]) = [-1, -1, 1, 3];
+                    d3(4, [3, 4, 5, 6]) = [1, 1, -1, -1];
 
-                    d3(9, 1) = -h1_min;
-                    d3(10, 1) = -h1_max-obj.eps;
+                    d3(5, 1) = -h1_min;
+                    d3(6, 1) = -h1_max;
 
-                    d3(11, 2) = -h2_min;
-                    d3(12, 2) = -h2_max-obj.eps;
+                    d3(7, 2) = -h2_min;
+                    d3(8, 2) = -h2_max;
 
-                    d3(13, 3) = -h3_min;
-                    d3(14, 3) = -h3_max-obj.eps;
+                    d3(9, 3) = -h3_min;
+                    d3(10, 3) = -h3_max;
 
-                    d3(15, 4) = -h5_min;
-                    d3(16, 4) = -h5_max-obj.eps;
+                    d3(11, 4) = -h5_min;
+                    d3(12, 4) = -h5_max;
 
-                    d3(17, 5) = p_min;
-                    d3(18, 5) = -p_max;
-                    d3(19, 5) = p_max;
-                    d3(20, 5) = -p_min;
+                    d3(13, 5) = p_min;
+                    d3(14, 5) = -p_max;
+                    d3(15, 5) = p_max;
+                    d3(16, 5) = -p_min;
+
+                    d3(17, 6) = p_min;
+                    d3(18, 6) = -p_max;
+                    d3(19, 6) = p_max;
+                    d3(20, 6) = -p_min;
 
                     d3(21, 6) = p_min;
                     d3(22, 6) = -p_max;
                     d3(23, 6) = p_max;
                     d3(24, 6) = -p_min;
 
-                    d3(25, 6) = p_min;
-                    d3(26, 6) = -p_max;
-                    d3(27, 6) = p_max;
-                    d3(28, 6) = -p_min;
-
                     % variables_counterを更新
-                    constraints_counter = constraints_counter + 28;
-
-                elseif veh_id == LaneFirstVehsMap(2)
-                    % メインの車線の先頭車
-                    % d3を初期化
-                    d3 = zeros(28, 7);
-
-                    % 非０要素を代入
-                    d3(1, [1, 2, 5]) = [-1, -1, -1];
-                    d3(2, [1, 2, 5]) = [0, 0, 1];
-                    d3(3, [1, 2, 5]) = [1, 0, 1];
-                    d3(4, [1, 2, 5]) = [0, 1, 1];
-
-                    d3(5, [3, 4, 5, 6]) = [1, 1, -1, -1];
-                    d3(6, [3, 4, 5, 6]) = [0, 0, 1, 1];
-                    d3(7, [3, 4, 5, 6]) = [-1, 0, 0, 1];
-                    d3(8, [3, 4, 5, 6]) = [0, -1, 0, 1];
-
-                    d3(9, 1) = -h1_min;
-                    d3(10, 1) = -h1_max-obj.eps;
-
-                    d3(11, 2) = -h2_min;
-                    d3(12, 2) = -h2_max-obj.eps;
-
-                    d3(13, 3) = -h3_min;
-                    d3(14, 3) = -h3_max-obj.eps;
-
-                    d3(15, 4) = -h5_min;
-                    d3(16, 4) = -h5_max-obj.eps;
-
-                    d3(17, 5) = p_min;
-                    d3(18, 5) = -p_max;
-                    d3(19, 5) = p_max;
-                    d3(20, 5) = -p_min;
-
-                    d3(21, 6) = p_min;
-                    d3(22, 6) = -p_max;
-                    d3(23, 6) = p_max;
-                    d3(24, 6) = -p_min;
-
-                    d3(25, 6) = p_min;
-                    d3(26, 6) = -p_max;
-                    d3(27, 6) = p_max;
-                    d3(28, 6) = -p_min;
-
-                    % variables_counterを更新
-                    constraints_counter = constraints_counter + 28;
-
-                elseif veh_id == LaneFirstVehsMap(3)
-                    % 分岐車線（右）の先頭車
-                    % d3を初期化
-                    d3 = zeros(28, 7);
-
-                    % 非０要素を代入
-                    d3(1, [1, 2, 5]) = [-1, -1, -1];
-                    d3(2, [1, 2, 5]) = [0, 0, 1];
-                    d3(3, [1, 2, 5]) = [1, 0, 1];
-                    d3(4, [1, 2, 5]) = [0, 1, 1];
-
-                    d3(5, [3, 4, 5, 6]) = [1, 1, -1, -1];
-                    d3(6, [3, 4, 5, 6]) = [0, 0, 1, 1];
-                    d3(7, [3, 4, 5, 6]) = [-1, 0, 0, 1];
-                    d3(8, [3, 4, 5, 6]) = [0, -1, 0, 1];
-
-                    d3(9, 1) = -h1_min;
-                    d3(10, 1) = -h1_max-obj.eps;
-
-                    d3(11, 2) = -h2_min;
-                    d3(12, 2) = -h2_max-obj.eps;
-
-                    d3(13, 3) = -h3_min;
-                    d3(14, 3) = -h3_max-obj.eps;
-
-                    d3(15, 4) = -h5_min;
-                    d3(16, 4) = -h5_max-obj.eps;
-
-                    d3(17, 5) = p_min;
-                    d3(18, 5) = -p_max;
-                    d3(19, 5) = p_max;
-                    d3(20, 5) = -p_min;
-
-                    d3(21, 6) = p_min;
-                    d3(22, 6) = -p_max;
-                    d3(23, 6) = p_max;
-                    d3(24, 6) = -p_min;
-
-                    d3(25, 6) = p_min;
-                    d3(26, 6) = -p_max;
-                    d3(27, 6) = p_max;
-                    d3(28, 6) = -p_min;
-
-                    % variables_counterを更新
-                    constraints_counter = constraints_counter + 28;
-
+                    constraints_counter = constraints_counter + 24;
+                    
                 else
                     % それ以外の場合
                     % d3を初期化

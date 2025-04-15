@@ -64,33 +64,34 @@ function makeE(obj)
                     e(9) = p_max;
                     e(10) = -p_min;
 
-                elseif veh_id == LaneFirstVehsMap(1)
-                    % 分岐車線（左）の先頭車
+                elseif veh_id == LaneFirstVehsMap(1) || veh_id == LaneFirstVehsMap(2) || veh_id == LaneFirstVehsMap(3)
+                    % 分岐車線（左），メインの車線，分岐車線（右）の先頭車
                     % eを初期化
-                    e = zeros(28, 1);
+                    e = zeros(24, 1);
 
                     % 非０要素を代入
-                    e(1) = -1;
-                    e(2) = 1;
+                    e(1) = 3;
+                    e(2) = -1;
+
                     e(3) = 1;
                     e(4) = 1;
 
-                    e(5) = 1;
-                    e(6) = 1;
-                    e(7) = 0;
-                    e(8) = 0;
+                    e(5) = p_s - h1_min - D_s;
+                    e(6) = -p_s + D_s;
 
-                    e(9) = p_s - h1_min - D_s;
-                    e(10) = -p_s + D_s - obj.eps;
+                    e(7) = -p_s + d_s - h2_min;
+                    e(8) = p_s - d_s;
 
-                    e(11) = -p_s + d_s - h2_min;
-                    e(12) = p_s - d_s - obj.eps;
+                    e(9) = D_f - h3_min;
+                    e(10) = -D_f;
 
-                    e(13) = D_f - h3_min;
-                    e(14) = -D_f - obj.eps;
+                    e(11) = p_s - D_b - h5_min;
+                    e(12) = -p_s + D_b;
 
-                    e(15) = p_s - D_b - h5_min;
-                    e(16) = -p_s + D_b - obj.eps;
+                    e(13) = 0;
+                    e(14) = 0;
+                    e(15) = p_max;
+                    e(16) = -p_min;
 
                     e(17) = 0;
                     e(18) = 0;
@@ -102,10 +103,6 @@ function makeE(obj)
                     e(23) = p_max;
                     e(24) = -p_min;
 
-                    e(25) = 0;
-                    e(26) = 0;
-                    e(27) = p_max;
-                    e(28) = -p_min;
                 elseif veh_id == LaneFirstVehsMap(2)
                     % 直進先頭車
                     % eを初期化
