@@ -1,5 +1,0 @@
-simulation_id,intersection_id,control_method,num_phases,seed,input1,input2,input3,input4,relflow1,relflow2,relflow3,relflow4,yellow_time,red_time,N_p,N_c,N_s,queue,delay,speed,calc_time,success_rate
-1,1,Dan,4,1,700,700,700,700,1,1,1,1,1,1,5,2,5,17.2,14.8,36.4,0.23,1
-2,1,Dan,8,1,700,700,700,700,1,1,1,1,1,1,5,2,5,13.4,12,38.2,0.32,1
-3,1,Dan,4,1,700,700,700,700,2,2,2,2,1,1,5,2,5,15.4,13.1,36.9,0.35,1
-4,1,Dan,8,1,700,700,700,700,2,2,2,2,1,1,5,2,5,12.2,11,38.6,0.25,1

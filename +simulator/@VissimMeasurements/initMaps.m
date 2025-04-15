@@ -7,6 +7,7 @@ function initMaps(obj)
     obj.IntersectionRoadNumVehsMap = tool.HierarchicalMap('KeyType1', 'int32','KeyType2', 'int32', 'ValueType', 'any');
     obj.IntersectionRoadDelayMap = tool.HierarchicalMap('KeyType1', 'int32', 'KeyType2', 'int32', 'ValueType', 'any');
     obj.VehicleSpeedsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+    obj.AverageSpeedsMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
 
     % シミュレーション時間0秒のときのデータを設定
 
@@ -74,4 +75,16 @@ function initMaps(obj)
             obj.IntersectionRoadDelayMap.add(intersection_id, order, 0);
         end
     end
+
+    % VehicleSpeedsMapについて
+    for intersection_id = cell2mat(keys(IntersectionStructMap))
+        obj.VehicleSpeedsMap(intersection_id) = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+    end
+    obj.VehicleSpeedsMap(0) = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+
+    % AverageSpeedsMapについて
+    for intersection_id = cell2mat(keys(IntersectionStructMap))
+        obj.AverageSpeedsMap(intersection_id) = [];
+    end
+    obj.AverageSpeedsMap(0) = [];
 end

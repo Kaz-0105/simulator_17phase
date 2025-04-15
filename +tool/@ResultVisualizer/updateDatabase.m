@@ -4,7 +4,7 @@ function updateDatabase(obj)
     IntersectionRoadDelayMap = obj.VissimMeasurements.get('IntersectionRoadDelayMap');
     IntersectionCalcTimeMap = obj.VissimMeasurements.get('IntersectionCalcTimeMap');
     IntersectionControllerMap = obj.Vissim.get('IntersectionControllerMap');
-    VehicleSpeedsMap = obj.VissimMeasurements.get('VehicleSpeedsMap');
+    AverageSpeedsMap = obj.VissimMeasurements.get('AverageSpeedsMap');
 
     % Vissimクラスからデータを取得
     IntersectionStructMap = obj.Vissim.get('IntersectionStructMap');
@@ -165,11 +165,7 @@ function updateDatabase(obj)
         calc_time = round(mean(IntersectionCalcTimeMap(intersection_id)), 2);
 
         % speedの時間平均を取得（TODO: 全体でまとめちゃってるので直したかったら直す）
-        vehicle_average_speeds = [];
-        for vehicle_id = cell2mat(VehicleSpeedsMap.keys())
-            vehicle_average_speeds = [vehicle_average_speeds; mean(VehicleSpeedsMap(vehicle_id))];
-        end
-        speed = round(mean(vehicle_average_speeds), 1);
+        speed = round(mean(AverageSpeedsMap(0)), 1);
 
         % 計算の成功率を計算
         Controller = IntersectionControllerMap(intersection_id);

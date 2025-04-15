@@ -37,10 +37,11 @@ function save(obj)
     IntersectionRoadNumVehsMap = obj.IntersectionRoadNumVehsMap;        
     IntersectionRoadDelayMap = obj.IntersectionRoadDelayMap;
     VehicleSpeedsMap = obj.VehicleSpeedsMap;
+    AverageSpeedsMap = obj.AverageSpeedsMap;
     time = obj.time;
 
     % データを保存
-    save(file_path, 'RoadInputMap', 'RoadOutputMap', 'IntersectionRoadQueueMap', 'IntersectionCalcTimeMap', 'IntersectionRoadNumVehsMap', 'IntersectionRoadDelayMap', 'VehicleSpeedsMap', 'time');
+    save(file_path, 'RoadInputMap', 'RoadOutputMap', 'IntersectionRoadQueueMap', 'IntersectionCalcTimeMap', 'IntersectionRoadNumVehsMap', 'IntersectionRoadDelayMap', 'VehicleSpeedsMap', 'AverageSpeedsMap', 'time');
     fprintf('Data saved to %s\n', file_path);
     
 
