@@ -47,24 +47,22 @@ function makeE(obj)
                 if veh_id == 1
                     % 先頭車
                     % eを初期化
-                    e = zeros(12, 1);
+                    e = zeros(10, 1);
 
                     % 非０要素を代入
-                    e(1) = -1;
-                    e(2) = 1;
-                    e(3) = 1;
-                    e(4) = 1;
+                    e(1) = 3;
+                    e(2) = -1;
 
-                    e(5) = p_s-h1_min-D_s;
-                    e(6) = -p_s+D_s-obj.eps;
+                    e(3) = p_s-h1_min-D_s;
+                    e(4) = -p_s+D_s;
 
-                    e(7) = -p_s+d_s-h2_min;
-                    e(8) = p_s-d_s-obj.eps;
+                    e(5) = -p_s+d_s-h2_min;
+                    e(6) = p_s-d_s;
 
-                    e(9) = 0;
-                    e(10) = 0;
-                    e(11) = p_max;
-                    e(12) = -p_min;
+                    e(7) = 0;
+                    e(8) = 0;
+                    e(9) = p_max;
+                    e(10) = -p_min;
 
                 elseif veh_id == LaneFirstVehsMap(1)
                     % 分岐車線（左）の先頭車

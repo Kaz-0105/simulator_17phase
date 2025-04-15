@@ -16,8 +16,8 @@ function makeD2(obj)
             for veh_id = 1: obj.RoadLinkNumVehsMap.get(road_id, link_id)
                 if veh_id == 1
                     % 先頭車
-                    d2 = zeros(12, 1);
-                    d2(9:12, 1) = [-1, 1, -1, 1]';
+                    d2 = zeros(10, 1);
+                    d2(7:10, 1) = [-1, 1, -1, 1]';
 
                 elseif veh_id == LaneFirstVehsMap(1)
                     % 分岐車線（左）の先頭車

@@ -58,27 +58,25 @@ function makeD3(obj)
                 if veh_id == 1
                     % 先頭車
                     % d3を初期化
-                    d3 = zeros(12, 4);
+                    d3 = zeros(10, 4);
 
                     % 非０要素を代入
-                    d3(1, [1, 2, 3]) = [-1, -1, -1];
-                    d3(2, [1, 2, 3]) = [0, 0, 1];
-                    d3(3, [1, 2, 3]) = [1, 0, 1];
-                    d3(4, [1, 2, 3]) = [0, 1, 1];
+                    d3(1, [1, 2, 3]) = [1, 1, 3];
+                    d3(2, [1, 2, 3]) = [-1, -1, -1];
 
-                    d3(5, 1) = -h1_min;
-                    d3(6, 1) = -h1_max-obj.eps;
+                    d3(3, 1) = -h1_min;
+                    d3(4, 1) = -h1_max;
 
-                    d3(7, 2) = -h2_min;
-                    d3(8, 2) = -h2_max-obj.eps;
+                    d3(5, 2) = -h2_min;
+                    d3(6, 2) = -h2_max;
 
-                    d3(9, 3) = p_min;
-                    d3(10, 3) = -p_max;
-                    d3(11, 3) = p_max;
-                    d3(12, 3) = -p_min;
+                    d3(7, 3) = p_min;
+                    d3(8, 3) = -p_max;
+                    d3(9, 3) = p_max;
+                    d3(10, 3) = -p_min;
 
                     % constraints_counterを更新
-                    constraints_counter = constraints_counter + 12;
+                    constraints_counter = constraints_counter + 10;
 
                 elseif veh_id == LaneFirstVehsMap(1)
                     % 分岐車線（左）の先頭車

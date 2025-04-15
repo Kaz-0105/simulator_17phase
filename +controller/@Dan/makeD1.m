@@ -26,24 +26,12 @@ function makeD1(obj)
 
                 if veh_id == 1
                     % 先頭車
-                    d1 = zeros(12, obj.signal_num);
-                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
-
-                elseif veh_id == LaneFirstVehsMap(1)
-                    % 分岐車線（左）の先頭車
+                    d1 = zeros(10, obj.signal_num);
+                    d1(1:2, signal_ids(signal_group_id)) = [1; -1];
+                elseif veh_id == LaneFirstVehsMap(1) || veh_id == LaneFirstVehsMap(2) || veh_id == LaneFirstVehsMap(3)
+                    % 分岐車線（左），メインの車線，分岐車線（右）の先頭車
                     d1 = zeros(28, obj.signal_num);
                     d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
-
-                elseif veh_id == LaneFirstVehsMap(2)
-                    % メインの車線の先頭車
-                    d1 = zeros(28, obj.signal_num);
-                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
-
-                elseif veh_id == LaneFirstVehsMap(3)
-                    % 分岐車線（右）の先頭車
-                    d1 = zeros(28, obj.signal_num);
-                    d1(1:2, signal_ids(signal_group_id)) = [-1; 1];
-
                 else
                     % それ以外の場合
                     d1 = zeros(47, obj.signal_num);

@@ -19,12 +19,12 @@ function makeC(obj)
             for veh_id = 1: num_vehs
                 if veh_id == 1
                     % 先頭車
-                    c = zeros(12, num_vehs);
+                    c = zeros(10, num_vehs);
 
                     % 係数が0ではない要素に値を代入
-                    c(5:6, veh_id) = [1; -1];
-                    c(7:8, veh_id) = [-1; 1];
-                    c(11:12, veh_id) = [1; -1];
+                    c(3:4, veh_id) = [1; -1];
+                    c(5:6, veh_id) = [-1; 1];
+                    c(9:10, veh_id) = [1; -1];
 
                 elseif veh_id == LaneFirstVehsMap(1)
                     % 分岐車線（左）の先頭車
