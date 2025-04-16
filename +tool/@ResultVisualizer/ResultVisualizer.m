@@ -19,6 +19,11 @@ classdef ResultVisualizer < handle
     end
 
     properties
+        % フラグ
+        phase_comparison_flg; % フェーズごとの比較の有無のフラグ
+    end
+
+    properties
         tmp_figure_id; % 現在のfigureの番号
     end
 
@@ -28,6 +33,9 @@ classdef ResultVisualizer < handle
             % ConfigクラスとVissimクラスの変数を設定
             obj.Config = Config;
             obj.Vissim = Vissim;
+
+            % フェーズごとの比較の有無
+            obj.phase_comparison_flg = obj.Config.vissim.phase_comparison_flg;
 
             % VissimMeasurementsクラスの変数を設定
             obj.VissimMeasurements = Vissim.get('VissimMeasurements');
@@ -83,6 +91,41 @@ classdef ResultVisualizer < handle
             end 
 
             histogram(vehicle_average_speeds, 'BinWidth', 5);
+        end
+
+        % フェーズごとの比較を行うメソッド
+        function makePhaseComparisonGraph(obj)
+            % LineGraphの設定
+            setting = obj.GraphSettingMap('line_graph');
+
+            IntersectionControllerMap = obj.Vissim.IntersectionControllerMap;
+
+            for intersection_id = cell2mat(IntersectionControllerMap.keys())
+                Controller = IntersectionControllerMap(intersection_id);
+
+                if (~isa(Controller ,'controller.Dan'))
+                    continue;
+                end
+
+                FunctionValueMap = Controller.FunctionValueMap;
+
+                figure;
+                hold on;
+                
+                for num_phases = [4, 8, 17]
+                    function_values = FunctionValueMap(num_phases);
+                    plot(function_values, 'DisplayName', ['NumPhases: ' num2str(num_phases)], 'LineWidth', setting.line_width);
+                end
+
+                title(['Objective Function Values for Intersection' num2str(intersection_id)], 'FontSize', obj.font_sizes.label); 
+                xlabel('Optimization Iteration', 'FontSize', obj.font_sizes.label);
+                ylabel('Objective Function Value [veh]', 'FontSize', obj.font_sizes.label);
+
+                ax = gca;
+                ax.FontSize = obj.font_sizes.axis;
+
+                legend('show', 'Location', 'best');
+            end
         end
     end
 end
