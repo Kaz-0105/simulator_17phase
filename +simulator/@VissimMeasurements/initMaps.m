@@ -84,7 +84,7 @@ function initMaps(obj)
 
     % AverageSpeedsMapについて
     for intersection_id = cell2mat(keys(IntersectionStructMap))
-        obj.AverageSpeedsMap(intersection_id) = [];
+        obj.AverageSpeedsMap(intersection_id) = 0;
     end
-    obj.AverageSpeedsMap(0) = [];
+    obj.AverageSpeedsMap(0) = 0;
 end
