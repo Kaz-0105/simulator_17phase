@@ -1,15 +1,13 @@
 function makeMilp(obj)
     % MILPの行列を作成する
-    obj.milp_matrices.f = [];
-    obj.milp_matrices.w = [];
-    obj.milp_matrices.P = [];
-    obj.milp_matrices.q = [];
-    obj.milp_matrices.Peq = [];
-    obj.milp_matrices.qeq = [];
-    obj.milp_matrices.intcon = [];
-    obj.milp_matrices.intcon_binary = [];
-    obj.milp_matrices.lb = [];
-    obj.milp_matrices.ub = [];
+    matrices_template = struct('f', [], 'w', [], 'P', [], 'q', [], 'Peq', [], 'qeq', [], 'intcon', [], 'intcon_binary', [], 'lb', [], 'ub', []);
+    if obj.phase_comparison_flg && obj.road_num == 4
+        for num_phases = [4, 8, 17]
+            obj.MILPMatrixMap(num_phases) = matrices_template;
+        end
+    else
+        obj.milp_matrices = matrices_template;
+    end
 
     % 系に一台も自動車が存在しない場合は計算の必要がないため空の行列を返す
     if isempty(obj.mld_matrices.A)
@@ -27,6 +25,4 @@ function makeMilp(obj)
 
     % 決定変数の上下限の作成
     obj.makeBoundary();
-
-
 end

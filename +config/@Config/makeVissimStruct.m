@@ -30,5 +30,15 @@ function makeVissimStruct(obj, data)
     catch
         obj.vissim.max_sim_speed = false;
     end
-    
+
+    % 4フェーズ，8フェーズ，17フェーズの比較をするフラグの設定
+    try
+        if strcmp(data.vissim.phase_comparison_flg, 'on')
+            obj.vissim.phase_comparison_flg = true;
+        else
+            obj.vissim.phase_comparison_flg = false;
+        end
+    catch
+        obj.vissim.phase_comparison_flg = false;
+    end
 end

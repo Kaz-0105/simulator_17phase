@@ -1,5 +1,10 @@
 function run(obj)
     % フラグがTrueの場合のみ描画
+
+    % フェーズごとの比較
+    if obj.phase_comparison_flg
+        obj.makePhaseComparisonGraph();
+    end
     
     % QueueLengthについて
     if obj.flags.queue_length

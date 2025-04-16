@@ -1,17 +1,16 @@
-network :
-  inpx_file : '1-1_network\1-1_network.inpx'   # vissimのinpxファイル
-  layx_file : '1-1_network\1-1_network.layx'   # vissimのlayxファイル
+network : 
+  inpx_file : '1-1_network\1-1_network.inpx' # vissimのinpxファイル
+  layx_file : '1-1_network\1-1_network.layx' # vissimのlayxファイル
   groups :
-    - id : 1                                                # グループのID
+    - id : 1                                           # グループのID
       roads : '1-1_network_roads.yaml'                 # 道路の情報がまとまったyamlファイル
       intersections : '1-1_network_intersections.yaml' # 交差点の情報がまとまったyamlファイル
       prms : '1-1_network_prms.yaml'                   # パラメータの情報がまとまったyamlファイル
-
 vissim :
-  graphic_mode : 1 # 描画モードON=0
-  seed : 22        # 乱数のシード値
-  resolution : 10  # シミュレーション時間で1sあたりに何回自動車の位置を更新するか(解像度)
-  max_sim_speed : 'on' # シミュレーションの速度を最大にするかどうか
+  graphic_mode : 1            # 描画モードON=0
+  seed : 1                    # 乱数のシード値
+  resolution : 10             # シミュレーション時間で1sあたりに何回自動車の位置を更新するか(解像度)
+  max_sim_speed : 'on'        # シミュレーションの速度を最大にするかどうか
   phase_comparison_flg : 'on' # 4, 8, 17フェーズで同時の比較をするかどうか
   
 mpc :
@@ -35,7 +34,7 @@ model :
         num : 10
 
 simulation :
-  time : 500  # シミュレーション時間
+  time : 200  # シミュレーション時間
   count : 1   # シミュレーション回数
 
 intersection :

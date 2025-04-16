@@ -7,6 +7,9 @@ classdef Dan < handle
 
         PhiResults; % phiの結果を格納するクラス
         UResults;   % uの結果を格納するクラス
+
+        % フラグ
+        phase_comparison_flg = false; % 4, 8, 17フェーズの比較をするフラグ
     end
 
     properties
@@ -47,6 +50,10 @@ classdef Dan < handle
         % 構造体
         mld_matrices;  % 混合論理動的システムの係数行列を収納する構造体
         milp_matrices; % 混合整数線形計画問題の係数行列を収納する構造体
+
+        % マップ
+        MILPMatrixMap; % 比較用のmilpのマトリックスを格納するマップ
+        FunctionValueMap; % 比較用の目的関数の値を格納するマップ
     end
 
     properties
@@ -91,6 +98,26 @@ classdef Dan < handle
             obj.id = id;
             obj.road_num = road_num;
             obj.signal_num = obj.road_num * (obj.road_num -1);
+
+            % フェーズ数が異なる制御器を比較するフラグを設定
+            obj.phase_comparison_flg = obj.Config.vissim.phase_comparison_flg;
+
+            % mld_matricesとMILPMatrixMap（milp_matrices）の初期化
+            if obj.phase_comparison_flg && obj.road_num == 4
+                obj.mld_matrices = struct();
+                obj.MILPMatrixMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+                for num_phases = [4, 8, 17]
+                    obj.MILPMatrixMap(num_phases) = struct();
+                end
+
+                obj.FunctionValueMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+                for num_phases = [4, 8, 17]
+                    obj.FunctionValueMap(num_phases) = [];
+                end
+            else
+                obj.mld_matrices = struct();
+                obj.milp_matrices = struct();
+            end
 
             % フェーズの数を設定
             obj.phase_num = double(obj.Config.model.dan.NumRoadsNumPhasesMap(obj.road_num));

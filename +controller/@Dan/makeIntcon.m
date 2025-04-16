@@ -38,16 +38,31 @@ function makeIntcon(obj)
         end
     end
 
-    obj.milp_matrices.intcon_binary = intcon_binary;
+    if obj.phase_comparison_flg && obj.road_num == 4
+        for num_phases = [4, 8, 17]
+            tmp_matrices = obj.MILPMatrixMap(num_phases);
+            tmp_matrices.intcon_binary = intcon_binary;
 
-    intcon = [];
+            intcon = [];
+            obj.variables_size = size(tmp_matrices.P, 2);
+            for variables_id = 1: obj.variables_size
+                if intcon_binary(1, variables_id) == 1
+                    intcon = [intcon, variables_id];
+                end
+            end
+            tmp_matrices.intcon = intcon;
 
-    for variables_id = 1: obj.variables_size
-        if intcon_binary(1, variables_id) == 1
-            intcon = [intcon, variables_id];
+            obj.MILPMatrixMap(num_phases) = tmp_matrices;
         end
+    else
+        obj.milp_matrices.intcon_binary = intcon_binary;
+
+        intcon = [];
+        for variables_id = 1: obj.variables_size
+            if intcon_binary(1, variables_id) == 1
+                intcon = [intcon, variables_id];
+            end
+        end
+        obj.milp_matrices.intcon = intcon;
     end
-
-    obj.milp_matrices.intcon = intcon;
-
 end
