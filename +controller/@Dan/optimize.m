@@ -3,91 +3,178 @@ function optimize(obj)
     % 予測回数をインクリメント
     obj.prediction_count = obj.prediction_count + 1;
 
-    % 混合整数線形計画問題を解く
-    f = obj.milp_matrices.f;
-    intcon = obj.milp_matrices.intcon;
-    P = obj.milp_matrices.P;
-    q = obj.milp_matrices.q;
-    Peq = obj.milp_matrices.Peq;
-    qeq = obj.milp_matrices.qeq;
-    lb = obj.milp_matrices.lb;
-    ub = obj.milp_matrices.ub;
 
-    % 交差点内に自動車が存在するかどうかで場合分け
-    if ~isempty(P)
+    if obj.phase_comparison_flg && obj.road_num == 4
+        empty_flg = false;
+
         % intlinprogのオプションを設定
         options = optimoptions('intlinprog');
         options.IntegerTolerance = 1e-3;
         options.MaxTime = obj.max_time;
         options.Display = 'final';
 
-        % 計算時間の測定の開始
-        tic;
+        % 最適化計算をそれぞれのフェーズで行う
+        for num_phases = [4, 8, 17]
+            tmp_matrices = obj.MILPMatrixMap(num_phases);
+            f = tmp_matrices.f;
+            intcon = tmp_matrices.intcon;
+            P = tmp_matrices.P;
+            q = tmp_matrices.q;
+            Peq = tmp_matrices.Peq;
+            qeq = tmp_matrices.qeq;
+            lb = tmp_matrices.lb;
+            ub = tmp_matrices.ub;
 
-        % intlinprogでMILPを解く
-        [obj.x_opt, obj.fval, obj.exitflag] = intlinprog(f', intcon, P, q, Peq, qeq, lb, ub, options);
-
-        % 計算時間の測定の終了
-        obj.calc_time = toc;
-
-        % 終了ステータスによって処理が異なる
-
-        % exitflagの値の意味
-        %  3 : The solution is feasible with respect to the relative ConstraintTolerance tolerance, but is not feasible with respect to the absolute tolerance.
-        %  2 : intlinprog stopped prematurely. Integer feasible point found.
-        %  1 : intlinprog converged to the solution x.
-        %  0 : intlinprog stopped prematurely. No integer feasible point found.
-        % -1 : intlinprog stopped by an output function or plot function.
-        % -2 : No feasible point found.
-        % -3 : Root LP problem is unbounded.
-        % -9 : Solver lost feasibility.
-
-        if obj.exitflag >= 1
-            % x_optからu_optとphi_optを作成
-            obj.makeUOpt();
-            obj.makePhiOpt();
-
-            % 最適解が見つかった回数をインクリメント
-            obj.success_count = obj.success_count + 1;
-
-            % フェーズ数の再設定
-            if obj.road_num == 4
-                obj.tmp_phase_num = obj.phase_num;
-            elseif obj.road_num == 5
-                obj.tmp_phase_num = obj.phase_num;
+            if (isempty(P))
+                empty_flg = true;
+                break;
             end
 
-            % obj.makePosVehsResult();
-        else
-            % フェーズ数の再設定
-            if obj.road_num == 4
-                if obj.phase_num == 4
-                    obj.tmp_phase_num = 4;
+            % 計算時間の測定の開始
+            tic;
+
+            % intlinprogでMILPを解く
+            if (num_phases == 4)
+                [obj.x_opt, obj.fval, obj.exitflag] = intlinprog(f', intcon, P, q, Peq, qeq, lb, ub, options);
+                obj.FunctionValueMap(num_phases) = [obj.FunctionValueMap(num_phases), obj.fval];
+            else
+                [~, fval, ~] = intlinprog(f', intcon, P, q, Peq, qeq, lb, ub, options);
+                obj.FunctionValueMap(num_phases) = [obj.FunctionValueMap(num_phases), fval];
+            end
+
+            % 計算時間の測定の終了
+            obj.calc_time = toc;
+
+            if (num_phases == 4)
+                % 終了ステータスによって処理が異なる
+
+                % exitflagの値の意味
+                %  3 : The solution is feasible with respect to the relative ConstraintTolerance tolerance, but is not feasible with respect to the absolute tolerance.
+                %  2 : intlinprog stopped prematurely. Integer feasible point found.
+                %  1 : intlinprog converged to the solution x.
+                %  0 : intlinprog stopped prematurely. No integer feasible point found.
+                % -1 : intlinprog stopped by an output function or plot function.
+                % -2 : No feasible point found.
+                % -3 : Root LP problem is unbounded.
+                % -9 : Solver lost feasibility.
+
+                if obj.exitflag >= 1
+                    % x_optからu_optとphi_optを作成
+                    obj.makeUOpt();
+                    obj.makePhiOpt();
+
+                    % 最適解が見つかった回数をインクリメント
+                    obj.success_count = obj.success_count + 1;
                 else
-                    obj.tmp_phase_num = 8;
+                    % 例外処理によってu_optとphi_optを作成
+                    obj.emergencyTreatment();
                 end
-            elseif obj.road_num == 5
-                obj.tmp_phase_num = 10;
             end
-            
-            % 例外処理によってu_optとphi_optを作成
-            obj.emergencyTreatment();
+        end
+
+        if (empty_flg)
+            % 今の信号現示を維持する
+            u_future = obj.UResults.get('future_data');
+            obj.u_opt = [];
+
+            for step = 1:obj.N_s
+                obj.u_opt = [obj.u_opt, u_future(:, step)];
+            end
+
+            for step = obj.N_s + 1:obj.N_p
+                obj.u_opt = [obj.u_opt, u_future(:, obj.N_s)];
+            end
+
+            obj.phi_opt = zeros(1, obj.N_p -1);
+            obj.calc_time = 0;
         end
     else
-        % 今の信号現示を維持する
-        u_future = obj.UResults.get('future_data');
-        obj.u_opt = [];
+        % 混合整数線形計画問題を解く
+        f = obj.milp_matrices.f;
+        intcon = obj.milp_matrices.intcon;
+        P = obj.milp_matrices.P;
+        q = obj.milp_matrices.q;
+        Peq = obj.milp_matrices.Peq;
+        qeq = obj.milp_matrices.qeq;
+        lb = obj.milp_matrices.lb;
+        ub = obj.milp_matrices.ub;
 
-        for step = 1:obj.N_s
-            obj.u_opt = [obj.u_opt, u_future(:, step)];
+        % 交差点内に自動車が存在するかどうかで場合分け
+        if ~isempty(P)
+            % intlinprogのオプションを設定
+            options = optimoptions('intlinprog');
+            options.IntegerTolerance = 1e-3;
+            options.MaxTime = obj.max_time;
+            options.Display = 'final';
+
+            % 計算時間の測定の開始
+            tic;
+
+            % intlinprogでMILPを解く
+            [obj.x_opt, obj.fval, obj.exitflag] = intlinprog(f', intcon, P, q, Peq, qeq, lb, ub, options);
+
+            % 計算時間の測定の終了
+            obj.calc_time = toc;
+
+            % 終了ステータスによって処理が異なる
+
+            % exitflagの値の意味
+            %  3 : The solution is feasible with respect to the relative ConstraintTolerance tolerance, but is not feasible with respect to the absolute tolerance.
+            %  2 : intlinprog stopped prematurely. Integer feasible point found.
+            %  1 : intlinprog converged to the solution x.
+            %  0 : intlinprog stopped prematurely. No integer feasible point found.
+            % -1 : intlinprog stopped by an output function or plot function.
+            % -2 : No feasible point found.
+            % -3 : Root LP problem is unbounded.
+            % -9 : Solver lost feasibility.
+
+            if obj.exitflag >= 1
+                % x_optからu_optとphi_optを作成
+                obj.makeUOpt();
+                obj.makePhiOpt();
+
+                % 最適解が見つかった回数をインクリメント
+                obj.success_count = obj.success_count + 1;
+
+                % フェーズ数の再設定
+                if obj.road_num == 4
+                    obj.tmp_phase_num = obj.phase_num;
+                elseif obj.road_num == 5
+                    obj.tmp_phase_num = obj.phase_num;
+                end
+
+                % obj.makePosVehsResult();
+            else
+                % フェーズ数の再設定
+                if obj.road_num == 4
+                    if obj.phase_num == 4
+                        obj.tmp_phase_num = 4;
+                    else
+                        obj.tmp_phase_num = 8;
+                    end
+                elseif obj.road_num == 5
+                    obj.tmp_phase_num = 10;
+                end
+                
+                % 例外処理によってu_optとphi_optを作成
+                obj.emergencyTreatment();
+            end
+        else
+            % 今の信号現示を維持する
+            u_future = obj.UResults.get('future_data');
+            obj.u_opt = [];
+
+            for step = 1:obj.N_s
+                obj.u_opt = [obj.u_opt, u_future(:, step)];
+            end
+
+            for step = obj.N_s + 1:obj.N_p
+                obj.u_opt = [obj.u_opt, u_future(:, obj.N_s)];
+            end
+
+            obj.phi_opt = zeros(1, obj.N_p -1);
+            obj.calc_time = 0;
         end
-
-        for step = obj.N_s + 1:obj.N_p
-            obj.u_opt = [obj.u_opt, u_future(:, obj.N_s)];
-        end
-
-        obj.phi_opt = zeros(1, obj.N_p -1);
-        obj.calc_time = 0;
     end
 
     % u_optとphi_optを記録
