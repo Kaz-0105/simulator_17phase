@@ -151,6 +151,7 @@ for num_phases = unique(results.num_phases)'
     time_series = struct(...
         'queue', IntersectionRoadQueueMap.average('all'),...
         'delay', IntersectionRoadDelayMap.average('all'),...
+        'speed', AverageSpeedsMap(0),...
         'time', time...
     );
     PhaseTimeSeriesMap(num_phases) = time_series;
@@ -187,4 +188,50 @@ title('Time Series of Delay Time', 'FontSize', TITLE_FONT_SIZE);
 legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE);
 set(gca, 'FontSize', AXIS_FONT_SIZE);
 xlim([0, 500]);
+hold off;
+
+figure;
+hold on;
+plot(time_series_scoot.time, time_series_scoot.speed, 'LineWidth', LINEWIDTH);
+for num_phases = unique(results.num_phases)'
+    time_series = PhaseTimeSeriesMap(num_phases);
+    plot(time_series.time, time_series.speed, 'LineWidth', LINEWIDTH);
+end
+xlabel('Time [s]', 'FontSize', LABEL_FONT_SIZE);
+ylabel('Average Speed [m/s]', 'FontSize', LABEL_FONT_SIZE);
+title('Time Series of Speed', 'FontSize', TITLE_FONT_SIZE);
+legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE, 'Location', 'southeast');
+set(gca, 'FontSize', AXIS_FONT_SIZE);
+xlim([0, 500]);
+hold off;
+
+% 自動車の速度分布について
+figure;
+hold on;
+load(pwd + "/results/1-1_network/vehicle_speeds/scoot");
+tmp_vehicle_speeds_map = vehicle_speeds(0);
+vehicle_speeds = [];
+for vehicle_id = cell2mat(tmp_vehicle_speeds_map.keys)
+    vehicle_speeds = [vehicle_speeds; mean(tmp_vehicle_speeds_map(vehicle_id))];
+end
+histogram(vehicle_speeds, "BinWidth", 1);
+
+for num_phases = unique(results.num_phases)'
+    vehicle_speeds = [];
+
+    load(pwd + "/results/1-1_network/time_series/time_series" + num2str(num_phases));
+    tmp_vehicle_speeds_map = VehicleSpeedsMap(0);
+    for vehicle_id = cell2mat(tmp_vehicle_speeds_map.keys)
+        vehicle_speeds = [vehicle_speeds; mean(tmp_vehicle_speeds_map(vehicle_id))];
+    end
+
+    histogram(vehicle_speeds, "BinWidth", 1);
+end
+
+xlabel('Vehicle Speed [m/s]', 'FontSize', LABEL_FONT_SIZE);
+ylabel('Number of Vehicles', 'FontSize', LABEL_FONT_SIZE);
+title('Vehicle Speed Distribution', 'FontSize', TITLE_FONT_SIZE);
+legend({'SCOOT', '4-Phase MPC', '8-Phase MPC', '17-Phase MPC'}, 'FontSize', LEGEND_FONT_SIZE, 'Location', 'northeast');
+set(gca, 'FontSize', AXIS_FONT_SIZE);
+xlim([0, 60]);
 hold off;
