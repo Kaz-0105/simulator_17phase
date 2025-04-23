@@ -72,13 +72,14 @@ result :
       
 graph :
   line_graph : 
-    line_width : 2
+    line_width : 5
   histogram :
     bin_width : 0.5
     face_alpha : 0.5
   font_size :
-    title : 20
-    label : 15
-    axis : 15
+    title : 30
+    label : 30
+    axis : 35
+    legend : 25
 
   
