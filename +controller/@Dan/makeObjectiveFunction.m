@@ -7,6 +7,7 @@ function makeObjectiveFunction(obj, template_id)
             tmp_matrices = obj.MILPMatrixMap(num_phases);
             obj.variables_size = size(tmp_matrices.P, 2);
             f = zeros(1, obj.variables_size);
+
             if template_id == 1
                 % delta_1を使用、重みはなし
                 for delta1_num = delta1_list
@@ -51,6 +52,23 @@ function makeObjectiveFunction(obj, template_id)
                     for step = 1: obj.N_p
                         f(delta4_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta4(i);
                     end
+                end
+            elseif template_id == 5
+                % delta_1とdelta_4とphiを使用、重みはなし
+                phi_list = obj.VariableListMap(['phi', num2str(num_phases)]);
+
+                for delta1_num = delta1_list
+                    for step = 1: obj.N_p
+                        f(delta1_num + obj.v_length*(step-1)) = 1;
+                    end
+                end
+                for delta4_num = delta4_list
+                    for step = 1: obj.N_p
+                        f(delta4_num + obj.v_length*(step-1)) = 1;
+                    end
+                end
+                for phi_num = phi_list
+                    f(phi_num) = obj.N_p;
                 end
             end
 
@@ -103,6 +121,23 @@ function makeObjectiveFunction(obj, template_id)
                 for step = 1: obj.N_p
                     f(delta4_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta4(i);
                 end
+            end
+        elseif template_id == 5
+            % delta_1とdelta_4とphiを使用、重みはなし
+            phi_list = obj.VariableListMap('phi');
+
+            for delta1_num = delta1_list
+                for step = 1: obj.N_p
+                    f(delta1_num + obj.v_length*(step-1)) = 1;
+                end
+            end
+            for delta4_num = delta4_list
+                for step = 1: obj.N_p
+                    f(delta4_num + obj.v_length*(step-1)) = 1;
+                end
+            end
+            for phi_num = phi_list
+                f(phi_num) = obj.N_p;
             end
         end
 
