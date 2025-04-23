@@ -246,4 +246,27 @@ classdef Dan < handle
 
         makePosVehsResult(obj);
     end
+
+    methods
+        function makePhiList(obj)
+            if obj.phase_comparison_flg && obj.road_num == 4
+                % 4, 8, 17フェーズの比較をするフラグが立っているとき
+                for num_phases = [4, 8, 17]
+                    % フェーズ数に応じたphiのリストを作成
+                    phi_list = [];
+                    for step = 1: obj.N_p - 1
+                        phi_list = [phi_list; obj.v_length * obj.N_p + num_phases * obj.N_p + (obj.signal_num + 1) * step];
+                    end
+                    obj.VariableListMap(['phi', num2str(num_phases)]) = phi_list;
+                end
+            else
+                % 通常の処理
+                phi_list = [];
+                for step = 1: obj.N_p - 1
+                    phi_list = [phi_list; obj.v_length * obj.N_p + obj.tmp_phase_num * obj.N_p + (obj.signal_num + 1) * step];
+                end
+                obj.VariableListMap('phi') = phi_list;
+            end
+        end
+    end
 end

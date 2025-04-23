@@ -18,9 +18,6 @@ function makeConstraints(obj)
     % D1, D2, D3をまとめる
     D = [D1, D2, D3];
 
-    % MLDの1ステップ分の決定変数の数を取得
-    [~, obj.v_length] = size(D);
-
     % 交差点内の全ての自動車の位置情報をまとめる
     obj.pos_vehs_init = [];
     

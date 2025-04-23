@@ -17,4 +17,8 @@ function makeVariablesList(obj)
     obj.makeDeltaBList();
 
     obj.makeDeltaCList();
+
+    obj.v_length = obj.u_length + obj.z_length + obj.delta_length;
+
+    obj.makePhiList();
 end
