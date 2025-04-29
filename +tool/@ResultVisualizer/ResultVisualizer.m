@@ -21,6 +21,9 @@ classdef ResultVisualizer < handle
     properties
         % フラグ
         phase_comparison_flg; % フェーズごとの比較の有無のフラグ
+
+        % 配列
+        comparison_phases; % 比較するフェーズの種類
     end
 
     properties
@@ -36,6 +39,7 @@ classdef ResultVisualizer < handle
 
             % フェーズごとの比較の有無
             obj.phase_comparison_flg = obj.Config.vissim.phase_comparison_flg;
+            obj.comparison_phases = obj.Config.vissim.comparison_phases;
 
             % VissimMeasurementsクラスの変数を設定
             obj.VissimMeasurements = Vissim.get('VissimMeasurements');
@@ -112,14 +116,19 @@ classdef ResultVisualizer < handle
                 figure;
                 hold on;
                 
-                for num_phases = [4, 8, 17]
+                for num_phases = obj.comparison_phases
                     function_values = FunctionValueMap(num_phases);
                     plot(function_values, 'DisplayName', ['NumPhases: ' num2str(num_phases)], 'LineWidth', setting.line_width);
+
+                    if (num_phases == obj.comparison_phases(1))
+                        x_max = size(function_values, 2);
+                    end
                 end
 
                 title(['Objective Function Values for Intersection' num2str(intersection_id)], 'FontSize', obj.font_sizes.label); 
                 xlabel('Optimization Iteration', 'FontSize', obj.font_sizes.label);
                 ylabel('Objective Function Value [veh]', 'FontSize', obj.font_sizes.label);
+                xlim([1, x_max]);
 
                 ax = gca;
                 ax.FontSize = obj.font_sizes.axis;

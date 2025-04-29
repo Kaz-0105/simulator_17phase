@@ -39,7 +39,7 @@ function makeIntcon(obj)
     end
 
     if obj.phase_comparison_flg && obj.road_num == 4
-        for num_phases = [4, 8, 17]
+        for num_phases = obj.comparison_phases
             tmp_matrices = obj.MILPMatrixMap(num_phases);
             tmp_matrices.intcon_binary = intcon_binary;
 

@@ -9,12 +9,14 @@ function optimize(obj)
 
         % intlinprogのオプションを設定
         options = optimoptions('intlinprog');
+        options.AbsoluteGapTolerance = 1e-2;
+        options.RelativeGapTolerance = 0;
         options.IntegerTolerance = 1e-3;
         options.MaxTime = obj.max_time;
         options.Display = 'final';
 
         % 最適化計算をそれぞれのフェーズで行う
-        for num_phases = [4, 8, 17]
+        for num_phases = obj.comparison_phases
             tmp_matrices = obj.MILPMatrixMap(num_phases);
             f = tmp_matrices.f;
             intcon = tmp_matrices.intcon;
@@ -34,7 +36,7 @@ function optimize(obj)
             tic;
 
             % intlinprogでMILPを解く
-            if (num_phases == 4)
+            if (num_phases == obj.comparison_phases(1))
                 [obj.x_opt, obj.fval, obj.exitflag] = intlinprog(f', intcon, P, q, Peq, qeq, lb, ub, options);
                 obj.FunctionValueMap(num_phases) = [obj.FunctionValueMap(num_phases), obj.fval];
             else
@@ -45,7 +47,7 @@ function optimize(obj)
             % 計算時間の測定の終了
             obj.calc_time = toc;
 
-            if (num_phases == 4)
+            if (num_phases == obj.comparison_phases(1))
                 % 終了ステータスによって処理が異なる
 
                 % exitflagの値の意味
@@ -103,7 +105,8 @@ function optimize(obj)
         if ~isempty(P)
             % intlinprogのオプションを設定
             options = optimoptions('intlinprog');
-            options.IntegerTolerance = 1e-3;
+            options.AbsoluteGapTolerance = 0;
+            options.RelativeGapTolerance = 0;
             options.MaxTime = obj.max_time;
             options.Display = 'final';
 

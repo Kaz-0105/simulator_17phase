@@ -9,7 +9,10 @@ classdef Dan < handle
         UResults;   % uの結果を格納するクラス
 
         % フラグ
-        phase_comparison_flg = false; % 4, 8, 17フェーズの比較をするフラグ
+        phase_comparison_flg; % 4, 8, 17フェーズの比較をするフラグ
+
+        % 配列
+        comparison_phases; % 比較するフェーズの種類
     end
 
     properties
@@ -101,17 +104,18 @@ classdef Dan < handle
 
             % フェーズ数が異なる制御器を比較するフラグを設定
             obj.phase_comparison_flg = obj.Config.vissim.phase_comparison_flg;
+            obj.comparison_phases = obj.Config.vissim.comparison_phases;
 
             % mld_matricesとMILPMatrixMap（milp_matrices）の初期化
             if obj.phase_comparison_flg && obj.road_num == 4
                 obj.mld_matrices = struct();
                 obj.MILPMatrixMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-                for num_phases = [4, 8, 17]
+                for num_phases = obj.comparison_phases
                     obj.MILPMatrixMap(num_phases) = struct();
                 end
 
                 obj.FunctionValueMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
-                for num_phases = [4, 8, 17]
+                for num_phases = obj.comparison_phases
                     obj.FunctionValueMap(num_phases) = [];
                 end
             else
@@ -251,7 +255,7 @@ classdef Dan < handle
         function makePhiList(obj)
             if obj.phase_comparison_flg && obj.road_num == 4
                 % 4, 8, 17フェーズの比較をするフラグが立っているとき
-                for num_phases = [4, 8, 17]
+                for num_phases = obj.comparison_phases
                     % フェーズ数に応じたphiのリストを作成
                     phi_list = [];
                     for step = 1: obj.N_p - 1

@@ -41,4 +41,11 @@ function makeVissimStruct(obj, data)
     catch
         obj.vissim.phase_comparison_flg = false;
     end
+
+    % 比較するフェーズの種類の設定
+    try 
+        obj.vissim.comparison_phases = cell2mat(data.vissim.comparison_phases);
+    catch
+        obj.vissim.comparison_phases = [4, 8, 17];
+    end 
 end

@@ -2,7 +2,7 @@ function makeMilp(obj)
     % MILPの行列を作成する
     matrices_template = struct('f', [], 'w', [], 'P', [], 'q', [], 'Peq', [], 'qeq', [], 'intcon', [], 'intcon_binary', [], 'lb', [], 'ub', []);
     if obj.phase_comparison_flg && obj.road_num == 4
-        for num_phases = [4, 8, 17]
+        for num_phases = obj.comparison_phases
             obj.MILPMatrixMap(num_phases) = matrices_template;
         end
     else

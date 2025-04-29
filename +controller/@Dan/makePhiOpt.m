@@ -2,7 +2,7 @@ function makePhiOpt(obj)
     phi_opt = zeros(1, obj.N_p-1);
 
     if obj.phase_comparison_flg && obj.road_num == 4
-        obj.tmp_phase_num = 4;
+        obj.tmp_phase_num = obj.comparison_phases(1);
     end
 
     for step = 1:obj.N_p-1

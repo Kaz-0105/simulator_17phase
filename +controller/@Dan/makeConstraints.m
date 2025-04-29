@@ -39,7 +39,7 @@ function makeConstraints(obj)
     E_bar = kron(ones(obj.N_p, 1), E);
 
     if obj.phase_comparison_flg && obj.road_num == 4
-        for num_phases = [4, 8, 17]
+        for num_phases = obj.comparison_phases
             obj.tmp_phase_num = num_phases;
 
             % P、qに代入
