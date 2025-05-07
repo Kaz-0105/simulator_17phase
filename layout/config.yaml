@@ -11,8 +11,9 @@ vissim :
   seed : 1                    # 乱数のシード値
   resolution : 10             # シミュレーション時間で1sあたりに何回自動車の位置を更新するか(解像度)
   max_sim_speed : 'on'        # シミュレーションの速度を最大にするかどうか
-  phase_comparison_flg : 'on' # 4, 8, 17フェーズで同時の比較をするかどうか
+  phase_comparison_flg : 'off' # 4, 8, 17フェーズで同時の比較をするかどうか
   comparison_phases : [8, 17] # フェーズの比較をする場合のフェーズ番号
+  model_error_flg : 'on' # モデリングエラーのチェックをするかどうか
   
 mpc :
   predictive_horizon : 5 # 予測ホライゾン
@@ -35,7 +36,7 @@ model :
         num : 10
 
 simulation :
-  time : 20  # シミュレーション時間
+  time : 500  # シミュレーション時間
   count : 1   # シミュレーション回数
 
 intersection :

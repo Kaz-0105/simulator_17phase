@@ -15,6 +15,16 @@ function makeObjectiveFunction(obj, template_id)
                         f(delta1_num + obj.v_length*(step-1)) = 1;
                     end
                 end
+
+                if obj.model_error_flg && num_phases == obj.comparison_phases(1)
+                    for step = 1: obj.N_p
+                        tmp_f = zeros(1, obj.variables_size);
+                        for delta1_num = delta1_list
+                            tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                        end
+                        obj.fs_by_step(step) = tmp_f;
+                    end
+                end
             elseif template_id == 2
                 % delta_1を使用、重みをつける
                 obj.makeWeight(1);
@@ -22,6 +32,16 @@ function makeObjectiveFunction(obj, template_id)
                     delta1_num = delta1_list(i);
                     for step = 1: obj.N_p
                         f(delta1_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta1(i);
+                    end
+                end
+
+                if obj.model_error_flg && num_phases == obj.comparison_phases(1)
+                    for step = 1: obj.N_p
+                        tmp_f = zeros(1, obj.variables_size);
+                        for delta1_num = delta1_list
+                            tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                        end
+                        obj.fs_by_step(step) = tmp_f;
                     end
                 end
             elseif template_id == 3
@@ -34,6 +54,20 @@ function makeObjectiveFunction(obj, template_id)
                 for delta4_num = delta4_list
                     for step = 1: obj.N_p
                         f(delta4_num + obj.v_length*(step-1)) = 1;
+                    end
+                end
+
+                if obj.model_error_flg && num_phases == obj.comparison_phases(1)
+                    for step = 1: obj.N_p
+                        tmp_f = zeros(1, obj.variables_size);
+                        for delta1_num = delta1_list
+                            tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                        end
+
+                        for delta4_num = delta4_list
+                            tmp_f(delta4_num + obj.v_length*(step-1)) = 1;
+                        end
+                        obj.fs_by_step(step) = tmp_f;
                     end
                 end
     
@@ -53,6 +87,21 @@ function makeObjectiveFunction(obj, template_id)
                         f(delta4_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta4(i);
                     end
                 end
+
+                if obj.model_error_flg && num_phases == obj.comparison_phases(1)
+                    for step = 1: obj.N_p
+                        tmp_f = zeros(1, obj.variables_size);
+                        for delta1_num = delta1_list
+                            tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                        end
+
+                        for delta4_num = delta4_list
+                            tmp_f(delta4_num + obj.v_length*(step-1)) = 1;
+                        end
+                        obj.fs_by_step(step) = tmp_f;
+                    end
+                end
+
             elseif template_id == 5
                 % delta_1とdelta_4とphiを使用、重みはなし
                 phi_list = obj.VariableListMap(['phi', num2str(num_phases)]);
@@ -70,6 +119,21 @@ function makeObjectiveFunction(obj, template_id)
                 for phi_num = phi_list
                     f(phi_num) = obj.N_p;
                 end
+
+                if obj.model_error_flg && num_phases == obj.comparison_phases(1)
+                    for step = 1: obj.N_p
+                        tmp_f = zeros(1, obj.variables_size);
+                        for delta1_num = delta1_list
+                            tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                        end
+
+                        for delta4_num = delta4_list
+                            tmp_f(delta4_num + obj.v_length*(step-1)) = 1;
+                        end
+
+                        obj.fs_by_step(step) = tmp_f;
+                    end
+                end
             end
 
             tmp_matrices.f = f;
@@ -84,6 +148,16 @@ function makeObjectiveFunction(obj, template_id)
                     f(delta1_num + obj.v_length*(step-1)) = 1;
                 end
             end
+
+            if obj.model_error_flg
+                for step = 1: obj.N_p
+                    tmp_f = zeros(1, obj.variables_size);
+                    for delta1_num = delta1_list
+                        tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                    end
+                    obj.fs_by_step(step) = tmp_f;
+                end
+            end
         elseif template_id == 2
             % delta_1を使用、重みをつける
             obj.makeWeight(1);
@@ -91,6 +165,16 @@ function makeObjectiveFunction(obj, template_id)
                 delta1_num = delta1_list(i);
                 for step = 1: obj.N_p
                     f(delta1_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta1(i);
+                end
+            end
+
+            if obj.model_error_flg
+                for step = 1: obj.N_p
+                    tmp_f = zeros(1, obj.variables_size);
+                    for delta1_num = delta1_list
+                        tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                    end
+                    obj.fs_by_step(step) = tmp_f;
                 end
             end
         elseif template_id == 3
@@ -106,6 +190,19 @@ function makeObjectiveFunction(obj, template_id)
                 end
             end
 
+            if obj.model_error_flg
+                for step = 1: obj.N_p
+                    tmp_f = zeros(1, obj.variables_size);
+                    for delta1_num = delta1_list
+                        tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                    end
+
+                    for delta4_num = delta4_list
+                        tmp_f(delta4_num + obj.v_length*(step-1)) = 1;
+                    end
+                    obj.fs_by_step(step) = tmp_f;
+                end
+            end
         elseif template_id == 4
             % delta_1とdelta_4を使用、重みをつける
             obj.makeWeight(1);
@@ -122,6 +219,21 @@ function makeObjectiveFunction(obj, template_id)
                     f(delta4_num + obj.v_length*(step-1)) = obj.milp_matrices.w.delta4(i);
                 end
             end
+
+            if obj.model_error_flg
+                for step = 1: obj.N_p
+                    tmp_f = zeros(1, obj.variables_size);
+                    for delta1_num = delta1_list
+                        tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                    end
+
+                    for delta4_num = delta4_list
+                        tmp_f(delta4_num + obj.v_length*(step-1)) = 1;
+                    end
+                    obj.fs_by_step(step) = tmp_f;
+                end
+            end
+
         elseif template_id == 5
             % delta_1とdelta_4とphiを使用、重みはなし
             phi_list = obj.VariableListMap('phi');
@@ -138,6 +250,21 @@ function makeObjectiveFunction(obj, template_id)
             end
             for phi_num = phi_list
                 f(phi_num) = obj.N_p;
+            end
+
+            if obj.model_error_flg
+                for step = 1: obj.N_p
+                    tmp_f = zeros(1, obj.variables_size);
+                    for delta1_num = delta1_list
+                        tmp_f(delta1_num + obj.v_length*(step-1)) = 1;
+                    end
+
+                    for delta4_num = delta4_list
+                        tmp_f(delta4_num + obj.v_length*(step-1)) = 1;
+                    end
+
+                    obj.fs_by_step(step) = tmp_f;
+                end
             end
         end
 

@@ -44,6 +44,17 @@ function optimize(obj)
                 obj.FunctionValueMap(num_phases) = [obj.FunctionValueMap(num_phases), fval];
             end
 
+            if obj.model_error_flg && (num_phases == obj.comparison_phases(1))
+                current_time = obj.Vissim.get('current_time');
+                time_queue_data = [];
+                for step = 1:obj.N_p
+                    time = current_time + (step - 1) * obj.dt;
+                    num_queues = obj.fs_by_step(step) * obj.x_opt;
+                    time_queue_data = [time_queue_data, [time; num_queues]];                    
+                end
+                obj.TimeNumQueuesMap(current_time) = time_queue_data;
+            end
+
             % 計算時間の測定の終了
             obj.calc_time = toc;
 
@@ -115,6 +126,18 @@ function optimize(obj)
 
             % intlinprogでMILPを解く
             [obj.x_opt, obj.fval, obj.exitflag] = intlinprog(f', intcon, P, q, Peq, qeq, lb, ub, options);
+            obj.function_values = [obj.function_values, obj.fval];
+
+            if obj.model_error_flg
+                current_time = obj.Vissim.get('current_time');
+                time_queue_data = [];
+                for step = 1:obj.N_p
+                    time = current_time + (step - 1) * obj.dt;
+                    num_queues = obj.fs_by_step(step) * obj.x_opt;
+                    time_queue_data = [time_queue_data, [time; num_queues]];                    
+                end
+                obj.TimeNumQueuesMap(current_time) = time_queue_data;
+            end
 
             % 計算時間の測定の終了
             obj.calc_time = toc;
@@ -145,8 +168,6 @@ function optimize(obj)
                 elseif obj.road_num == 5
                     obj.tmp_phase_num = obj.phase_num;
                 end
-
-                % obj.makePosVehsResult();
             else
                 % フェーズ数の再設定
                 if obj.road_num == 4

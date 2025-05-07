@@ -21,6 +21,7 @@ classdef ResultVisualizer < handle
     properties
         % フラグ
         phase_comparison_flg; % フェーズごとの比較の有無のフラグ
+        model_error_flg;      % モデル誤差の調査の有無のフラグ
 
         % 配列
         comparison_phases; % 比較するフェーズの種類
@@ -40,6 +41,9 @@ classdef ResultVisualizer < handle
             % フェーズごとの比較の有無
             obj.phase_comparison_flg = obj.Config.vissim.phase_comparison_flg;
             obj.comparison_phases = obj.Config.vissim.comparison_phases;
+
+            % モデル誤差の調査の有無
+            obj.model_error_flg = obj.Config.vissim.model_error_flg;
 
             % VissimMeasurementsクラスの変数を設定
             obj.VissimMeasurements = Vissim.get('VissimMeasurements');
@@ -135,6 +139,56 @@ classdef ResultVisualizer < handle
 
                 legend('show', 'Location', 'best');
             end
+        end
+
+        % モデル誤差の調査を行うメソッド
+        function makeModelErrorGraph(obj)
+            setting = obj.GraphSettingMap('line_graph');
+            IntersectionControllerMap = obj.Vissim.get('IntersectionControllerMap');
+            IntersectionRoadNumQueuesMap = obj.VissimMeasurements.get('IntersectionRoadNumQueuesMap');
+            
+            for intersection_id = cell2mat(IntersectionControllerMap.keys())
+                Controller = IntersectionControllerMap(intersection_id);
+
+                if (~isa(Controller ,'controller.Dan'))
+                    continue;
+                end
+
+                RoadNumQueuesMap = IntersectionRoadNumQueuesMap(intersection_id);
+
+                intersection_num_queues = [];
+                for road_id = cell2mat(RoadNumQueuesMap.keys())
+                    if isempty(intersection_num_queues)
+                        intersection_num_queues = RoadNumQueuesMap(road_id);
+                    else
+                        intersection_num_queues = intersection_num_queues + RoadNumQueuesMap(road_id);
+                    end
+                end
+
+                figure;
+                hold on;
+
+                plot(obj.VissimMeasurements.time, intersection_num_queues, 'LineWidth', setting.line_width, 'Color', 'b');
+                title(['Intersection ' num2str(intersection_id) ' - Model Error'], 'FontSize', obj.font_sizes.label);
+                xlabel('Time [s]', 'FontSize', obj.font_sizes.label);
+                ylabel('Number of vehicles in queue', 'FontSize', obj.font_sizes.label);
+                xlim([0, obj.VissimMeasurements.time(end)]);
+
+                TimeNumQueuesMap = Controller.get('TimeNumQueuesMap');
+                count = 0;
+                for time = cell2mat(TimeNumQueuesMap.keys())
+                    time_num_queues_data = TimeNumQueuesMap(time);
+                    times = time_num_queues_data(1, :);
+                    num_queues = time_num_queues_data(2, :);
+
+                    if (mod(count, 2) == 0) 
+                        plot(times, num_queues, 'LineWidth', setting.line_width, 'Color', 'r');
+                    else
+                        plot(times, num_queues, 'LineWidth', setting.line_width, 'Color', 'r');
+                    end
+                    count = count + 1;
+                end
+            end 
         end
     end
 end
