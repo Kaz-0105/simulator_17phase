@@ -3,9 +3,9 @@ vehicle_inputs :
   - id : 1
     volume : 900
   - id : 2
-    volume : 900
-  - id : 3
     volume : 500
+  - id : 3
+    volume : 900
   - id : 4
     volume : 500
 
@@ -14,13 +14,13 @@ vehicle_routes :
     - id : 1
       roads :
         - id : 1
-          template_id : 1
+          template_id : 3
         - id : 4
-          template_id : 1
+          template_id : 3
         - id : 5
-          template_id : 1
+          template_id : 3
         - id : 8
-          template_id : 1
+          template_id : 3
 
   templates :
     - id : 1 # 左折：直進：右折 = 1 : 1 : 1

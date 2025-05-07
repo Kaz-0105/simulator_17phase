@@ -48,4 +48,15 @@ function makeVissimStruct(obj, data)
     catch
         obj.vissim.comparison_phases = [4, 8, 17];
     end 
+
+    % モデル化誤差の調査を行うかどうかのフラグ
+    try
+        if strcmp(data.vissim.model_error_flg, 'on')
+            obj.vissim.model_error_flg = true;
+        else
+            obj.vissim.model_error_flg = false;
+        end
+    catch
+        obj.vissim.model_error_flg = false;
+    end
 end

@@ -87,4 +87,17 @@ function initMaps(obj)
         obj.AverageSpeedsMap(intersection_id) = 0;
     end
     obj.AverageSpeedsMap(0) = 0;
+
+    % IntersectionRoadNumQueueMapについて
+    if obj.Config.vissim.model_error_flg
+        obj.IntersectionRoadNumQueueMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+        for intersection_id = cell2mat(keys(IntersectionStructMap))
+            intersection_struct = IntersectionStructMap(intersection_id);
+            RoadNumQueueMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+            for road_id = intersection_struct.input_road_ids
+                RoadNumQueueMap(road_id) = 0;
+            end
+            obj.IntersectionRoadNumQueueMap(intersection_id) = RoadNumQueueMap;
+        end
+    end
 end
