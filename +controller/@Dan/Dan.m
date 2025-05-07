@@ -10,6 +10,7 @@ classdef Dan < handle
 
         % フラグ
         phase_comparison_flg; % 4, 8, 17フェーズの比較をするフラグ
+        model_error_flg;     % モデル化誤差の調査を行うかどうかのフラグ
 
         % 配列
         comparison_phases; % 比較するフェーズの種類
@@ -53,10 +54,14 @@ classdef Dan < handle
         % 構造体
         mld_matrices;  % 混合論理動的システムの係数行列を収納する構造体
         milp_matrices; % 混合整数線形計画問題の係数行列を収納する構造体
+        function_values; % 目的関数の値を収納する構造体
 
         % マップ
         MILPMatrixMap; % 比較用のmilpのマトリックスを格納するマップ
         FunctionValueMap; % 比較用の目的関数の値を格納するマップ
+        TimeNumQueuesMap; % 道路ごとの信号待ち車列の予測を格納するマップ
+
+        fs_by_step; % ステップごとの目的関数
     end
 
     properties
@@ -106,6 +111,9 @@ classdef Dan < handle
             obj.phase_comparison_flg = obj.Config.vissim.phase_comparison_flg;
             obj.comparison_phases = obj.Config.vissim.comparison_phases;
 
+            % モデル化誤差の調査を行うかどうかのフラグを設定
+            obj.model_error_flg = obj.Config.vissim.model_error_flg;
+
             % mld_matricesとMILPMatrixMap（milp_matrices）の初期化
             if obj.phase_comparison_flg && obj.road_num == 4
                 obj.mld_matrices = struct();
@@ -121,6 +129,13 @@ classdef Dan < handle
             else
                 obj.mld_matrices = struct();
                 obj.milp_matrices = struct();
+                obj.function_values = [];
+            end
+
+            % モデル化誤差の調査を行うかどうかによって分岐
+            if obj.model_error_flg
+                obj.TimeNumQueuesMap = containers.Map('KeyType', 'int32', 'ValueType', 'any');
+                obj.fs_by_step = containers.Map('KeyType', 'int32', 'ValueType', 'any');
             end
 
             % フェーズの数を設定
