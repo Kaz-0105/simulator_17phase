@@ -19,7 +19,7 @@ classdef VissimMeasurements < handle
         AverageSpeedsMap;                   % 平均速度の時系列データをまとめるマップ
         IntersectionRoadsMap;               % 交差点IDから道路IDへのマップ
         RoadLinksMap;                       % 道路IDからリンクIDへのマップ
-        IntersectionRoadNumQueueMap;       % 信号待ち車列台数のマップ
+        IntersectionRoadNumQueuesMap;       % 信号待ち車列台数のマップ
     end
 
     properties
@@ -204,9 +204,9 @@ classdef VissimMeasurements < handle
             end
         end
 
-        function updateIntersectionRoadNumQueueMap(obj)
-            for intersection_id = cell2mat(keys(obj.IntersectionRoadNumQueueMap))
-                RoadNumQueueMap = obj.IntersectionRoadNumQueueMap(intersection_id);
+        function updateIntersectionRoadNumQueuesMap(obj)
+            for intersection_id = cell2mat(keys(obj.IntersectionRoadNumQueuesMap))
+                RoadNumQueueMap = obj.IntersectionRoadNumQueuesMap(intersection_id);
 
                 for road_id = cell2mat(keys(RoadNumQueueMap))
                     LinksMap = obj.RoadLinksMap(road_id);
@@ -225,7 +225,7 @@ classdef VissimMeasurements < handle
                     RoadNumQueueMap(road_id) = [RoadNumQueueMap(road_id), tmp_sum];
                 end
 
-                obj.IntersectionRoadNumQueueMap(intersection_id) = RoadNumQueueMap;
+                obj.IntersectionRoadNumQueuesMap(intersection_id) = RoadNumQueueMap;
             end
         end
     end

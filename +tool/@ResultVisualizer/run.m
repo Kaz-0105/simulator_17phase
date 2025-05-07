@@ -5,6 +5,11 @@ function run(obj)
     if obj.phase_comparison_flg
         obj.makePhaseComparisonGraph();
     end
+
+    % モデル誤差の調査
+    if obj.model_error_flg
+        obj.makeModelErrorGraph();
+    end
     
     % QueueLengthについて
     if obj.flags.queue_length

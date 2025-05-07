@@ -7,7 +7,7 @@ function update(obj)
     obj.updateIntersectionRoadNumVehsMap();
     obj.updateIntersectionRoadDelayMap();
     obj.updateVehicleSpeedsMap();
-    obj.updateIntersectionRoadNumQueueMap();
+    obj.updateIntersectionRoadNumQueuesMap();
     
     % 時間の更新
     obj.time = [obj.time, obj.Vissim.get('current_time')];
