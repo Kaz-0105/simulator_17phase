@@ -36,7 +36,7 @@ model :
         num : 10
 
 simulation :
-  time : 100  # シミュレーション時間
+  time : 500  # シミュレーション時間
   count : 1   # シミュレーション回数
 
 intersection :
