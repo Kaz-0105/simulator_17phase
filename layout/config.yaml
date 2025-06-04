@@ -31,7 +31,7 @@ model :
       - roads : 3
         num : 4
       - roads : 4
-        num : 4
+        num : 8
       - roads : 5
         num : 10
 
@@ -47,7 +47,7 @@ result :
   save :
     active : 'on'
     path : 'results\1-1_network'
-    name : '4-phase_1_3'
+    name : '8-phase_2_3'
   compare : 
     active : 'off'
     path : 
