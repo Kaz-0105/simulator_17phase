@@ -205,6 +205,11 @@ classdef VissimMeasurements < handle
         end
 
         function updateIntersectionRoadNumQueuesMap(obj)
+            % モデル化誤差を見ない場合はスキップ
+            if ~obj.Config.vissim.model_error_flg
+                return;
+            end
+
             for intersection_id = cell2mat(keys(obj.IntersectionRoadNumQueuesMap))
                 RoadNumQueueMap = obj.IntersectionRoadNumQueuesMap(intersection_id);
 
