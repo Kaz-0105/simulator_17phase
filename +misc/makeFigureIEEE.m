@@ -36,9 +36,6 @@ inflows_map('balanced') = true;
 inflows_map('unbalanced') = true;
 inflows_map('main-minor') = true;
 
-% time series data flags
-time_series_flags = true;
-
 % the order id of inflow and relative flow to be used for time series data
 % you can not change now.
 time_series_inflow_list = [1, 2, 3];
