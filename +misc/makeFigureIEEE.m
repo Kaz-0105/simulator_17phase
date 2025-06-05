@@ -11,7 +11,7 @@ figures_map('total_speed_comparison') = false;
 figures_map('total_calc_time_comparison') = false;
 figures_map('time_series_queue') = false;
 figures_map('time_series_delay') = true;
-figures_map('time_series_speed') = true;
+figures_map('time_series_speed') = false;
 
 % the types of controller to be compared
 controllers_map = containers.Map('KeyType', 'char', 'ValueType', 'int32');
@@ -41,10 +41,8 @@ time_series_flags = true;
 
 % the order id of inflow and relative flow to be used for time series data
 % you can not change now.
-% time_series_inflow_list = [1, 2, 3];
-time_series_inflow_list = [1];
-% time_series_relative_flow_list = [3, 4];
-time_series_relative_flow_list = [3];
+time_series_inflow_list = [1, 2, 3];
+time_series_relative_flow_list = [3, 4];
 
 % figure specifications
 title_font_size = 30;
