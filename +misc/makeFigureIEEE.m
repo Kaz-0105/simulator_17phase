@@ -9,8 +9,8 @@ figures_map('total_queue_comparison') = false;
 figures_map('total_delay_comparison') = false;
 figures_map('total_speed_comparison') = false;
 figures_map('total_calc_time_comparison') = false;
-figures_map('time_series_queue') = false;
-figures_map('time_series_delay') = true;
+figures_map('time_series_queue') = true;
+figures_map('time_series_delay') = false;
 figures_map('time_series_speed') = false;
 
 % the types of controller to be compared
@@ -18,7 +18,7 @@ controllers_map = containers.Map('KeyType', 'char', 'ValueType', 'int32');
 controllers_map('scoot') = true;
 controllers_map('4-phase') = true;
 controllers_map('8-phase') = true;
-controllers_map('17-phase') = false;
+controllers_map('17-phase') = true;
 
 % the types of relative flow to be compared
 relative_flows_map = containers.Map('KeyType', 'char', 'ValueType', 'int32');
