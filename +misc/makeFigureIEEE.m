@@ -5,7 +5,7 @@ close all;
 
 % the types of figure to be shown
 figures_map = containers.Map('KeyType', 'char', 'ValueType', 'int32');
-figures_map('total_queue_comparison') = false;
+figures_map('total_queue_comparison') = true;
 figures_map('total_delay_comparison') = false;
 figures_map('total_speed_comparison') = false;
 figures_map('total_calc_time_comparison') = false;

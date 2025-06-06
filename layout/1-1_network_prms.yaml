@@ -3,9 +3,9 @@ vehicle_inputs :
   - id : 1
     volume : 900
   - id : 2
-    volume : 500
-  - id : 3
     volume : 900
+  - id : 3
+    volume : 500
   - id : 4
     volume : 500
 
